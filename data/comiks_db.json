@@ -1,0 +1,2364 @@
+{
+  "series": [
+    {
+      "id": "series-nairobi-01",
+      "title": "Life in Nairobi",
+      "description": "A fast-paced, hilarious and relatable animated comic series following young Kenyan tech hustler Brian, his chaotic friend Kevin, and sharp fintech manager Mary as they navigate Nairobi's startup grind, matatu madness, and big ambitions.",
+      "genre": "Comedy / Drama / Urban Tech Slice-of-Life",
+      "artStyle": "African Comic",
+      "isStyleLocked": true,
+      "mainCharacterIds": [
+        "char-brian-01",
+        "char-kevin-02",
+        "char-mary-03"
+      ],
+      "supportingCharacterIds": [
+        "char-otieno-04"
+      ],
+      "locationIds": [
+        "loc-cbd-01",
+        "loc-matatu-02",
+        "loc-eastlands-03",
+        "loc-techhub-04"
+      ],
+      "worldRules": [
+        "Natural multilingual blending: English, Swahili, and authentic Sheng are mixed effortlessly.",
+        "High comic energy: sweat drops, exaggerated reaction shots, and dynamic comic freeze frames during comedic climaxes.",
+        "Authentic Nairobi urban aesthetics: Nairobi skyline, bustling matatus with graffiti art, street food kibandas, and vibrant tech spaces.",
+        "Character visual consistency: Brian always wears his signature green safari tech jacket; Kevin rocks oversized streetwear."
+      ],
+      "voiceProfilesSummary": "Brian: Fast, energetic Kenyan English. Kevin: Sheng heavy, witty, expressive. Mary: Crisp professional East African corporate English.",
+      "visualReferences": [
+        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop"
+      ],
+      "brandIdentity": {
+        "tagline": "The Hustle is Real. The Drama is Epic.",
+        "outroHook": "Subscribe on TikTok @ComiksX for the next episode!",
+        "primaryColor": "#f59e0b",
+        "secondaryColor": "#06b6d4",
+        "fontStyle": "Bangers / Bold Comic Gothic"
+      },
+      "episodeCount": 6,
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "title": "Safari Cyberpunk",
+      "description": "Futuristic Nairobi in the year 2088",
+      "genre": "Sci-Fi / Cyberpunk",
+      "artStyle": "Anime-inspired",
+      "isStyleLocked": true,
+      "mainCharacterIds": [],
+      "supportingCharacterIds": [],
+      "locationIds": [],
+      "worldRules": [
+        "High tech, low life in downtown Nairobi"
+      ],
+      "visualReferences": [],
+      "brandIdentity": {
+        "tagline": "Neon Rift Valley",
+        "outroHook": "Watch episode 2 on TikTok!",
+        "primaryColor": "#06b6d4",
+        "secondaryColor": "#ec4899",
+        "fontStyle": "Cyber"
+      },
+      "episodeCount": 0,
+      "id": "series-1791315299198-t6s7t",
+      "createdAt": "2026-10-06T19:34:59.199Z",
+      "updatedAt": "2026-10-06T19:34:59.199Z"
+    },
+    {
+      "title": "Safari Cyberpunk",
+      "description": "Futuristic Nairobi in the year 2088",
+      "genre": "Sci-Fi / Cyberpunk",
+      "artStyle": "Anime-inspired",
+      "isStyleLocked": true,
+      "mainCharacterIds": [],
+      "supportingCharacterIds": [],
+      "locationIds": [],
+      "worldRules": [
+        "High tech, low life in downtown Nairobi"
+      ],
+      "visualReferences": [],
+      "brandIdentity": {
+        "tagline": "Neon Rift Valley",
+        "outroHook": "Watch episode 2 on TikTok!",
+        "primaryColor": "#06b6d4",
+        "secondaryColor": "#ec4899",
+        "fontStyle": "Cyber"
+      },
+      "episodeCount": 0,
+      "id": "series-1791315319416-hlnuf",
+      "createdAt": "2026-10-06T19:35:19.416Z",
+      "updatedAt": "2026-10-06T19:35:19.416Z"
+    }
+  ],
+  "characters": [
+    {
+      "id": "char-brian-01",
+      "seriesId": "series-nairobi-01",
+      "name": "Brian Otieno",
+      "age": 24,
+      "personality": "Ambitious, slightly anxious developer, loyal friend, quick thinker under pressure.",
+      "appearance": "Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes.",
+      "clothing": "Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.",
+      "hairstyle": "Crisp tapered fade with short neat waves on top.",
+      "skinTone": "Deep warm bronze brown.",
+      "bodyType": "Lean and athletic, 5ft 11in.",
+      "voice": {
+        "voiceId": "ke-male-brian",
+        "provider": "elevenlabs",
+        "accent": "Kenyan English",
+        "gender": "male",
+        "ageBracket": "young-adult",
+        "tone": "Energetic and relatable",
+        "speed": 1.05,
+        "pitch": 1
+      },
+      "accent": "Kenyan English with occasional Sheng slang",
+      "speechStyle": "Fast-paced tech jargon mixed with relatable Nairobi humor",
+      "characterDescription": "A talented full-stack engineer trying to scale his first AI startup from a shared apartment in Nairobi.",
+      "referenceImages": [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop"
+      ],
+      "characterPrompt": "24-year-old Kenyan young man, Brian, short faded hairstyle, warm brown skin, expressive brown eyes, wearing green safari zip jacket and dark jeans, African comic art style, clean bold cel-shaded outlines, vivid colors, animated character sheet",
+      "negativePrompt": "photorealistic, European features, blurry, disfigured face, extra limbs, 3d clay render",
+      "isLocked": true,
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop",
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "char-kevin-02",
+      "seriesId": "series-nairobi-01",
+      "name": "Kevin 'Kevo' Mwangi",
+      "age": 25,
+      "personality": "Charismatic hustler, comedic hype man, always knows a guy who knows a guy, big risk taker.",
+      "appearance": "Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures.",
+      "clothing": "Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.",
+      "hairstyle": "Short dreadlocks tied in a neat top bun with shaved sides.",
+      "skinTone": "Rich dark chocolate brown.",
+      "bodyType": "Stocky, expressive body language.",
+      "voice": {
+        "voiceId": "ke-male-kevo",
+        "provider": "elevenlabs",
+        "accent": "Sheng / Swahili Casual",
+        "gender": "male",
+        "ageBracket": "young-adult",
+        "tone": "Comedic, witty, high energy",
+        "speed": 1.1,
+        "pitch": 0.95
+      },
+      "accent": "Nairobi Sheng with heavy Swahili street slang",
+      "speechStyle": "Punchy, comedic, uses phrases like 'Buda!', 'Wazi wazi', 'Hii ni noma!'",
+      "characterDescription": "Brian's childhood buddy and unofficial marketing manager who turns simple problems into wild adventures.",
+      "referenceImages": [
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop"
+      ],
+      "characterPrompt": "25-year-old Kenyan man Kevin, short dreadlocks tied in top bun, rich dark brown skin, big expressive smile, oversized graffiti streetwear hoodie, baggy cargos, African comic art style, bold outlines, vibrant colors",
+      "negativePrompt": "photorealistic, skinny, different hairstyle, faded colors, blurry",
+      "isLocked": true,
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop",
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "char-mary-03",
+      "seriesId": "series-nairobi-01",
+      "name": "Mary Wanjiku",
+      "age": 26,
+      "personality": "Sharp, no-nonsense fintech operations lead, razor-sharp wit, secretly supportive.",
+      "appearance": "Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor.",
+      "clothing": "Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.",
+      "hairstyle": "Intricate braided cornrow updo.",
+      "skinTone": "Warm golden brown.",
+      "bodyType": "Graceful, tall posture.",
+      "voice": {
+        "voiceId": "ke-female-mary",
+        "provider": "elevenlabs",
+        "accent": "Kenyan Corporate English",
+        "gender": "female",
+        "ageBracket": "young-adult",
+        "tone": "Authoritative yet warm",
+        "speed": 1,
+        "pitch": 1.05
+      },
+      "accent": "Refined Kenyan English with subtle Swahili expressions",
+      "speechStyle": "Direct, articulate, business-savvy with dry comedic timing",
+      "characterDescription": "A rising fintech lead who gives Brian his biggest client opportunity while holding him to impossible deadlines.",
+      "referenceImages": [
+        "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&auto=format&fit=crop"
+      ],
+      "characterPrompt": "26-year-old Kenyan woman Mary, braided cornrow crown hairstyle, warm golden brown skin, stylish modern spectacles, wearing tailored blazer with kitenge lapels, African comic art style, crisp cel-shaded animation linework",
+      "negativePrompt": "photorealistic, loose hair, messy clothes, distorted anatomy",
+      "isLocked": true,
+      "avatarUrl": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&auto=format&fit=crop",
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "char-1791315299201-otlat",
+      "seriesId": "series-nairobi-01",
+      "name": "Brian Otieno (Copy)",
+      "age": 24,
+      "personality": "Ambitious, slightly anxious developer, loyal friend, quick thinker under pressure.",
+      "appearance": "Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes.",
+      "clothing": "Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.",
+      "hairstyle": "Crisp tapered fade with short neat waves on top.",
+      "skinTone": "Deep warm bronze brown.",
+      "bodyType": "Lean and athletic, 5ft 11in.",
+      "voice": {
+        "voiceId": "ke-male-brian",
+        "provider": "elevenlabs",
+        "accent": "Kenyan English",
+        "gender": "male",
+        "ageBracket": "young-adult",
+        "tone": "Energetic and relatable",
+        "speed": 1.05,
+        "pitch": 1
+      },
+      "accent": "Kenyan English with occasional Sheng slang",
+      "speechStyle": "Fast-paced tech jargon mixed with relatable Nairobi humor",
+      "characterDescription": "A talented full-stack engineer trying to scale his first AI startup from a shared apartment in Nairobi.",
+      "referenceImages": [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop"
+      ],
+      "characterPrompt": "24-year-old Kenyan young man, Brian, short faded hairstyle, warm brown skin, expressive brown eyes, wearing green safari zip jacket and dark jeans, African comic art style, clean bold cel-shaded outlines, vivid colors, animated character sheet",
+      "negativePrompt": "photorealistic, European features, blurry, disfigured face, extra limbs, 3d clay render",
+      "isLocked": false,
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop",
+      "createdAt": "2026-10-06T19:34:59.201Z",
+      "updatedAt": "2026-10-06T19:34:59.201Z"
+    },
+    {
+      "id": "char-1791315319419-ftqvm",
+      "seriesId": "series-nairobi-01",
+      "name": "Brian Otieno (Copy)",
+      "age": 24,
+      "personality": "Ambitious, slightly anxious developer, loyal friend, quick thinker under pressure.",
+      "appearance": "Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes.",
+      "clothing": "Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.",
+      "hairstyle": "Crisp tapered fade with short neat waves on top.",
+      "skinTone": "Deep warm bronze brown.",
+      "bodyType": "Lean and athletic, 5ft 11in.",
+      "voice": {
+        "voiceId": "ke-male-brian",
+        "provider": "elevenlabs",
+        "accent": "Kenyan English",
+        "gender": "male",
+        "ageBracket": "young-adult",
+        "tone": "Energetic and relatable",
+        "speed": 1.05,
+        "pitch": 1
+      },
+      "accent": "Kenyan English with occasional Sheng slang",
+      "speechStyle": "Fast-paced tech jargon mixed with relatable Nairobi humor",
+      "characterDescription": "A talented full-stack engineer trying to scale his first AI startup from a shared apartment in Nairobi.",
+      "referenceImages": [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop"
+      ],
+      "characterPrompt": "24-year-old Kenyan young man, Brian, short faded hairstyle, warm brown skin, expressive brown eyes, wearing green safari zip jacket and dark jeans, African comic art style, clean bold cel-shaded outlines, vivid colors, animated character sheet",
+      "negativePrompt": "photorealistic, European features, blurry, disfigured face, extra limbs, 3d clay render",
+      "isLocked": false,
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop",
+      "createdAt": "2026-10-06T19:35:19.419Z",
+      "updatedAt": "2026-10-06T19:35:19.419Z"
+    }
+  ],
+  "locations": [
+    {
+      "id": "loc-cbd-01",
+      "seriesId": "series-nairobi-01",
+      "name": "Nairobi CBD & Kencom",
+      "category": "cbd",
+      "description": "Bustling downtown Nairobi with towering glass skyscrapers, red double-decker buses, and dense pedestrian energy.",
+      "visualPrompt": "Downtown Nairobi CBD skyline at golden hour, Kencom bus station background, modern skyscrapers, bustling pedestrian street, vibrant African comic art style, high contrast, clean lineart",
+      "referenceImages": [],
+      "tags": [
+        "nairobi",
+        "cbd",
+        "city",
+        "urban",
+        "exterior"
+      ],
+      "createdAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "loc-matatu-02",
+      "seriesId": "series-nairobi-01",
+      "name": "Custom Nganya (Matatu 58)",
+      "category": "matatu",
+      "description": "Legendary pimped-out Nairobi Matatu with glowing neon interior, custom airbrush graffiti, giant subwoofer displays, and tinted windows.",
+      "visualPrompt": "Interior of pimped-out Nairobi matatu nganya, custom comic graffiti art on ceiling, violet and cyan LED neon ambient glow, passengers seated, dynamic cinematic comic style",
+      "referenceImages": [],
+      "tags": [
+        "matatu",
+        "nganya",
+        "transport",
+        "neon",
+        "sheng"
+      ],
+      "createdAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "loc-eastlands-03",
+      "seriesId": "series-nairobi-01",
+      "name": "Buru Buru Apartment & Balcony",
+      "category": "estate",
+      "description": "Brian and Kevin's two-bedroom apartment in Buru Buru Phase 2 with a balcony overlooking the vibrant neighborhood.",
+      "visualPrompt": "Living room of Nairobi apartment in Buruburu estate, developer workstation with two monitors, Kenyan art prints on walls, balcony door open showing residential neighborhood, warm sunlight, comic art style",
+      "referenceImages": [],
+      "tags": [
+        "estate",
+        "apartment",
+        "buruburu",
+        "home",
+        "interior"
+      ],
+      "createdAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "loc-techhub-04",
+      "seriesId": "series-nairobi-01",
+      "name": "Kilimani Tech Hub & Co-working",
+      "category": "office",
+      "description": "Ultra-modern glass co-working incubator in Kilimani with exposed brick, indoor plants, and a rooftop coffee lounge.",
+      "visualPrompt": "Modern African startup tech hub office in Kilimani Nairobi, glass partitions, large windows with Nairobi green canopy view, whiteboard with app diagrams, sleek desks, African comic cel-shaded style",
+      "referenceImages": [],
+      "tags": [
+        "tech",
+        "office",
+        "kilimani",
+        "fintech",
+        "interior"
+      ],
+      "createdAt": "2026-10-06T19:33:32.298Z"
+    }
+  ],
+  "episodes": [
+    {
+      "id": "ep-01-the-pitch",
+      "seriesId": "series-nairobi-01",
+      "episodeNumber": 1,
+      "title": "The Big Pitch",
+      "logline": "A young Nairobi developer lands a game-changing fintech client meeting, but an unruly matatu and a dead laptop battery threaten to ruin everything.",
+      "synopsis": "Brian receives an urgent call from Mary to pitch his AI financial assistant to senior venture investors at 2:00 PM in Kilimani. Kevin insists on escorting him, leading to a hilarious chain reaction involving an impromptu detour through Gikomba, a forgotten charger, and an emergency sprint through Nairobi traffic.",
+      "targetDurationMinutes": 30,
+      "actualDurationSeconds": 1820,
+      "status": "storyboarded",
+      "charactersInvolved": [
+        "Brian Otieno",
+        "Kevin 'Kevo' Mwangi",
+        "Mary Wanjiku"
+      ],
+      "threeActStructure": {
+        "beginning": "Brian wakes up to Mary's surprise call scheduling a multi-million shilling venture pitch in 2 hours.",
+        "conflict": "Kevin convinces Brian to take a notorious express nganya matatu that takes a wild unplanned detour.",
+        "escalation": "Brian's laptop battery dips to 4% while stuck in a major roundabout jam on Uhuru Highway.",
+        "climax": "Brian and Kevin abandon the vehicle and sprint across downtown Nairobi, arriving at the boardroom with seconds to spare.",
+        "resolution": "Brian delivers the pitch verbally with Kevin providing dynamic live whiteboard sketches; the board is captivated.",
+        "endingHook": "Mary smiles and tells Brian they got the funding—but the investor wants the prototype live in 48 hours."
+      },
+      "chapters": [
+        {
+          "id": "ch-01",
+          "episodeId": "ep-01-the-pitch",
+          "chapterNumber": 1,
+          "title": "The 2-Hour Warning",
+          "timecode": "00:00",
+          "startTimeSeconds": 0,
+          "endTimeSeconds": 300,
+          "summary": "Brian gets the high-stakes call from Mary while Kevin is busy making mandazi."
+        },
+        {
+          "id": "ch-02",
+          "episodeId": "ep-01-the-pitch",
+          "chapterNumber": 2,
+          "title": "Boarding the Beast",
+          "timecode": "05:00",
+          "startTimeSeconds": 300,
+          "endTimeSeconds": 780,
+          "summary": "The duo hops into the wildest matatu in Eastlands with deafening bass and wild driving."
+        },
+        {
+          "id": "ch-03",
+          "episodeId": "ep-01-the-pitch",
+          "chapterNumber": 3,
+          "title": "Gridlock Panic",
+          "timecode": "13:00",
+          "startTimeSeconds": 780,
+          "endTimeSeconds": 1320,
+          "summary": "Uhuru Highway standstill. Battery reaches 4%. Panic ensues."
+        },
+        {
+          "id": "ch-04",
+          "episodeId": "ep-01-the-pitch",
+          "chapterNumber": 4,
+          "title": "The Downtown Sprint",
+          "timecode": "22:00",
+          "startTimeSeconds": 1320,
+          "endTimeSeconds": 1620,
+          "summary": "Brian and Kevin sprint through the city, dodging cart pullers and street fruit stalls."
+        },
+        {
+          "id": "ch-05",
+          "episodeId": "ep-01-the-pitch",
+          "chapterNumber": 5,
+          "title": "The Hustler's Triumph",
+          "timecode": "27:00",
+          "startTimeSeconds": 1620,
+          "endTimeSeconds": 1820,
+          "summary": "An unforgettable pitch, standing ovation, and a cliffhanger contract."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "scene-01",
+          "episodeId": "ep-01-the-pitch",
+          "sceneNumber": 1,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 12,
+          "location": "Buru Buru Apartment",
+          "locationDetails": "Morning light streaming into apartment. Code on dual monitors.",
+          "characters": [
+            "Brian Otieno"
+          ],
+          "dialogue": [
+            {
+              "id": "d-01",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Just one more function and the sync is complete... Come on, compile!",
+              "language": "en",
+              "emotion": "intense focus"
+            }
+          ],
+          "narration": "Monday morning in Nairobi. The hustle begins before sunrise.",
+          "visualDescription": "Close-up of Brian's intense eyes reflecting green code lines, pulling back to show him hunched over his mechanical keyboard.",
+          "cameraAngle": "Medium Close-up",
+          "cameraMovement": "Slow Pull-back",
+          "action": "Brian taps enter aggressively, then leans back as green success messages scroll on screen.",
+          "facialExpressions": "Brian breathes a sigh of relief with a triumphant grin.",
+          "soundEffects": [
+            "Keyboard mechanical clacking",
+            "Success chime sound"
+          ],
+          "backgroundMusic": "Lo-fi afrobeat with subtle rhythmic bass",
+          "transition": "Cut",
+          "aiPrompt": "African comic art style, 24-year-old Kenyan developer Brian, tapered fade hairstyle, dark green safari zip jacket, seated in Buruburu apartment in front of dual monitors with coding IDE, warm sunrise light, clean bold outlines, vibrant colors, cinematic framing",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, messy linework",
+          "status": "completed",
+          "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
+          "thumbnailUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop",
+          "retryCount": 0,
+          "costEstimate": 12,
+          "createdAt": "2026-10-06T19:33:32.298Z",
+          "updatedAt": "2026-10-06T19:33:32.298Z"
+        },
+        {
+          "id": "scene-02",
+          "episodeId": "ep-01-the-pitch",
+          "sceneNumber": 2,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 14,
+          "location": "Buru Buru Apartment",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "d-02",
+              "characterId": "char-kevin-02",
+              "characterName": "Kevin 'Kevo' Mwangi",
+              "line": "Buda! Simu yako inapiga kengele kama ambulansi ya Kenyatta!",
+              "language": "sheng",
+              "emotion": "loud and comedic"
+            },
+            {
+              "id": "d-03",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Wait... it's Mary! Hello, Mary?",
+              "language": "en",
+              "emotion": "surprised"
+            }
+          ],
+          "visualDescription": "Kevin kicks open kitchen door holding a spatula, pointing at Brian's vibrating smartphone.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Dynamic Zoom",
+          "action": "Kevin strikes an exaggerated martial arts pose with his cooking spatula.",
+          "facialExpressions": "Kevin laughing loudly, Brian frantically reaching for the phone.",
+          "soundEffects": [
+            "Door creak",
+            "High-tempo phone ringtone"
+          ],
+          "backgroundMusic": "Upbeat comedic afro-pop rhythm",
+          "transition": "Comic Halftone Wipe",
+          "aiPrompt": "African comic art style, interior Nairobi apartment, Kenyan comedic friend Kevin in oversized graphic hoodie holding cooking spatula, laughing dramatically, Brian reaching across desk for glowing phone, dynamic comic panel composition, bold black ink outlines",
+          "negativePrompt": "photorealistic, extra limbs, low resolution, blurred faces",
+          "status": "completed",
+          "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-young-man-answering-a-phone-call-in-an-office-42998-large.mp4",
+          "thumbnailUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop",
+          "retryCount": 0,
+          "costEstimate": 14,
+          "createdAt": "2026-10-06T19:33:32.298Z",
+          "updatedAt": "2026-10-06T19:33:32.298Z"
+        },
+        {
+          "id": "scene-03",
+          "episodeId": "ep-01-the-pitch",
+          "sceneNumber": 3,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 10,
+          "location": "Kilimani Tech Hub",
+          "characters": [
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "d-04",
+              "characterId": "char-mary-03",
+              "characterName": "Mary Wanjiku",
+              "line": "Brian, the Silicon Savannah partners arrived early. Be in Kilimani by 2 PM sharp, or we forfeit the term sheet.",
+              "language": "en",
+              "emotion": "firm and urgent"
+            }
+          ],
+          "visualDescription": "Mary standing by executive floor-to-ceiling glass in Kilimani with phone to ear, holding an iPad.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Slow Push-in",
+          "action": "Mary checks her elegant watch while looking out at Nairobi skyline.",
+          "facialExpressions": "Sharp, confident, raised eyebrow.",
+          "soundEffects": [
+            "Subtle office chatter",
+            "Phone click"
+          ],
+          "backgroundMusic": "Tense corporate bass groove",
+          "transition": "Cut",
+          "aiPrompt": "African comic art style, elegant Kenyan fintech businesswoman Mary, braided crown hairstyle, stylish spectacles, kitenge lapel blazer, holding modern tablet in glass executive office overlooking Nairobi skyline, crisp comic book cel-shading, rich colors",
+          "negativePrompt": "photorealistic, 3d CGI, western comic distortion, messy background",
+          "status": "completed",
+          "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-businesswoman-talking-on-the-phone-in-an-office-42996-large.mp4",
+          "thumbnailUrl": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500&auto=format&fit=crop",
+          "retryCount": 0,
+          "costEstimate": 10,
+          "createdAt": "2026-10-06T19:33:32.298Z",
+          "updatedAt": "2026-10-06T19:33:32.298Z"
+        },
+        {
+          "id": "scene-04",
+          "episodeId": "ep-01-the-pitch",
+          "sceneNumber": 4,
+          "actNumber": 2,
+          "chapterId": "ch-02",
+          "duration": 15,
+          "location": "Custom Nganya (Matatu 58)",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "d-05",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Kevo, why did we board this specific nganya?! The bass is shaking my laptop screen!",
+              "language": "en",
+              "emotion": "panicked"
+            },
+            {
+              "id": "d-06",
+              "characterId": "char-kevin-02",
+              "characterName": "Kevin 'Kevo' Mwangi",
+              "line": "Tulia buda! Huyu dereva ni fundi. Nairobi traffic haina nguvu mbele ya Nganya 58!",
+              "language": "sheng",
+              "emotion": "boastful and excited"
+            }
+          ],
+          "visualDescription": "Inside the matatu bathed in pulsing violet neon light, bass speakers vibrating, Brian clinging onto his laptop backpack.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Handheld Shake",
+          "action": "Matatu swerves slightly as Kevin bobs his head to the heavy Gengetone beat while Brian grips his seat in terror.",
+          "facialExpressions": "Brian wide-eyed terror, Kevin ecstatic joy.",
+          "soundEffects": [
+            "Booming bass subwoofer",
+            "Matatu exhaust roar",
+            "Conductor coin rattle"
+          ],
+          "backgroundMusic": "Heavy Kenyan Gengetone bassline",
+          "transition": "Flash Cut",
+          "aiPrompt": "African comic art style, inside vibrant Nairobi matatu nganya, neon purple and cyan LED lights glowing, 24yo Kenyan techie Brian clutching laptop with terrified expression, comedic friend Kevin grooving to music with big grin, motion lines, high octane comic animation",
+          "negativePrompt": "photorealistic, dim lighting, washed out, blurry, anatomical errors",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 15,
+          "createdAt": "2026-10-06T19:33:32.298Z",
+          "updatedAt": "2026-10-06T19:33:32.298Z"
+        }
+      ],
+      "progressPercent": 40,
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "seriesId": "series-nairobi-01",
+      "episodeNumber": 4,
+      "title": "A Young Kenyan Developer",
+      "logline": "In the heart of Nairobi, a high-stakes challenge tests Brian Otieno's wit and grit against unexpected comic urban hurdles.",
+      "synopsis": "An engaging 30-minute animated comic episode depicting the energetic clash of ambition, comedy, and street-smart survival in Nairobi, starring Brian Otieno, Kevin 'Kevo' Mwangi, Mary Wanjiku.",
+      "targetDurationMinutes": 30,
+      "actualDurationSeconds": 138,
+      "status": "storyboarded",
+      "charactersInvolved": [
+        "Brian Otieno",
+        "Kevin 'Kevo' Mwangi",
+        "Mary Wanjiku"
+      ],
+      "threeActStructure": {
+        "beginning": "Brian Otieno receives an unexpected ultimatum that sets the clock ticking.",
+        "conflict": "A chaotic urban obstacle threatens to derail the mission before it even starts.",
+        "escalation": "Battery failure, intense Nairobi traffic gridlock, and hilarious miscommunications compound the urgency.",
+        "climax": "A breathless downtown sprint brings Brian Otieno face to face with the final challenge.",
+        "resolution": "A charismatic breakthrough clinches victory through impromptu creativity.",
+        "endingHook": "A new twist arrives immediately after victory, setting up the next episode."
+      },
+      "chapters": [
+        {
+          "id": "ch-01",
+          "episodeId": "",
+          "chapterNumber": 1,
+          "title": "The Genesis & The Call",
+          "timecode": "00:00",
+          "startTimeSeconds": 0,
+          "endTimeSeconds": 360,
+          "summary": "The morning calm is shattered by an unexpected high-stakes dilemma."
+        },
+        {
+          "id": "ch-02",
+          "episodeId": "",
+          "chapterNumber": 2,
+          "title": "The Plan & The Transit Trap",
+          "timecode": "06:00",
+          "startTimeSeconds": 360,
+          "endTimeSeconds": 780,
+          "summary": "An audacious shortcut turns into an unforgettable obstacle course."
+        },
+        {
+          "id": "ch-03",
+          "episodeId": "",
+          "chapterNumber": 3,
+          "title": "Everything Goes Wrong",
+          "timecode": "13:00",
+          "startTimeSeconds": 780,
+          "endTimeSeconds": 1260,
+          "summary": "Dead batteries, mistaken identities, and escalating comedy."
+        },
+        {
+          "id": "ch-04",
+          "episodeId": "",
+          "chapterNumber": 4,
+          "title": "The Climax Confrontation",
+          "timecode": "21:00",
+          "startTimeSeconds": 1260,
+          "endTimeSeconds": 1560,
+          "summary": "The final sprint against the clock and face-to-face showdown."
+        },
+        {
+          "id": "ch-05",
+          "episodeId": "",
+          "chapterNumber": 5,
+          "title": "The Twist & Resolution",
+          "timecode": "26:00",
+          "startTimeSeconds": 1560,
+          "endTimeSeconds": 1800,
+          "summary": "A thrilling victory with a cliffhanger hook for the next episode."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "scene-auto-1",
+          "episodeId": "",
+          "sceneNumber": 1,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 12,
+          "location": "Buru Buru Apartment & Balcony",
+          "locationDetails": "Scene set at Buru Buru Apartment & Balcony",
+          "characters": [
+            "Brian Otieno"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-1",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Everything is set. Today is the day we change everything.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "narration": "When opportunity knocks in the city, seconds matter.",
+          "visualDescription": "Brian Otieno inspects their workspace, checking the notifications with focused determination.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno inspects their workspace, checking the notifications with focused determination.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Keyboard typing",
+            "Digital chime"
+          ],
+          "backgroundMusic": "Uplifting modern afro-fusion beat",
+          "transition": "Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Buru Buru Apartment & Balcony. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.. Action: Brian Otieno inspects their workspace, checking the notifications with focused determination.. Camera: Medium Shot, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 12,
+          "createdAt": "2026-10-06T19:34:59.207Z",
+          "updatedAt": "2026-10-06T19:34:59.207Z"
+        },
+        {
+          "id": "scene-auto-2",
+          "episodeId": "",
+          "sceneNumber": 2,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 15,
+          "location": "Buru Buru Apartment & Balcony",
+          "locationDetails": "Scene set at Buru Buru Apartment & Balcony",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-2",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Buda! Umeona ile notification? Hatuna time ya kupoteza!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Dynamic Zoom",
+          "action": "Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Door burst",
+            "Laughter"
+          ],
+          "backgroundMusic": "Fast-paced comedic rhythm",
+          "transition": "Comic Page Flip",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Buru Buru Apartment & Balcony. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.. Camera: Wide Shot, Dynamic Zoom. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 15,
+          "createdAt": "2026-10-06T19:34:59.207Z",
+          "updatedAt": "2026-10-06T19:34:59.207Z"
+        },
+        {
+          "id": "scene-auto-3",
+          "episodeId": "",
+          "sceneNumber": 3,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 10,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-3",
+              "characterId": "char-mary-03",
+              "characterName": "Mary Wanjiku",
+              "line": "They have thirty minutes to arrive. Let's see if their hustle matches their promise.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.",
+          "cameraAngle": "Medium Close-up",
+          "cameraMovement": "Static",
+          "action": "Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Clock ticking",
+            "Glass clink"
+          ],
+          "backgroundMusic": "Subtle corporate tension bassline",
+          "transition": "Comic Halftone Wipe",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.. Camera: Medium Close-up, Static. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 10,
+          "createdAt": "2026-10-06T19:34:59.207Z",
+          "updatedAt": "2026-10-06T19:34:59.207Z"
+        },
+        {
+          "id": "scene-auto-4",
+          "episodeId": "",
+          "sceneNumber": 4,
+          "actNumber": 2,
+          "chapterId": "ch-02",
+          "duration": 16,
+          "location": "Custom Nganya (Matatu 58)",
+          "locationDetails": "Scene set at Custom Nganya (Matatu 58)",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-4",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Tulia buda, huyu dereva anajua shortcuts za Nairobi kuliko Google Maps!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Handheld Shake",
+          "action": "Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Matatu horn",
+            "Heavy bass drop",
+            "Coins rattling"
+          ],
+          "backgroundMusic": "High energy Gengetone beat",
+          "transition": "Flash Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Custom Nganya (Matatu 58). Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.. Camera: Medium Shot, Handheld Shake. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 16,
+          "createdAt": "2026-10-06T19:34:59.208Z",
+          "updatedAt": "2026-10-06T19:34:59.208Z"
+        },
+        {
+          "id": "scene-auto-5",
+          "episodeId": "",
+          "sceneNumber": 5,
+          "actNumber": 2,
+          "chapterId": "ch-02",
+          "duration": 14,
+          "location": "Custom Nganya (Matatu 58)",
+          "locationDetails": "Scene set at Custom Nganya (Matatu 58)",
+          "characters": [
+            "Brian Otieno"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-5",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "No no no... 5%?! Kevo, where is the backup power bank?!",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.",
+          "cameraAngle": "Close-up",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Warning buzzer",
+            "Gasps"
+          ],
+          "backgroundMusic": "Rising suspense string swell",
+          "transition": "Crossfade",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Custom Nganya (Matatu 58). Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.. Action: Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.. Camera: Close-up, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 14,
+          "createdAt": "2026-10-06T19:34:59.208Z",
+          "updatedAt": "2026-10-06T19:34:59.208Z"
+        },
+        {
+          "id": "scene-auto-6",
+          "episodeId": "",
+          "sceneNumber": 6,
+          "actNumber": 2,
+          "chapterId": "ch-03",
+          "duration": 18,
+          "location": "Nairobi CBD & Kencom",
+          "locationDetails": "Scene set at Nairobi CBD & Kencom",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-6",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Jam imekwama kabisa. Kama tunataka kufika, lazima tuchape lap!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Tracking Shot",
+          "action": "Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Loud car horns",
+            "Street shouting"
+          ],
+          "backgroundMusic": "Urgent comedic brass run",
+          "transition": "Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Nairobi CBD & Kencom. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.. Camera: Wide Shot, Tracking Shot. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 18,
+          "createdAt": "2026-10-06T19:34:59.208Z",
+          "updatedAt": "2026-10-06T19:34:59.208Z"
+        },
+        {
+          "id": "scene-auto-7",
+          "episodeId": "",
+          "sceneNumber": 7,
+          "actNumber": 3,
+          "chapterId": "ch-04",
+          "duration": 20,
+          "location": "Nairobi CBD & Kencom",
+          "locationDetails": "Scene set at Nairobi CBD & Kencom",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-7",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Run, Brian, run! Usiangalie nyuma!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.",
+          "cameraAngle": "Low Angle",
+          "cameraMovement": "Tracking Shot",
+          "action": "Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Footsteps slamming",
+            "Cart rattle"
+          ],
+          "backgroundMusic": "Fast orchestral afro-percussion",
+          "transition": "Comic Page Flip",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Nairobi CBD & Kencom. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.. Camera: Low Angle, Tracking Shot. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 20,
+          "createdAt": "2026-10-06T19:34:59.208Z",
+          "updatedAt": "2026-10-06T19:34:59.208Z"
+        },
+        {
+          "id": "scene-auto-8",
+          "episodeId": "",
+          "sceneNumber": 8,
+          "actNumber": 3,
+          "chapterId": "ch-04",
+          "duration": 15,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Brian Otieno",
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-8",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "We are here. And the solution is right here in my hand.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Heavy breathing",
+            "Door open"
+          ],
+          "backgroundMusic": "Dramatic pause then victorious chords",
+          "transition": "Comic Halftone Wipe",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.. Camera: Medium Shot, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 15,
+          "createdAt": "2026-10-06T19:34:59.208Z",
+          "updatedAt": "2026-10-06T19:34:59.208Z"
+        },
+        {
+          "id": "scene-auto-9",
+          "episodeId": "",
+          "sceneNumber": 9,
+          "actNumber": 3,
+          "chapterId": "ch-05",
+          "duration": 18,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi",
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-9",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Impressive hustle. The contract is yours... but you launch in 48 hours.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Slow Pull-back",
+          "action": "Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Boardroom applause",
+            "Celebration chime"
+          ],
+          "backgroundMusic": "Triumphant energetic outro theme",
+          "transition": "Flash Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.; Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.. Camera: Wide Shot, Slow Pull-back. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 18,
+          "createdAt": "2026-10-06T19:34:59.208Z",
+          "updatedAt": "2026-10-06T19:34:59.208Z"
+        }
+      ],
+      "progressPercent": 0,
+      "id": "ep-1791315299209-j2rmv",
+      "createdAt": "2026-10-06T19:34:59.209Z",
+      "updatedAt": "2026-10-06T19:34:59.209Z"
+    },
+    {
+      "seriesId": "series-nairobi-01",
+      "episodeNumber": 5,
+      "title": "A Young Kenyan Developer",
+      "logline": "In the heart of Nairobi, a high-stakes challenge tests Brian Otieno's wit and grit against unexpected comic urban hurdles.",
+      "synopsis": "An engaging 30-minute animated comic episode depicting the energetic clash of ambition, comedy, and street-smart survival in Nairobi, starring Brian Otieno, Kevin 'Kevo' Mwangi, Mary Wanjiku.",
+      "targetDurationMinutes": 30,
+      "actualDurationSeconds": 138,
+      "status": "storyboarded",
+      "charactersInvolved": [
+        "Brian Otieno",
+        "Kevin 'Kevo' Mwangi",
+        "Mary Wanjiku"
+      ],
+      "threeActStructure": {
+        "beginning": "Brian Otieno receives an unexpected ultimatum that sets the clock ticking.",
+        "conflict": "A chaotic urban obstacle threatens to derail the mission before it even starts.",
+        "escalation": "Battery failure, intense Nairobi traffic gridlock, and hilarious miscommunications compound the urgency.",
+        "climax": "A breathless downtown sprint brings Brian Otieno face to face with the final challenge.",
+        "resolution": "A charismatic breakthrough clinches victory through impromptu creativity.",
+        "endingHook": "A new twist arrives immediately after victory, setting up the next episode."
+      },
+      "chapters": [
+        {
+          "id": "ch-01",
+          "episodeId": "",
+          "chapterNumber": 1,
+          "title": "The Genesis & The Call",
+          "timecode": "00:00",
+          "startTimeSeconds": 0,
+          "endTimeSeconds": 360,
+          "summary": "The morning calm is shattered by an unexpected high-stakes dilemma."
+        },
+        {
+          "id": "ch-02",
+          "episodeId": "",
+          "chapterNumber": 2,
+          "title": "The Plan & The Transit Trap",
+          "timecode": "06:00",
+          "startTimeSeconds": 360,
+          "endTimeSeconds": 780,
+          "summary": "An audacious shortcut turns into an unforgettable obstacle course."
+        },
+        {
+          "id": "ch-03",
+          "episodeId": "",
+          "chapterNumber": 3,
+          "title": "Everything Goes Wrong",
+          "timecode": "13:00",
+          "startTimeSeconds": 780,
+          "endTimeSeconds": 1260,
+          "summary": "Dead batteries, mistaken identities, and escalating comedy."
+        },
+        {
+          "id": "ch-04",
+          "episodeId": "",
+          "chapterNumber": 4,
+          "title": "The Climax Confrontation",
+          "timecode": "21:00",
+          "startTimeSeconds": 1260,
+          "endTimeSeconds": 1560,
+          "summary": "The final sprint against the clock and face-to-face showdown."
+        },
+        {
+          "id": "ch-05",
+          "episodeId": "",
+          "chapterNumber": 5,
+          "title": "The Twist & Resolution",
+          "timecode": "26:00",
+          "startTimeSeconds": 1560,
+          "endTimeSeconds": 1800,
+          "summary": "A thrilling victory with a cliffhanger hook for the next episode."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "scene-auto-1",
+          "episodeId": "",
+          "sceneNumber": 1,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 12,
+          "location": "Buru Buru Apartment & Balcony",
+          "locationDetails": "Scene set at Buru Buru Apartment & Balcony",
+          "characters": [
+            "Brian Otieno"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-1",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Everything is set. Today is the day we change everything.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "narration": "When opportunity knocks in the city, seconds matter.",
+          "visualDescription": "Brian Otieno inspects their workspace, checking the notifications with focused determination.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno inspects their workspace, checking the notifications with focused determination.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Keyboard typing",
+            "Digital chime"
+          ],
+          "backgroundMusic": "Uplifting modern afro-fusion beat",
+          "transition": "Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Buru Buru Apartment & Balcony. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.. Action: Brian Otieno inspects their workspace, checking the notifications with focused determination.. Camera: Medium Shot, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 12,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        },
+        {
+          "id": "scene-auto-2",
+          "episodeId": "",
+          "sceneNumber": 2,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 15,
+          "location": "Buru Buru Apartment & Balcony",
+          "locationDetails": "Scene set at Buru Buru Apartment & Balcony",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-2",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Buda! Umeona ile notification? Hatuna time ya kupoteza!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Dynamic Zoom",
+          "action": "Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Door burst",
+            "Laughter"
+          ],
+          "backgroundMusic": "Fast-paced comedic rhythm",
+          "transition": "Comic Page Flip",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Buru Buru Apartment & Balcony. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.. Camera: Wide Shot, Dynamic Zoom. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 15,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        },
+        {
+          "id": "scene-auto-3",
+          "episodeId": "",
+          "sceneNumber": 3,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 10,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-3",
+              "characterId": "char-mary-03",
+              "characterName": "Mary Wanjiku",
+              "line": "They have thirty minutes to arrive. Let's see if their hustle matches their promise.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.",
+          "cameraAngle": "Medium Close-up",
+          "cameraMovement": "Static",
+          "action": "Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Clock ticking",
+            "Glass clink"
+          ],
+          "backgroundMusic": "Subtle corporate tension bassline",
+          "transition": "Comic Halftone Wipe",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.. Camera: Medium Close-up, Static. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 10,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        },
+        {
+          "id": "scene-auto-4",
+          "episodeId": "",
+          "sceneNumber": 4,
+          "actNumber": 2,
+          "chapterId": "ch-02",
+          "duration": 16,
+          "location": "Custom Nganya (Matatu 58)",
+          "locationDetails": "Scene set at Custom Nganya (Matatu 58)",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-4",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Tulia buda, huyu dereva anajua shortcuts za Nairobi kuliko Google Maps!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Handheld Shake",
+          "action": "Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Matatu horn",
+            "Heavy bass drop",
+            "Coins rattling"
+          ],
+          "backgroundMusic": "High energy Gengetone beat",
+          "transition": "Flash Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Custom Nganya (Matatu 58). Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.. Camera: Medium Shot, Handheld Shake. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 16,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        },
+        {
+          "id": "scene-auto-5",
+          "episodeId": "",
+          "sceneNumber": 5,
+          "actNumber": 2,
+          "chapterId": "ch-02",
+          "duration": 14,
+          "location": "Custom Nganya (Matatu 58)",
+          "locationDetails": "Scene set at Custom Nganya (Matatu 58)",
+          "characters": [
+            "Brian Otieno"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-5",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "No no no... 5%?! Kevo, where is the backup power bank?!",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.",
+          "cameraAngle": "Close-up",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Warning buzzer",
+            "Gasps"
+          ],
+          "backgroundMusic": "Rising suspense string swell",
+          "transition": "Crossfade",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Custom Nganya (Matatu 58). Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.. Action: Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.. Camera: Close-up, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 14,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        },
+        {
+          "id": "scene-auto-6",
+          "episodeId": "",
+          "sceneNumber": 6,
+          "actNumber": 2,
+          "chapterId": "ch-03",
+          "duration": 18,
+          "location": "Nairobi CBD & Kencom",
+          "locationDetails": "Scene set at Nairobi CBD & Kencom",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-6",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Jam imekwama kabisa. Kama tunataka kufika, lazima tuchape lap!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Tracking Shot",
+          "action": "Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Loud car horns",
+            "Street shouting"
+          ],
+          "backgroundMusic": "Urgent comedic brass run",
+          "transition": "Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Nairobi CBD & Kencom. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.. Camera: Wide Shot, Tracking Shot. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 18,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        },
+        {
+          "id": "scene-auto-7",
+          "episodeId": "",
+          "sceneNumber": 7,
+          "actNumber": 3,
+          "chapterId": "ch-04",
+          "duration": 20,
+          "location": "Nairobi CBD & Kencom",
+          "locationDetails": "Scene set at Nairobi CBD & Kencom",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-7",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Run, Brian, run! Usiangalie nyuma!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.",
+          "cameraAngle": "Low Angle",
+          "cameraMovement": "Tracking Shot",
+          "action": "Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Footsteps slamming",
+            "Cart rattle"
+          ],
+          "backgroundMusic": "Fast orchestral afro-percussion",
+          "transition": "Comic Page Flip",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Nairobi CBD & Kencom. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.. Camera: Low Angle, Tracking Shot. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 20,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        },
+        {
+          "id": "scene-auto-8",
+          "episodeId": "",
+          "sceneNumber": 8,
+          "actNumber": 3,
+          "chapterId": "ch-04",
+          "duration": 15,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Brian Otieno",
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-8",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "We are here. And the solution is right here in my hand.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Heavy breathing",
+            "Door open"
+          ],
+          "backgroundMusic": "Dramatic pause then victorious chords",
+          "transition": "Comic Halftone Wipe",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.. Camera: Medium Shot, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 15,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        },
+        {
+          "id": "scene-auto-9",
+          "episodeId": "",
+          "sceneNumber": 9,
+          "actNumber": 3,
+          "chapterId": "ch-05",
+          "duration": 18,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi",
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-9",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Impressive hustle. The contract is yours... but you launch in 48 hours.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Slow Pull-back",
+          "action": "Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Boardroom applause",
+            "Celebration chime"
+          ],
+          "backgroundMusic": "Triumphant energetic outro theme",
+          "transition": "Flash Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.; Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.. Camera: Wide Shot, Slow Pull-back. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 18,
+          "createdAt": "2026-10-06T19:35:19.427Z",
+          "updatedAt": "2026-10-06T19:35:19.427Z"
+        }
+      ],
+      "progressPercent": 0,
+      "id": "ep-1791315319428-s0gyo",
+      "createdAt": "2026-10-06T19:35:19.428Z",
+      "updatedAt": "2026-10-06T19:35:19.428Z"
+    },
+    {
+      "seriesId": "series-nairobi-01",
+      "episodeNumber": 6,
+      "title": "A Young Kenyan Developer",
+      "logline": "In the heart of Nairobi, a high-stakes challenge tests Brian Otieno's wit and grit against unexpected comic urban hurdles.",
+      "synopsis": "An engaging 30-minute animated comic episode depicting the energetic clash of ambition, comedy, and street-smart survival in Nairobi, starring Brian Otieno, Kevin 'Kevo' Mwangi, Mary Wanjiku.",
+      "targetDurationMinutes": 30,
+      "actualDurationSeconds": 138,
+      "status": "storyboarded",
+      "charactersInvolved": [
+        "Brian Otieno",
+        "Kevin 'Kevo' Mwangi",
+        "Mary Wanjiku"
+      ],
+      "threeActStructure": {
+        "beginning": "Brian Otieno receives an unexpected ultimatum that sets the clock ticking.",
+        "conflict": "A chaotic urban obstacle threatens to derail the mission before it even starts.",
+        "escalation": "Battery failure, intense Nairobi traffic gridlock, and hilarious miscommunications compound the urgency.",
+        "climax": "A breathless downtown sprint brings Brian Otieno face to face with the final challenge.",
+        "resolution": "A charismatic breakthrough clinches victory through impromptu creativity.",
+        "endingHook": "A new twist arrives immediately after victory, setting up the next episode."
+      },
+      "chapters": [
+        {
+          "id": "ch-01",
+          "episodeId": "",
+          "chapterNumber": 1,
+          "title": "The Genesis & The Call",
+          "timecode": "00:00",
+          "startTimeSeconds": 0,
+          "endTimeSeconds": 360,
+          "summary": "The morning calm is shattered by an unexpected high-stakes dilemma."
+        },
+        {
+          "id": "ch-02",
+          "episodeId": "",
+          "chapterNumber": 2,
+          "title": "The Plan & The Transit Trap",
+          "timecode": "06:00",
+          "startTimeSeconds": 360,
+          "endTimeSeconds": 780,
+          "summary": "An audacious shortcut turns into an unforgettable obstacle course."
+        },
+        {
+          "id": "ch-03",
+          "episodeId": "",
+          "chapterNumber": 3,
+          "title": "Everything Goes Wrong",
+          "timecode": "13:00",
+          "startTimeSeconds": 780,
+          "endTimeSeconds": 1260,
+          "summary": "Dead batteries, mistaken identities, and escalating comedy."
+        },
+        {
+          "id": "ch-04",
+          "episodeId": "",
+          "chapterNumber": 4,
+          "title": "The Climax Confrontation",
+          "timecode": "21:00",
+          "startTimeSeconds": 1260,
+          "endTimeSeconds": 1560,
+          "summary": "The final sprint against the clock and face-to-face showdown."
+        },
+        {
+          "id": "ch-05",
+          "episodeId": "",
+          "chapterNumber": 5,
+          "title": "The Twist & Resolution",
+          "timecode": "26:00",
+          "startTimeSeconds": 1560,
+          "endTimeSeconds": 1800,
+          "summary": "A thrilling victory with a cliffhanger hook for the next episode."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "scene-auto-1",
+          "episodeId": "",
+          "sceneNumber": 1,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 12,
+          "location": "Buru Buru Apartment & Balcony",
+          "locationDetails": "Scene set at Buru Buru Apartment & Balcony",
+          "characters": [
+            "Brian Otieno"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-1",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Everything is set. Today is the day we change everything.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "narration": "When opportunity knocks in the city, seconds matter.",
+          "visualDescription": "Brian Otieno inspects their workspace, checking the notifications with focused determination.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno inspects their workspace, checking the notifications with focused determination.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Keyboard typing",
+            "Digital chime"
+          ],
+          "backgroundMusic": "Uplifting modern afro-fusion beat",
+          "transition": "Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Buru Buru Apartment & Balcony. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.. Action: Brian Otieno inspects their workspace, checking the notifications with focused determination.. Camera: Medium Shot, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 12,
+          "createdAt": "2026-10-06T19:36:21.135Z",
+          "updatedAt": "2026-10-06T19:36:21.135Z"
+        },
+        {
+          "id": "scene-auto-2",
+          "episodeId": "",
+          "sceneNumber": 2,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 15,
+          "location": "Buru Buru Apartment & Balcony",
+          "locationDetails": "Scene set at Buru Buru Apartment & Balcony",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-2",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Buda! Umeona ile notification? Hatuna time ya kupoteza!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Dynamic Zoom",
+          "action": "Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Door burst",
+            "Laughter"
+          ],
+          "backgroundMusic": "Fast-paced comedic rhythm",
+          "transition": "Comic Page Flip",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Buru Buru Apartment & Balcony. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Kevin 'Kevo' Mwangi bursts through the door brandishing a breakfast snack and shouting excitedly.. Camera: Wide Shot, Dynamic Zoom. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 15,
+          "createdAt": "2026-10-06T19:36:21.135Z",
+          "updatedAt": "2026-10-06T19:36:21.135Z"
+        },
+        {
+          "id": "scene-auto-3",
+          "episodeId": "",
+          "sceneNumber": 3,
+          "actNumber": 1,
+          "chapterId": "ch-01",
+          "duration": 10,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-3",
+              "characterId": "char-mary-03",
+              "characterName": "Mary Wanjiku",
+              "line": "They have thirty minutes to arrive. Let's see if their hustle matches their promise.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.",
+          "cameraAngle": "Medium Close-up",
+          "cameraMovement": "Static",
+          "action": "Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Clock ticking",
+            "Glass clink"
+          ],
+          "backgroundMusic": "Subtle corporate tension bassline",
+          "transition": "Comic Halftone Wipe",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Mary Wanjiku looks at a digital schedule in the conference room, tapping fingers impatiently.. Camera: Medium Close-up, Static. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 10,
+          "createdAt": "2026-10-06T19:36:21.135Z",
+          "updatedAt": "2026-10-06T19:36:21.135Z"
+        },
+        {
+          "id": "scene-auto-4",
+          "episodeId": "",
+          "sceneNumber": 4,
+          "actNumber": 2,
+          "chapterId": "ch-02",
+          "duration": 16,
+          "location": "Custom Nganya (Matatu 58)",
+          "locationDetails": "Scene set at Custom Nganya (Matatu 58)",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-4",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Tulia buda, huyu dereva anajua shortcuts za Nairobi kuliko Google Maps!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Handheld Shake",
+          "action": "Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Matatu horn",
+            "Heavy bass drop",
+            "Coins rattling"
+          ],
+          "backgroundMusic": "High energy Gengetone beat",
+          "transition": "Flash Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Custom Nganya (Matatu 58). Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Both characters scramble aboard the vibrant matatu as heavy bass notes vibrate the windows.. Camera: Medium Shot, Handheld Shake. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 16,
+          "createdAt": "2026-10-06T19:36:21.135Z",
+          "updatedAt": "2026-10-06T19:36:21.135Z"
+        },
+        {
+          "id": "scene-auto-5",
+          "episodeId": "",
+          "sceneNumber": 5,
+          "actNumber": 2,
+          "chapterId": "ch-02",
+          "duration": 14,
+          "location": "Custom Nganya (Matatu 58)",
+          "locationDetails": "Scene set at Custom Nganya (Matatu 58)",
+          "characters": [
+            "Brian Otieno"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-5",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "No no no... 5%?! Kevo, where is the backup power bank?!",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.",
+          "cameraAngle": "Close-up",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Warning buzzer",
+            "Gasps"
+          ],
+          "backgroundMusic": "Rising suspense string swell",
+          "transition": "Crossfade",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Custom Nganya (Matatu 58). Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.. Action: Brian Otieno gasps as the red battery indicator flashes at 5% on their screen.. Camera: Close-up, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 14,
+          "createdAt": "2026-10-06T19:36:21.135Z",
+          "updatedAt": "2026-10-06T19:36:21.135Z"
+        },
+        {
+          "id": "scene-auto-6",
+          "episodeId": "",
+          "sceneNumber": 6,
+          "actNumber": 2,
+          "chapterId": "ch-03",
+          "duration": 18,
+          "location": "Nairobi CBD & Kencom",
+          "locationDetails": "Scene set at Nairobi CBD & Kencom",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-6",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Jam imekwama kabisa. Kama tunataka kufika, lazima tuchape lap!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Tracking Shot",
+          "action": "Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Loud car horns",
+            "Street shouting"
+          ],
+          "backgroundMusic": "Urgent comedic brass run",
+          "transition": "Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Nairobi CBD & Kencom. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Traffic comes to a dead halt along the roundabout; the driver shrugs unapologetically.. Camera: Wide Shot, Tracking Shot. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 18,
+          "createdAt": "2026-10-06T19:36:21.136Z",
+          "updatedAt": "2026-10-06T19:36:21.136Z"
+        },
+        {
+          "id": "scene-auto-7",
+          "episodeId": "",
+          "sceneNumber": 7,
+          "actNumber": 3,
+          "chapterId": "ch-04",
+          "duration": 20,
+          "location": "Nairobi CBD & Kencom",
+          "locationDetails": "Scene set at Nairobi CBD & Kencom",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-7",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Run, Brian, run! Usiangalie nyuma!",
+              "language": "sheng",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.",
+          "cameraAngle": "Low Angle",
+          "cameraMovement": "Tracking Shot",
+          "action": "Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Footsteps slamming",
+            "Cart rattle"
+          ],
+          "backgroundMusic": "Fast orchestral afro-percussion",
+          "transition": "Comic Page Flip",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Nairobi CBD & Kencom. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.. Action: Both characters sprint down the avenue dodging street carts and fruit displays in frantic comic fashion.. Camera: Low Angle, Tracking Shot. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 20,
+          "createdAt": "2026-10-06T19:36:21.136Z",
+          "updatedAt": "2026-10-06T19:36:21.136Z"
+        },
+        {
+          "id": "scene-auto-8",
+          "episodeId": "",
+          "sceneNumber": 8,
+          "actNumber": 3,
+          "chapterId": "ch-04",
+          "duration": 15,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Brian Otieno",
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-8",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "We are here. And the solution is right here in my hand.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.",
+          "cameraAngle": "Medium Shot",
+          "cameraMovement": "Slow Push-in",
+          "action": "Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.",
+          "facialExpressions": "Comedic shock and surprise",
+          "soundEffects": [
+            "Heavy breathing",
+            "Door open"
+          ],
+          "backgroundMusic": "Dramatic pause then victorious chords",
+          "transition": "Comic Halftone Wipe",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Brian Otieno bursts through the boardroom doors panting, hair slightly wild, holding up the prototype.. Camera: Medium Shot, Slow Push-in. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 15,
+          "createdAt": "2026-10-06T19:36:21.136Z",
+          "updatedAt": "2026-10-06T19:36:21.136Z"
+        },
+        {
+          "id": "scene-auto-9",
+          "episodeId": "",
+          "sceneNumber": 9,
+          "actNumber": 3,
+          "chapterId": "ch-05",
+          "duration": 18,
+          "location": "Kilimani Tech Hub & Co-working",
+          "locationDetails": "Scene set at Kilimani Tech Hub & Co-working",
+          "characters": [
+            "Brian Otieno",
+            "Kevin 'Kevo' Mwangi",
+            "Mary Wanjiku"
+          ],
+          "dialogue": [
+            {
+              "id": "diag-9",
+              "characterId": "char-brian-01",
+              "characterName": "Brian Otieno",
+              "line": "Impressive hustle. The contract is yours... but you launch in 48 hours.",
+              "language": "en",
+              "emotion": "expressive"
+            }
+          ],
+          "visualDescription": "Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.",
+          "cameraAngle": "Wide Shot",
+          "cameraMovement": "Slow Pull-back",
+          "action": "Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.",
+          "facialExpressions": "Excited and intense",
+          "soundEffects": [
+            "Boardroom applause",
+            "Celebration chime"
+          ],
+          "backgroundMusic": "Triumphant energetic outro theme",
+          "transition": "Flash Cut",
+          "aiPrompt": "African Comic art style, cel-shaded clean comic book lineart, rich dynamic saturation, 4k keyframe. Location: Kilimani Tech Hub & Co-working. Characters: Brian Otieno: Lean athletic build, short clean fade haircut, warm brown skin tone, expressive warm eyes., wearing Signature dark green safari tech jacket with front zip, fitted black tee, dark denim jeans, white sneakers.; Kevin 'Kevo' Mwangi: Stocky build, dreadlock bun fade, big radiant smile, animated hand gestures., wearing Bold oversized graphic hoodie with Nairobi graffiti print, baggy cargo pants, chunky sneakers.; Mary Wanjiku: Elegant poise, braided crown cornrows, stylish spectacles, confident demeanor., wearing Tailored modern African blazer with kitenge pattern lapels, cream silk blouse, gold hoop earrings.. Action: Mary Wanjiku applauds with an impressed smile while Kevin 'Kevo' Mwangi winks triumphantly in the background.. Camera: Wide Shot, Slow Pull-back. Highly expressive animated comic episode keyframe.",
+          "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, western superhero anatomy, washed out, low resolution, multiple heads, deformed hands",
+          "status": "pending",
+          "retryCount": 0,
+          "costEstimate": 18,
+          "createdAt": "2026-10-06T19:36:21.136Z",
+          "updatedAt": "2026-10-06T19:36:21.136Z"
+        }
+      ],
+      "progressPercent": 0,
+      "id": "ep-1791315381136-ib6ab",
+      "createdAt": "2026-10-06T19:36:21.136Z",
+      "updatedAt": "2026-10-06T19:36:21.136Z"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene-01",
+      "episodeId": "ep-01-the-pitch",
+      "sceneNumber": 1,
+      "actNumber": 1,
+      "chapterId": "ch-01",
+      "duration": 12,
+      "location": "Buru Buru Apartment",
+      "locationDetails": "Morning light streaming into apartment. Code on dual monitors.",
+      "characters": [
+        "Brian Otieno"
+      ],
+      "dialogue": [
+        {
+          "id": "d-01",
+          "characterId": "char-brian-01",
+          "characterName": "Brian Otieno",
+          "line": "Just one more function and the sync is complete... Come on, compile!",
+          "language": "en",
+          "emotion": "intense focus"
+        }
+      ],
+      "narration": "Monday morning in Nairobi. The hustle begins before sunrise.",
+      "visualDescription": "Close-up of Brian's intense eyes reflecting green code lines, pulling back to show him hunched over his mechanical keyboard.",
+      "cameraAngle": "Medium Close-up",
+      "cameraMovement": "Slow Pull-back",
+      "action": "Brian taps enter aggressively, then leans back as green success messages scroll on screen.",
+      "facialExpressions": "Brian breathes a sigh of relief with a triumphant grin.",
+      "soundEffects": [
+        "Keyboard mechanical clacking",
+        "Success chime sound"
+      ],
+      "backgroundMusic": "Lo-fi afrobeat with subtle rhythmic bass",
+      "transition": "Cut",
+      "aiPrompt": "African comic art style, 24-year-old Kenyan developer Brian, tapered fade hairstyle, dark green safari zip jacket, seated in Buruburu apartment in front of dual monitors with coding IDE, warm sunrise light, clean bold outlines, vibrant colors, cinematic framing",
+      "negativePrompt": "photorealistic, 3d render, blurry, distorted anatomy, messy linework",
+      "status": "completed",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop",
+      "retryCount": 0,
+      "costEstimate": 12,
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "scene-02",
+      "episodeId": "ep-01-the-pitch",
+      "sceneNumber": 2,
+      "actNumber": 1,
+      "chapterId": "ch-01",
+      "duration": 14,
+      "location": "Buru Buru Apartment",
+      "characters": [
+        "Brian Otieno",
+        "Kevin 'Kevo' Mwangi"
+      ],
+      "dialogue": [
+        {
+          "id": "d-02",
+          "characterId": "char-kevin-02",
+          "characterName": "Kevin 'Kevo' Mwangi",
+          "line": "Buda! Simu yako inapiga kengele kama ambulansi ya Kenyatta!",
+          "language": "sheng",
+          "emotion": "loud and comedic"
+        },
+        {
+          "id": "d-03",
+          "characterId": "char-brian-01",
+          "characterName": "Brian Otieno",
+          "line": "Wait... it's Mary! Hello, Mary?",
+          "language": "en",
+          "emotion": "surprised"
+        }
+      ],
+      "visualDescription": "Kevin kicks open kitchen door holding a spatula, pointing at Brian's vibrating smartphone.",
+      "cameraAngle": "Medium Shot",
+      "cameraMovement": "Dynamic Zoom",
+      "action": "Kevin strikes an exaggerated martial arts pose with his cooking spatula.",
+      "facialExpressions": "Kevin laughing loudly, Brian frantically reaching for the phone.",
+      "soundEffects": [
+        "Door creak",
+        "High-tempo phone ringtone"
+      ],
+      "backgroundMusic": "Upbeat comedic afro-pop rhythm",
+      "transition": "Comic Halftone Wipe",
+      "aiPrompt": "African comic art style, interior Nairobi apartment, Kenyan comedic friend Kevin in oversized graphic hoodie holding cooking spatula, laughing dramatically, Brian reaching across desk for glowing phone, dynamic comic panel composition, bold black ink outlines",
+      "negativePrompt": "photorealistic, extra limbs, low resolution, blurred faces",
+      "status": "completed",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-young-man-answering-a-phone-call-in-an-office-42998-large.mp4",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop",
+      "retryCount": 0,
+      "costEstimate": 14,
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "scene-03",
+      "episodeId": "ep-01-the-pitch",
+      "sceneNumber": 3,
+      "actNumber": 1,
+      "chapterId": "ch-01",
+      "duration": 10,
+      "location": "Kilimani Tech Hub",
+      "characters": [
+        "Mary Wanjiku"
+      ],
+      "dialogue": [
+        {
+          "id": "d-04",
+          "characterId": "char-mary-03",
+          "characterName": "Mary Wanjiku",
+          "line": "Brian, the Silicon Savannah partners arrived early. Be in Kilimani by 2 PM sharp, or we forfeit the term sheet.",
+          "language": "en",
+          "emotion": "firm and urgent"
+        }
+      ],
+      "visualDescription": "Mary standing by executive floor-to-ceiling glass in Kilimani with phone to ear, holding an iPad.",
+      "cameraAngle": "Medium Shot",
+      "cameraMovement": "Slow Push-in",
+      "action": "Mary checks her elegant watch while looking out at Nairobi skyline.",
+      "facialExpressions": "Sharp, confident, raised eyebrow.",
+      "soundEffects": [
+        "Subtle office chatter",
+        "Phone click"
+      ],
+      "backgroundMusic": "Tense corporate bass groove",
+      "transition": "Cut",
+      "aiPrompt": "African comic art style, elegant Kenyan fintech businesswoman Mary, braided crown hairstyle, stylish spectacles, kitenge lapel blazer, holding modern tablet in glass executive office overlooking Nairobi skyline, crisp comic book cel-shading, rich colors",
+      "negativePrompt": "photorealistic, 3d CGI, western comic distortion, messy background",
+      "status": "completed",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-businesswoman-talking-on-the-phone-in-an-office-42996-large.mp4",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500&auto=format&fit=crop",
+      "retryCount": 0,
+      "costEstimate": 10,
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "scene-04",
+      "episodeId": "ep-01-the-pitch",
+      "sceneNumber": 4,
+      "actNumber": 2,
+      "chapterId": "ch-02",
+      "duration": 15,
+      "location": "Custom Nganya (Matatu 58)",
+      "characters": [
+        "Brian Otieno",
+        "Kevin 'Kevo' Mwangi"
+      ],
+      "dialogue": [
+        {
+          "id": "d-05",
+          "characterId": "char-brian-01",
+          "characterName": "Brian Otieno",
+          "line": "Kevo, why did we board this specific nganya?! The bass is shaking my laptop screen!",
+          "language": "en",
+          "emotion": "panicked"
+        },
+        {
+          "id": "d-06",
+          "characterId": "char-kevin-02",
+          "characterName": "Kevin 'Kevo' Mwangi",
+          "line": "Tulia buda! Huyu dereva ni fundi. Nairobi traffic haina nguvu mbele ya Nganya 58!",
+          "language": "sheng",
+          "emotion": "boastful and excited"
+        }
+      ],
+      "visualDescription": "Inside the matatu bathed in pulsing violet neon light, bass speakers vibrating, Brian clinging onto his laptop backpack.",
+      "cameraAngle": "Medium Shot",
+      "cameraMovement": "Handheld Shake",
+      "action": "Matatu swerves slightly as Kevin bobs his head to the heavy Gengetone beat while Brian grips his seat in terror.",
+      "facialExpressions": "Brian wide-eyed terror, Kevin ecstatic joy.",
+      "soundEffects": [
+        "Booming bass subwoofer",
+        "Matatu exhaust roar",
+        "Conductor coin rattle"
+      ],
+      "backgroundMusic": "Heavy Kenyan Gengetone bassline",
+      "transition": "Flash Cut",
+      "aiPrompt": "African comic art style, inside vibrant Nairobi matatu nganya, neon purple and cyan LED lights glowing, 24yo Kenyan techie Brian clutching laptop with terrified expression, comedic friend Kevin grooving to music with big grin, motion lines, high octane comic animation",
+      "negativePrompt": "photorealistic, dim lighting, washed out, blurry, anatomical errors",
+      "status": "pending",
+      "retryCount": 0,
+      "costEstimate": 15,
+      "createdAt": "2026-10-06T19:33:32.298Z",
+      "updatedAt": "2026-10-06T19:33:32.298Z"
+    }
+  ],
+  "socialClips": [
+    {
+      "id": "clip-01-matatu-panic",
+      "episodeId": "ep-01-the-pitch",
+      "title": "When you have a 2 PM pitch and board a Kenyan Nganya 💀😭",
+      "hook": "POV: You have 15 minutes to pitch to investors...",
+      "mainMoment": "Brian realizing the matatu driver is turning the opposite direction towards Gikomba.",
+      "endingCta": "Watch full Episode 01 'The Big Pitch' on link in bio! #ComiksX",
+      "startTimeSeconds": 310,
+      "endTimeSeconds": 345,
+      "durationSeconds": 35,
+      "aspectRatio": "9:16",
+      "platform": "all",
+      "captions": [
+        {
+          "start": 0,
+          "end": 3,
+          "text": "POV: You have 15 mins to pitch investors...",
+          "emphasisWords": [
+            "POV",
+            "pitch"
+          ]
+        },
+        {
+          "start": 3,
+          "end": 8,
+          "text": "And your boy picked the loudest matatu in Eastlands! 🔊",
+          "emphasisWords": [
+            "loudest",
+            "Eastlands"
+          ]
+        },
+        {
+          "start": 8,
+          "end": 14,
+          "text": "Dereva: 'Leo hatupiti highway, tunapitia short-cut!' 😭",
+          "emphasisWords": [
+            "Dereva",
+            "short-cut"
+          ]
+        },
+        {
+          "start": 14,
+          "end": 20,
+          "text": "Battery: 4%. Traffic: Gridlocked. Blood pressure: 200.",
+          "emphasisWords": [
+            "4%",
+            "Gridlocked"
+          ]
+        },
+        {
+          "start": 20,
+          "end": 35,
+          "text": "Follow @ComiksX for Episode 2! 🔥🇰🇪",
+          "emphasisWords": [
+            "Follow"
+          ]
+        }
+      ],
+      "description": "Nairobi tech developers will feel this pain in their souls! 😂 Episode 1 of Life in Nairobi is OUT NOW. Drop your craziest matatu delay in the comments! 👇",
+      "hashtags": [
+        "#NairobiComics",
+        "#KenyanAnimation",
+        "#LifeInNairobi",
+        "#NairobiTech",
+        "#TikTokKenya",
+        "#MatatuCulture",
+        "#AfricanAnimation",
+        "#ComiksX"
+      ],
+      "safeZoneCompliance": true,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&auto=format&fit=crop",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-young-man-answering-a-phone-call-in-an-office-42998-large.mp4",
+      "createdAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "clip-02-battery-panic",
+      "episodeId": "ep-01-the-pitch",
+      "title": "4% Battery vs Multi-Million Shilling Pitch 🔥",
+      "hook": "That moment your charger is still at home in Buru Buru...",
+      "mainMoment": "The red battery notification popping up on Brian's MacBook screen.",
+      "endingCta": "Part 2 dropping this Friday! Hit follow!",
+      "startTimeSeconds": 840,
+      "endTimeSeconds": 885,
+      "durationSeconds": 45,
+      "aspectRatio": "9:16",
+      "platform": "tiktok",
+      "captions": [
+        {
+          "start": 0,
+          "end": 4,
+          "text": "That cold sweat when battery hits 4%... 🔋⚠️",
+          "emphasisWords": [
+            "cold sweat",
+            "4%"
+          ]
+        },
+        {
+          "start": 4,
+          "end": 10,
+          "text": "Mary on phone: 'Where are you?! The partners are seated!'",
+          "emphasisWords": [
+            "Where are you"
+          ]
+        },
+        {
+          "start": 10,
+          "end": 18,
+          "text": "Kevo: 'Buda, chukua powerbank yangu ya 200bob!' 💀",
+          "emphasisWords": [
+            "powerbank"
+          ]
+        },
+        {
+          "start": 18,
+          "end": 30,
+          "text": "The powerbank: 0% also. We are cooked.",
+          "emphasisWords": [
+            "cooked"
+          ]
+        },
+        {
+          "start": 30,
+          "end": 45,
+          "text": "Tap + for the conclusion! #LifeInNairobi",
+          "emphasisWords": [
+            "Tap +"
+          ]
+        }
+      ],
+      "description": "When the startup gods decide to test your faith on pitch day! 😭 Stream the complete 30-minute animated comic episode now.",
+      "hashtags": [
+        "#AfricanComics",
+        "#KenyanHumor",
+        "#NairobiCreatives",
+        "#AnimeKenya",
+        "#TechHustle",
+        "#ShengVibes"
+      ],
+      "safeZoneCompliance": true,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
+      "createdAt": "2026-10-06T19:33:32.298Z"
+    }
+  ],
+  "thumbnails": [
+    {
+      "id": "thumb-01",
+      "episodeId": "ep-01-the-pitch",
+      "title": "Reaction Shock: 4% Battery & Matatu Drift",
+      "conceptPrompt": "High visual contrast comic book cover, African comic style, Brian wide-eyed in horror with hands on face, neon purple matatu headlights glaring in background, bold typography 'THE BIG PITCH', glowing comic speech bubble, dynamic saturated colors",
+      "focalCharacterName": "Brian Otieno",
+      "facialExpression": "Exaggerated anime/comic shock with sweat drops",
+      "composition": "Dynamic Dutch angle close-up with neon motion trail",
+      "contrastStyle": "High contrast neon cyan and amber yellow",
+      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop",
+      "isSelected": true,
+      "createdAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "thumb-02",
+      "episodeId": "ep-01-the-pitch",
+      "title": "Duo Sprint: Downtown Nairobi Showdown",
+      "conceptPrompt": "Split-screen comic cover, left side Mary stern in luxury glass office checking watch, right side Brian and Kevin sprinting past street market in panic, bold comic ink lines, title text 'CAN THEY MAKE IT IN TIME?'",
+      "focalCharacterName": "Brian & Kevin",
+      "facialExpression": "Determined sweat-drenched sprint",
+      "composition": "Dynamic diagonal split screen",
+      "contrastStyle": "Golden hour orange and deep navy comic ink",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop",
+      "isSelected": false,
+      "createdAt": "2026-10-06T19:33:32.298Z"
+    }
+  ],
+  "generationJobs": [],
+  "usageRecords": [],
+  "settings": {
+    "activeProvider": "luma",
+    "lumaApiKey": "",
+    "runwayApiKey": "",
+    "klingApiKey": "",
+    "falApiKey": "",
+    "openaiApiKey": "",
+    "elevenlabsApiKey": "",
+    "geminiApiKey": "",
+    "enableImageToVideo": true,
+    "defaultSceneDuration": 12,
+    "maxRetries": 3,
+    "dailyBudgetLimitUsd": 50
+  }
+}
