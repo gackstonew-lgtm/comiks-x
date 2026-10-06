@@ -7,6 +7,15 @@ import { queueManager } from "../src/lib/queue";
 import { SocialClipExtractor } from "../src/lib/clips";
 import { EpisodeExportBuilder } from "../src/lib/export";
 import { CostManager } from "../src/lib/cost";
+import { CharacterOperatingSystem } from "../src/lib/character-os";
+import { worldBuilder, localizationEngine } from "../src/lib/world";
+import { aiDirector, motionLibrary } from "../src/lib/director";
+import { continuityEngine } from "../src/lib/continuity";
+import { providerRouter, generationCache } from "../src/lib/router";
+import { qualityGate, assetVersionControl } from "../src/lib/quality";
+import { audioDubbingStudio } from "../src/lib/audio-studio";
+import { retentionEngine, derivativesGenerator } from "../src/lib/social-director";
+import { creatorPlatform } from "../src/lib/creator-platform";
 
 async function runStudioTests() {
   console.log("==================================================");
@@ -137,6 +146,160 @@ async function runStudioTests() {
 
   const assemblyManifest = EpisodeExportBuilder.buildAssemblyManifest(newEpisode, "1080p");
   assert(assemblyManifest.resolution === "1080p", "Assembly manifest configured for 1080p resolution");
+
+  // TEST 10: Character Operating System & 5D DNA Synthesis
+  console.log("\n--- 10. Testing Character Operating System (5D DNA) ---");
+  const charOS = CharacterOperatingSystem.getInstance();
+  const fullyFormedBrian = charOS.ensureCharacterDNA(brian);
+  assert(Boolean(fullyFormedBrian.dna?.identity?.nationality), `Identity DNA synthesized: ${fullyFormedBrian.dna?.identity?.nationality}`);
+  assert(Boolean(fullyFormedBrian.dna?.visual?.distinctiveFeatures), "Visual DNA preserved distinctive facial & wardrobe anchors");
+  assert(fullyFormedBrian.dna?.personality?.values.length! > 0, `Personality DNA values count: ${fullyFormedBrian.dna?.personality?.values.length}`);
+  assert(fullyFormedBrian.dna?.performance?.energyLevel! > 5, `Performance DNA energy level: ${fullyFormedBrian.dna?.performance?.energyLevel}/10`);
+  assert(Boolean(fullyFormedBrian.dna?.voice?.slang.includes("Buda")), "Voice DNA lexicon includes authentic Sheng anchor 'Buda'");
+
+  // Reference pack
+  const refPack = charOS.getCharacterReferences(brian.id);
+  assert(refPack.length >= 2, `Reference pack contains ${refPack.length} multi-angle reference items`);
+
+  // Memory DNA
+  const memoryItem = charOS.addMemory(brian.id, {
+    description: "Successfully delivered high-stakes demo despite matatu breakdown.",
+    type: "event",
+    significance: "pivotal",
+  });
+  assert(memoryItem.significance === "pivotal", "Episodic memory recorded in Character DNA");
+
+  // Lock override with audit
+  const override = charOS.requestLockOverride({
+    level: "character",
+    entityId: brian.id,
+    attribute: "clothing",
+    overrideValue: "Mud-splattered safari jacket after rainfall",
+    justification: "Nairobi afternoon flash flood sequence in Scene 6",
+    approvedBy: "Lead Animator",
+  });
+  assert(override.isApproved === true, "Hierarchical lock override audited and approved");
+
+  // TEST 11: World Builder & Cultural Localization Engine
+  console.log("\n--- 11. Testing World Builder & Cultural Localization Engine ---");
+  const nairobiWorld = worldBuilder.getOrCreateDefaultWorld(nairobiSeries.id);
+  assert(nairobiWorld.environmentalRules.length >= 3, `World environmental rules defined: ${nairobiWorld.environmentalRules.length}`);
+  assert(Boolean(nairobiWorld.lightingRules), `Atmospheric lighting rules defined: "${nairobiWorld.lightingRules}"`);
+
+  const shengGlossary = localizationEngine.getGlossary();
+  assert(shengGlossary.length >= 6, `Cultural glossary loaded: ${shengGlossary.length} authentic terms`);
+  const analysis = localizationEngine.analyzeAndEnhanceDialogue("Buda ile ngori ya Kencom ilikuwa noma!", "Brian");
+  assert(analysis.detectedSlang.length >= 2, `Code-switching analyzer detected: ${analysis.detectedSlang.join(", ")}`);
+
+  // TEST 12: AI Director & Technical Shot Planner
+  console.log("\n--- 12. Testing AI Director & Technical Shot Planner ---");
+  const plannedShots = aiDirector.planSceneShots(firstScene, nairobiSeries, characters);
+  assert(plannedShots.length >= 2, `Decomposed scene into ${plannedShots.length} technical generation shots (4–20s)`);
+  assert(Boolean(plannedShots[0].lens), `Shot 1 camera lens: ${plannedShots[0].lens}`);
+  assert(Boolean(plannedShots[0].motionPresetId || plannedShots[0].cameraMovement), `Shot 1 camera motion: ${plannedShots[0].motionPresetId || plannedShots[0].cameraMovement}`);
+
+  const presets = motionLibrary.getPresets();
+  assert(presets.length >= 6, `Motion preset library loaded ${presets.length} camera and character presets`);
+
+  // TEST 13: Continuity Engine Diagnostics
+  console.log("\n--- 13. Testing Continuity Engine Diagnostics ---");
+  const continuityReport = continuityEngine.verifyEpisodeContinuity(
+    newEpisode.id,
+    newEpisode.scenes,
+    characters,
+    nairobiSeries
+  );
+  assert(Array.isArray(continuityReport.warnings), `Continuity scan evaluated all ${newEpisode.scenes.length} scenes`);
+  assert(continuityReport.passed === true, "Continuity validation passed: 0 critical visual/narrative breaches");
+
+  // TEST 14: Modular Video Provider Router & SHA-256 Cache
+  console.log("\n--- 14. Testing Provider Router & SHA-256 Fingerprint Cache ---");
+  const capabilities = providerRouter.getCapabilities();
+  assert(capabilities.length >= 5, `Provider router capabilities registry has ${capabilities.length} active models`);
+
+  // Fingerprint computation & caching test
+  const testReq = {
+    sceneId: firstScene.id,
+    prompt: "Brian Otieno walking through Kencom bus station in Nairobi",
+    durationSeconds: 10,
+    aspectRatio: "16:9" as const,
+    stylePreset: "African Comic",
+  };
+  const contentHash = generationCache.computeFingerprint(testReq, "luma", "default");
+  assert(contentHash.length === 64, `Computed cryptographic SHA-256 fingerprint: ${contentHash.substring(0, 16)}...`);
+
+  generationCache.store({
+    contentHash,
+    outputUrl: "https://cdn.example.com/cached-scene-kencom.mp4",
+    prompt: testReq.prompt,
+    provider: "luma",
+    model: "default",
+    duration: 10,
+    createdAt: new Date().toISOString(),
+  });
+
+  const cacheLookup = generationCache.lookup(contentHash);
+  assert(Boolean(cacheLookup && cacheLookup.outputUrl), "SHA-256 generation cache successfully recorded and retrieved artifact");
+
+  // Router cache hit test
+  const routerCachedHit = await providerRouter.routeAndGenerate(testReq, "luma");
+  assert(routerCachedHit.cached === true, `Router dispatched cached asset instantaneously without re-generating (hash: ${routerCachedHit.contentHash.substring(0, 12)})`);
+
+  // TEST 15: Quality Gate & Asset Version Control
+  console.log("\n--- 15. Testing Multi-Factor Quality Gate & Version Control ---");
+  const qualityScore = qualityGate.evaluateSceneQuality(firstScene, characters, true, true);
+  assert(qualityScore.overall >= 80, `Quality gate score: ${qualityScore.overall}/100 [A Grade]`);
+  assert(qualityScore.visualScore >= 80, `Visual coherence score: ${qualityScore.visualScore}/100`);
+
+  // Version control
+  const v1 = assetVersionControl.recordVersion(firstScene.id, "https://cdn.example.com/take1.mp4", "Initial take", "luma", "ray", "approved");
+  const v2 = assetVersionControl.recordVersion(firstScene.id, "https://cdn.example.com/take2.mp4", "Enhanced lighting", "luma", "ray", "approved");
+  assert(v2.versionNumber === 2, "Asset version control recorded version take v2");
+  const rolledBack = assetVersionControl.rollbackToVersion(firstScene.id, 1);
+  assert(rolledBack?.versionNumber === 1, "Asset rollback successfully restored take v1");
+
+  // TEST 16: Multilingual Audio Dubbing Studio
+  console.log("\n--- 16. Testing Multilingual Audio Dubbing Studio ---");
+  const dubbedTrack = await audioDubbingStudio.generateDubbedTrack(
+    brian,
+    "Bro, we have a big problem with the client server.",
+    "sheng"
+  );
+  assert(dubbedTrack.language === "sheng", `Dubbed track language: ${dubbedTrack.language}`);
+  assert(dubbedTrack.lipSyncEstimatedTiming.phonemeCount > 0, `Lip sync estimated phonemes: ${dubbedTrack.lipSyncEstimatedTiming.phonemeCount}`);
+
+  // TEST 17: Social Director Retention Engine & 5-in-1 Derivatives
+  console.log("\n--- 17. Testing Social Director Retention & Derivatives Bundle ---");
+  const retention = retentionEngine.evaluateRetention(firstScene, viralClips[0].durationSeconds);
+  assert(retention.hookScore > 80, `Hook score: ${retention.hookScore}%`);
+  assert(retention.retentionScore > 75, `Retention score: ${retention.retentionScore}%`);
+
+
+  const hookVariants = retentionEngine.generateHookVariants(firstScene);
+  assert(hookVariants.length === 4, `Generated ${hookVariants.length} distinct viral hook variants (Curiosity, Narrative, Sheng, Satirical)`);
+
+  const derivativesBundle = derivativesGenerator.generateDerivativesBundle(newEpisode);
+  assert(derivativesBundle.shortVideos.length >= 3, `Bundle contains ${derivativesBundle.shortVideos.length} vertical 9:16 clips`);
+  assert(derivativesBundle.quoteCards.length >= 3, `Bundle contains ${derivativesBundle.quoteCards.length} stylized quote cards`);
+  assert(derivativesBundle.comicPanels.length >= 3, `Bundle contains ${derivativesBundle.comicPanels.length} high-res comic panels`);
+  assert(derivativesBundle.characterClips.length >= 3, `Bundle contains ${derivativesBundle.characterClips.length} character highlight reels`);
+  assert(derivativesBundle.storyPosts.length >= 2, `Bundle contains ${derivativesBundle.storyPosts.length} social story/carousel posts`);
+
+  // TEST 18: Creator Platform Manager & AI Copilot
+  console.log("\n--- 18. Testing Creator Platform Manager & AI Copilot ---");
+  const brandKit = creatorPlatform.getBrandKit(nairobiSeries.id);
+  assert(Boolean(brandKit.primaryColor && brandKit.secondaryColor), `Brand kit verified: Primary ${brandKit.primaryColor}, Secondary ${brandKit.secondaryColor}, Font: ${brandKit.typography}`);
+
+  const plan = creatorPlatform.getContentPlan();
+  assert(plan.length >= 2, `Content plan populated with ${plan.length} scheduled production drop items`);
+
+  const assistantResponse = await creatorPlatform.handleAssistantQuery(
+    "How to optimize continuity for Scene 3?",
+    newEpisode,
+    nairobiSeries
+  );
+  assert(Boolean(assistantResponse.response), `AI Creator Assistant delivered contextual director guidance: "${assistantResponse.response.substring(0, 60)}..."`);
+  assert(Boolean(assistantResponse.relevantContext), `Context identified: ${assistantResponse.relevantContext}`);
 
   console.log("\n==================================================");
   console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);

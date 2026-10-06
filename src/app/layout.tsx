@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import { Film, BookOpen, User, Play, Sparkles, Sliders, Layers, Video } from "lucide-react";
+import { CreatorAssistant } from "@/components/creator-assistant";
+
 
 export const metadata: Metadata = {
   title: "Comiks X | Professional AI Comic Animation Studio",
@@ -118,7 +120,11 @@ export default function RootLayout({
           </div>
           <div>TikTok 9:16 & Reels Social Clip Pipeline Ready</div>
         </footer>
+
+        {/* Global AI Creator Copilot */}
+        <CreatorAssistant />
       </body>
     </html>
   );
+
 }

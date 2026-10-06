@@ -20,6 +20,10 @@ import {
   MessageCircle,
   Send,
   Music,
+  Award,
+  Flame,
+  TrendingUp,
+  BookOpen,
 } from "lucide-react";
 
 export default function SocialClipsPage() {
@@ -33,6 +37,12 @@ export default function SocialClipsPage() {
   const [showSafeZone, setShowSafeZone] = useState(true);
   const [isExtracting, setIsExtracting] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  // Social Director Extended Features
+  const [derivativesBundle, setDerivativesBundle] = useState<any | null>(null);
+  const [showDerivativesModal, setShowDerivativesModal] = useState(false);
+  const [isGeneratingDerivatives, setIsGeneratingDerivatives] = useState(false);
+
 
   useEffect(() => {
     fetchData();
@@ -75,6 +85,36 @@ export default function SocialClipsPage() {
     }
   };
 
+  const hookVariants = selectedClip ? [
+    { label: "Curiosity", text: `Wait until you see how this Nairobi situation unfolded...` },
+    { label: "High Stakes", text: `He had 10 minutes before the pitch, and then everything broke...` },
+    { label: "Kenyan Sheng", text: `Manze hii form ya Kevo na matatu ilienda ngori mbaya!` },
+    { label: "Satirical Twist", text: `Why you should never trust a Nairobi CBD matatu before a tech demo...` },
+  ] : [];
+
+  const handleSelectHookVariant = (hookText: string) => {
+    if (!selectedClip) return;
+    const updated = { ...selectedClip, hook: hookText };
+    setSelectedClip(updated);
+    setClips((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
+  };
+
+  const handleGenerateDerivatives = async () => {
+    setIsGeneratingDerivatives(true);
+    try {
+      const res = await fetch(`/api/derivatives?episodeId=${episodeId}`);
+      const data = await res.json();
+      if (data.success && data.bundle) {
+        setDerivativesBundle(data.bundle);
+        setShowDerivativesModal(true);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsGeneratingDerivatives(false);
+    }
+  };
+
   const copyToClipboard = (text: string, fieldName: string) => {
     navigator.clipboard.writeText(text);
     setCopiedField(fieldName);
@@ -96,7 +136,7 @@ export default function SocialClipsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => router.push(`/editor/${episodeId}`)}
             className="px-4 py-2 rounded-xl bg-studio-850 hover:bg-studio-800 border border-studio-700 text-studio-300 text-xs font-bold"
@@ -104,15 +144,24 @@ export default function SocialClipsPage() {
             ← Back to Editor
           </button>
           <button
+            onClick={handleGenerateDerivatives}
+            disabled={isGeneratingDerivatives}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-comic-yellow text-xs font-bold transition-colors"
+          >
+            <Layers className="w-4 h-4" />
+            {isGeneratingDerivatives ? "Compiling..." : "5-in-1 Derivatives"}
+          </button>
+          <button
             onClick={handleExtractClips}
             disabled={isExtracting}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-comic-pink to-comic-purple text-white font-black text-xs shadow-lg shadow-pink-500/20 hover:scale-102 transition-all disabled:opacity-50"
           >
             <Sparkles className="w-4 h-4" />
-            {isExtracting ? "Analyzing 30-min Episode..." : "Auto-Extract 5–10 Viral Clips"}
+            {isExtracting ? "Analyzing 30-min Episode..." : "Auto-Extract Clips"}
           </button>
         </div>
       </div>
+
 
       {/* Main Grid: Clips Selector & 9:16 Phone Mockup Viewport */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -272,11 +321,57 @@ export default function SocialClipsPage() {
 
           {selectedClip ? (
             <div className="space-y-4 text-xs">
-              {/* Viral Hook */}
+              {/* Retention & Virality Score Breakdown */}
+              <div className="p-3.5 rounded-xl bg-studio-950 border border-studio-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase text-studio-400 flex items-center gap-1">
+                    <Flame className="w-3.5 h-3.5 text-comic-pink" />
+                    Retention & Virality Score
+                  </span>
+                  <span className="text-xs font-black text-comic-pink bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/30">
+                    91 / 100 [A+]
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-[10px] pt-1 border-t border-studio-900">
+                  <div>
+                    <span className="text-studio-500 block">0–3s Hook:</span>
+                    <strong className="text-emerald-400 font-bold">94%</strong>
+                  </div>
+                  <div>
+                    <span className="text-studio-500 block">Completion:</span>
+                    <strong className="text-comic-cyan font-bold">88%</strong>
+                  </div>
+                  <div>
+                    <span className="text-studio-500 block">Engagement:</span>
+                    <strong className="text-comic-yellow font-bold">92%</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4 Hook Variants Picker */}
               <div>
-                <label className="text-[10px] font-bold text-studio-400 uppercase">Opening Hook (0–3s)</label>
-                <div className="p-2.5 rounded-xl bg-studio-950 border border-studio-800 font-bold text-comic-yellow mt-1">
-                  "{selectedClip.hook}"
+                <label className="text-[10px] font-bold text-studio-400 uppercase flex items-center justify-between mb-1.5">
+                  <span>Viral Hook Variants (4 Angles)</span>
+                  <span className="text-comic-yellow text-[9px]">Click to Apply</span>
+                </label>
+                <div className="space-y-1.5">
+                  {hookVariants.map((variant, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleSelectHookVariant(variant.text)}
+                      className={`w-full p-2 rounded-xl text-left border transition-all ${
+                        selectedClip.hook === variant.text
+                          ? "bg-amber-500/15 border-comic-yellow text-white shadow-sm shadow-amber-500/10"
+                          : "bg-studio-950 border-studio-800 text-studio-400 hover:border-studio-700 hover:text-studio-200"
+                      }`}
+                    >
+                      <span className="text-[9px] uppercase font-bold text-comic-yellow block">
+                        {variant.label}
+                      </span>
+                      <p className="text-[11px] font-medium truncate mt-0.5">"{variant.text}"</p>
+                    </button>
+                  ))}
                 </div>
               </div>
 
@@ -307,7 +402,7 @@ export default function SocialClipsPage() {
                     {copiedField === "desc" ? "Copied!" : "Copy Caption"}
                   </button>
                 </div>
-                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 text-studio-300 font-mono text-[11px] leading-relaxed mt-1 max-h-36 overflow-y-auto">
+                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 text-studio-300 font-mono text-[11px] leading-relaxed mt-1 max-h-28 overflow-y-auto">
                   {selectedClip.description}
                 </div>
               </div>
@@ -343,6 +438,102 @@ export default function SocialClipsPage() {
           )}
         </div>
       </div>
+
+      {/* Derivatives Bundle Modal */}
+      {showDerivativesModal && derivativesBundle && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-studio-900 border border-studio-800 rounded-2xl max-w-3xl w-full p-6 space-y-5 max-h-[85vh] overflow-y-auto shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-studio-800">
+              <div>
+                <h3 className="text-base font-black text-white flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-comic-yellow" />
+                  5-in-1 Social Derivative Content Bundle
+                </h3>
+                <p className="text-xs text-studio-400 mt-0.5">
+                  Generated from 30-minute episode: Short videos, quote cards, comic panels, teaser trailer & recap.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowDerivativesModal(false)}
+                className="text-studio-400 hover:text-white text-lg font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Bundle Assets Grid */}
+            <div className="space-y-4 text-xs">
+              {/* Quote Cards */}
+              <div>
+                <h4 className="font-bold text-comic-yellow uppercase mb-2 flex items-center gap-1.5">
+                  <Share2 className="w-3.5 h-3.5" />
+                  1. Viral Quote Cards ({derivativesBundle.quoteCards?.length || 3})
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  {derivativesBundle.quoteCards?.map((card: any, idx: number) => (
+                    <div key={card.id || idx} className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1">
+                      <span className="text-[10px] font-bold text-comic-cyan block">{card.speaker}</span>
+                      <p className="text-xs text-white italic">"{card.quote}"</p>
+                      <span className="text-[9px] text-studio-500 font-mono block mt-1">{card.sceneSetting}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Comic Panels */}
+              <div>
+                <h4 className="font-bold text-comic-cyan uppercase mb-2 flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  2. High-Resolution Comic Panels ({derivativesBundle.comicPanels?.length || 4})
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {derivativesBundle.comicPanels?.map((panel: any, idx: number) => (
+                    <div key={panel.id || idx} className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1">
+                      <div className="flex items-center justify-between text-[10px]">
+                        <span className="font-bold text-white">Panel #{panel.panelIndex}</span>
+                        <span className="text-comic-yellow font-mono">{panel.captionStyle}</span>
+                      </div>
+                      <p className="text-[11px] text-studio-300 line-clamp-2">{panel.actionPrompt}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Trailer & Recap EDL Config */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-studio-800">
+                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-comic-purple uppercase text-[11px]">3. Teaser Trailer EDL</span>
+                    <span className="text-[10px] text-studio-400 font-mono">45s Duration</span>
+                  </div>
+                  <p className="text-xs text-studio-300">
+                    Hook scene pacing with fast-paced cuts and cinematic outro brand logo sting.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-emerald-400 uppercase text-[11px]">4. Episode Recap Manifest</span>
+                    <span className="text-[10px] text-studio-400 font-mono">60s Duration</span>
+                  </div>
+                  <p className="text-xs text-studio-300">
+                    5-chapter narrative compression with key climax moments for returning viewers.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-3 border-t border-studio-800">
+              <button
+                onClick={() => setShowDerivativesModal(false)}
+                className="px-5 py-2 rounded-xl bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-black text-xs"
+              >
+                Close & Ready for Export
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
+
 }

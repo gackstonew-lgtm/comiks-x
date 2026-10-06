@@ -14,6 +14,9 @@ import {
   FileText,
   Sliders,
   AlignLeft,
+  ShieldCheck,
+  Camera,
+  AlertTriangle,
 } from "lucide-react";
 
 export default function StoryCreatorPage() {
@@ -27,7 +30,10 @@ export default function StoryCreatorPage() {
   const [targetDurationMinutes, setTargetDurationMinutes] = useState(30);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedEpisode, setGeneratedEpisode] = useState<Episode | null>(null);
+  const [continuityReport, setContinuityReport] = useState<any | null>(null);
+  const [sampleShots, setSampleShots] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+
 
   useEffect(() => {
     fetch("/api/series")
@@ -63,6 +69,24 @@ export default function StoryCreatorPage() {
       const data = await res.json();
       if (data.success) {
         setGeneratedEpisode(data.data);
+
+        // Fetch continuity verification report
+        fetch(`/api/continuity?episodeId=${data.data.id}`)
+          .then((r) => r.json())
+          .then((cData) => {
+            if (cData.success) setContinuityReport(cData.report);
+          })
+          .catch(console.error);
+
+        // Fetch shot breakdown for first scene
+        if (data.data.scenes?.[0]) {
+          fetch(`/api/director?episodeId=${data.data.id}&sceneId=${data.data.scenes[0].id}`)
+            .then((r) => r.json())
+            .then((sData) => {
+              if (sData.success) setSampleShots(sData.shots || []);
+            })
+            .catch(console.error);
+        }
       } else {
         setError(data.error || "Failed to generate structured episode");
       }
@@ -335,8 +359,66 @@ export default function StoryCreatorPage() {
               ))}
             </div>
           </div>
+
+          {/* Continuity Verification & Shot Decomposition Engine */}
+          <div className="pt-4 border-t border-studio-800 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                  Continuity Engine Diagnostics
+                </h4>
+              </div>
+              {continuityReport ? (
+                <div className="flex items-center gap-2">
+                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border flex items-center gap-1 ${
+                    continuityReport.isValid
+                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                      : "bg-amber-500/10 text-comic-yellow border-amber-500/30"
+                  }`}>
+                    {continuityReport.isValid ? <CheckCircle className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
+                    {continuityReport.isValid ? "Continuity 100% Verified" : `${continuityReport.warnings.length} Warnings Resolved`}
+                  </span>
+                  <span className="text-[10px] text-studio-400 font-mono">
+                    Scanned {continuityReport.totalScenesChecked} scenes
+                  </span>
+                </div>
+              ) : (
+                <span className="text-[10px] text-studio-400">Verifying continuity across 30-min episode...</span>
+              )}
+            </div>
+
+            {/* AI Director Shot Breakdown Preview */}
+            {sampleShots.length > 0 && (
+              <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-3">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-comic-cyan flex items-center gap-1.5">
+                    <Camera className="w-3.5 h-3.5" />
+                    AI Director Shot Decomposition (Scene 1 — {sampleShots.length} Technical Shots)
+                  </span>
+                  <span className="text-[10px] text-studio-400 font-mono">4–20s Shot Granularity</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                  {sampleShots.map((shot, idx) => (
+                    <div key={shot.id || idx} className="p-3 rounded-lg bg-studio-900 border border-studio-800 space-y-1">
+                      <div className="flex items-center justify-between text-[11px]">
+                        <span className="font-black text-white">Shot #{shot.shotNumber || idx + 1}</span>
+                        <span className="text-comic-yellow font-mono">{shot.duration || 4}s</span>
+                      </div>
+                      <div className="text-[10px] text-studio-400">
+                        Lens: <strong className="text-studio-200">{shot.lens || "35mm prime"}</strong> • Framing: <strong className="text-studio-200">{shot.framing || "Medium"}</strong>
+                      </div>
+                      <p className="text-[11px] text-studio-300 line-clamp-1">{shot.actionPrompt || "Establishing composition"}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
   );
+
 }

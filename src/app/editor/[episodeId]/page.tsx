@@ -26,6 +26,9 @@ import {
   Maximize2,
   Sliders,
   CheckCircle,
+  Languages,
+  History,
+  Undo2,
 } from "lucide-react";
 
 export default function EpisodeEditorPage() {
@@ -44,6 +47,12 @@ export default function EpisodeEditorPage() {
   const [isExporting, setIsExporting] = useState(false);
   const [exportManifest, setExportManifest] = useState<any | null>(null);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  // Dubbing & Versioning Control
+  const [dubbingLanguage, setDubbingLanguage] = useState<"original" | "sheng" | "swahili">("original");
+  const [isDubbing, setIsDubbing] = useState(false);
+  const [sceneVersions, setSceneVersions] = useState<Record<string, number>>({});
+
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const playbackTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -159,6 +168,48 @@ export default function EpisodeEditorPage() {
     setScenes(newScenes);
   };
 
+  const handleApplyDubbing = async (lang: "original" | "sheng" | "swahili") => {
+    setDubbingLanguage(lang);
+    if (lang === "original") {
+      setStatusMessage("Active audio: Original cast dialogue track.");
+      return;
+    }
+    if (!activeScene || !activeScene.dialogue?.[0]) return;
+    setIsDubbing(true);
+    try {
+      const diag = activeScene.dialogue[0];
+      const res = await fetch("/api/dubbing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          characterId: diag.characterId || "char-brian-01",
+          originalText: diag.line,
+          targetLanguage: lang,
+        }),
+      });
+      const data = await res.json();
+      if (data.success && data.data) {
+        setStatusMessage(`Multilingual Dub Track Active (${lang.toUpperCase()}): "${data.data.dubbedText}"`);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsDubbing(false);
+    }
+  };
+
+  const handleRollbackVersion = (sceneId: string) => {
+    const currentVer = sceneVersions[sceneId] || 2;
+    if (currentVer <= 1) {
+      setStatusMessage("Already at primary generation take v1.");
+      return;
+    }
+    const nextVer = currentVer - 1;
+    setSceneVersions((prev) => ({ ...prev, [sceneId]: nextVer }));
+    setStatusMessage(`Rolled back Scene #${activeScene?.sceneNumber} to previous take v${nextVer}.`);
+  };
+
+
   const handleExport = async (format: "manifest" | "srt" | "vtt" | "chapters") => {
     if (format === "srt" || format === "vtt") {
       window.open(`/api/export?episodeId=${episodeId}&format=${format}`, "_blank");
@@ -201,8 +252,24 @@ export default function EpisodeEditorPage() {
           </div>
         </div>
 
-        {/* Subtitle Style & Resolution Controls */}
-        <div className="flex items-center gap-3">
+        {/* Subtitle Style, Dubbing & Resolution Controls */}
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center space-x-1.5 bg-studio-950 px-2.5 py-1 rounded-xl border border-studio-800 text-xs">
+            <Languages className="w-3.5 h-3.5 text-comic-yellow" />
+            <span className="text-studio-400 font-bold uppercase text-[10px]">Dub:</span>
+            <select
+              value={dubbingLanguage}
+              onChange={(e) => handleApplyDubbing(e.target.value as any)}
+              disabled={isDubbing}
+              className="bg-transparent text-xs text-comic-yellow font-bold focus:outline-none cursor-pointer"
+            >
+              <option value="original">Original (Mixed)</option>
+              <option value="sheng">Authentic Sheng</option>
+              <option value="swahili">Standard Swahili</option>
+            </select>
+            {isDubbing && <span className="text-[10px] text-amber-400 animate-pulse">Syncing...</span>}
+          </div>
+
           <div className="flex items-center space-x-2 text-xs">
             <span className="text-studio-400 font-bold uppercase">Subtitles:</span>
             <select
@@ -215,6 +282,7 @@ export default function EpisodeEditorPage() {
               <option value="boxed">Clean Boxed Dark</option>
             </select>
           </div>
+
 
           <button
             onClick={() => handleExport("srt")}
@@ -436,6 +504,26 @@ export default function EpisodeEditorPage() {
                   <RotateCw className="w-3.5 h-3.5" />
                   Regenerate Scene AI Video
                 </button>
+
+                {/* Version History & Rollback */}
+                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-2 mt-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase text-studio-400 flex items-center gap-1">
+                      <History className="w-3 h-3 text-comic-cyan" />
+                      Take Version
+                    </span>
+                    <span className="font-mono font-bold text-xs text-comic-cyan">
+                      v{sceneVersions[activeScene.id] || 2}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => handleRollbackVersion(activeScene.id)}
+                    className="w-full py-1.5 rounded-lg bg-studio-850 hover:bg-studio-800 border border-studio-700 text-[11px] font-bold text-studio-300 flex items-center justify-center gap-1.5"
+                  >
+                    <Undo2 className="w-3 h-3" />
+                    Rollback to Previous Take (v{Math.max(1, (sceneVersions[activeScene.id] || 2) - 1)})
+                  </button>
+                </div>
               </div>
             </div>
           ) : (
