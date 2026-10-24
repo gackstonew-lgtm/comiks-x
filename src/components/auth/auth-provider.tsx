@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { BrandedSplash } from "@/components/pwa/branded-splash";
 
 interface AuthContextType {
   user: User | null;
@@ -49,6 +50,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [supabase]);
 
   const signOut = async () => {
+    // SECURITY GUARDRAIL: Clear all app-specific caches on logout
+    if (typeof window !== "undefined" && "caches" in window) {
+      try {
+        const cacheKeys = await window.caches.keys();
+        await Promise.all(cacheKeys.map((key) => window.caches.delete(key)));
+        console.log("[PWA] Purged all CacheStorage on user logout");
+      } catch (err) {
+        console.warn("[PWA] Cache purge on logout failed:", err);
+      }
+    }
+
     await supabase.auth.signOut();
     setUser(null);
     setSession(null);
@@ -58,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ user, session, loading, signOut }}>
-      {children}
+      {loading ? <BrandedSplash message="Verifying studio session..." /> : children}
     </AuthContext.Provider>
   );
 }
