@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ComicSeries, ComicArtStyle, LocationItem } from "@/types";
+import { ComicSeries, ComicArtStyle } from "@/types";
 import {
   BookOpen,
   Plus,
@@ -12,9 +12,7 @@ import {
   Sparkles,
   Layers,
   CheckCircle,
-  Tag,
   Shield,
-  Film,
   Globe,
   Languages,
   Search,
@@ -50,7 +48,6 @@ export default function SeriesPage() {
 
   // Form states
   const [title, setTitle] = useState("");
-
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState("Animation / Urban Slice-of-Life");
   const [artStyle, setArtStyle] = useState<ComicArtStyle>("African Comic");
@@ -58,8 +55,6 @@ export default function SeriesPage() {
   const [newRule, setNewRule] = useState("");
   const [rules, setRules] = useState<string[]>([
     "Mix English, Swahili, and authentic Sheng naturally without awkward translations.",
-    "Maintain character wardrobe and facial hair consistency in every scene.",
-    "Exaggerated comic reaction shots during comedic and tense turning points.",
   ]);
 
   useEffect(() => {
@@ -67,15 +62,12 @@ export default function SeriesPage() {
   }, []);
 
   const fetchSeries = async () => {
-    setLoading(true);
     try {
       const res = await fetch("/api/series");
       const data = await res.json();
-      if (data.success && data.data) {
+      if (data.success && data.data?.length > 0) {
         setSeriesList(data.data);
-        if (data.data.length > 0 && !selectedSeries) {
-          setSelectedSeries(data.data[0]);
-        }
+        if (!selectedSeries) setSelectedSeries(data.data[0]);
       }
     } catch (err) {
       console.error(err);
@@ -153,28 +145,29 @@ export default function SeriesPage() {
     }
   };
 
-
   return (
-    <div className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8">
+    <div className="max-w-6xl mx-auto w-full space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-studio-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#2e2e2e]">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-comic-yellow mb-1">
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-brand mb-1">
             <BookOpen className="w-3.5 h-3.5" />
             Comic Series Universe
           </div>
-          <h1 className="text-3xl font-black text-white">Series System & World Rules</h1>
-          <p className="text-xs text-studio-400 mt-1">
+          <h1 className="text-xl sm:text-2xl font-semibold text-[#ededed] tracking-tight">
+            Series System & World Rules
+          </h1>
+          <p className="text-xs text-[#a0a0a0] mt-1 max-w-xl leading-relaxed">
             Configure series lore, lock visual comic art styles, and establish dialogue world rules across episodes.
           </p>
         </div>
 
         <button
           onClick={() => setIsCreating(!isCreating)}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-bold text-xs shadow-lg shadow-amber-500/20 hover:scale-102 transition-all self-start sm:self-auto"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium text-xs shadow-sm transition-all self-start sm:self-auto"
         >
-          <Plus className="w-4 h-4 stroke-[3]" />
-          {isCreating ? "Close Form" : "Create New Series"}
+          <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+          <span>{isCreating ? "Close Form" : "Create New Series"}</span>
         </button>
       </div>
 
@@ -182,68 +175,68 @@ export default function SeriesPage() {
       {isCreating && (
         <form
           onSubmit={handleCreateSeries}
-          className="bg-studio-900 border border-amber-500/30 rounded-2xl p-6 space-y-6 shadow-xl"
+          className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-5 space-y-5 shadow-sm"
         >
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-black text-white flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-comic-yellow" />
+            <h3 className="text-sm font-semibold text-[#ededed] flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-brand" />
               New Comic Series Setup
             </h3>
-            <span className="text-xs text-studio-400">Unlimited episodes can be created under this series</span>
+            <span className="text-xs text-[#707070]">Unlimited episodes can be created under this series</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-studio-300 uppercase mb-1">Series Title</label>
+              <label className="block text-xs font-medium text-[#ededed] mb-1">Series Title</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. Life in Nairobi, Safari Cyberpunk, Matatu Hustlers..."
+                placeholder="e.g. Life in Nairobi, Safari Cyberpunk..."
                 required
-                className="w-full bg-studio-950 border border-studio-800 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-comic-yellow"
+                className="w-full bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-studio-300 uppercase mb-1">Genre</label>
+              <label className="block text-xs font-medium text-[#ededed] mb-1">Genre</label>
               <input
                 type="text"
                 value={genre}
                 onChange={(e) => setGenre(e.target.value)}
                 placeholder="e.g. Urban Comedy / Sci-Fi / Action / Slice-of-Life"
-                className="w-full bg-studio-950 border border-studio-800 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-comic-yellow"
+                className="w-full bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-studio-300 uppercase mb-1">Series Logline & Premise</label>
+            <label className="block text-xs font-medium text-[#ededed] mb-1">Series Logline & Premise</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
               placeholder="Describe the world, premise, tone, and recurring character dynamics..."
-              className="w-full bg-studio-950 border border-studio-800 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-comic-yellow"
+              className="w-full bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-3 py-2 text-xs text-[#ededed] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40"
             />
           </div>
 
           {/* Visual Style Selection */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold text-studio-300 uppercase flex items-center gap-1.5">
-                <Palette className="w-3.5 h-3.5 text-comic-yellow" />
+              <label className="text-xs font-medium text-[#ededed] flex items-center gap-1.5">
+                <Palette className="w-3.5 h-3.5 text-brand" />
                 Select & Lock Comic Art Style
               </label>
-              <label className="flex items-center gap-2 text-xs text-studio-300 cursor-pointer">
+              <label className="flex items-center gap-2 text-xs text-[#a0a0a0] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={isStyleLocked}
                   onChange={(e) => setIsStyleLocked(e.target.checked)}
-                  className="rounded border-studio-700 text-comic-yellow focus:ring-0"
+                  className="rounded-[4px] border-[#2e2e2e] text-brand focus:ring-0"
                 />
-                <span className="flex items-center gap-1 text-[11px] font-semibold">
-                  <Lock className="w-3 h-3 text-comic-yellow" />
+                <span className="flex items-center gap-1 text-[11px] font-medium text-[#ededed]">
+                  <Lock className="w-3 h-3 text-brand" />
                   Lock style for all future episodes
                 </span>
               </label>
@@ -255,17 +248,17 @@ export default function SeriesPage() {
                   type="button"
                   key={style.name}
                   onClick={() => setArtStyle(style.name)}
-                  className={`p-3 rounded-xl border text-left transition-all ${
+                  className={`p-3 rounded-[6px] border text-left transition-all ${
                     artStyle === style.name
-                      ? "bg-amber-500/10 border-comic-yellow text-white shadow-md shadow-amber-500/10"
-                      : "bg-studio-950 border-studio-800 text-studio-400 hover:border-studio-700"
+                      ? "bg-[#1c1c1c] border-brand shadow-[0_0_0_1px_rgba(62,207,142,0.3)] text-white"
+                      : "bg-[#121212] border-[#2e2e2e] text-[#a0a0a0] hover:border-[#3e3e3e]"
                   }`}
                 >
-                  <div className="text-xs font-bold text-white flex items-center justify-between">
+                  <div className="text-xs font-semibold text-[#ededed] flex items-center justify-between">
                     <span>{style.name}</span>
-                    {artStyle === style.name && <CheckCircle className="w-3 h-3 text-comic-yellow" />}
+                    {artStyle === style.name && <CheckCircle className="w-3.5 h-3.5 text-brand" />}
                   </div>
-                  <div className="text-[10px] text-studio-400 mt-1 line-clamp-2">{style.desc}</div>
+                  <div className="text-[10px] text-[#707070] mt-1 line-clamp-2">{style.desc}</div>
                 </button>
               ))}
             </div>
@@ -273,36 +266,36 @@ export default function SeriesPage() {
 
           {/* World Rules */}
           <div>
-            <label className="block text-xs font-bold text-studio-300 uppercase mb-1">
+            <label className="block text-xs font-medium text-[#ededed] mb-1">
               World Rules & Cultural Authenticity Guidelines
             </label>
-            <div className="flex gap-2 mb-3">
+            <div className="flex gap-2 mb-2">
               <input
                 type="text"
                 value={newRule}
                 onChange={(e) => setNewRule(e.target.value)}
                 placeholder="Add dialogue rule (e.g. natural Sheng mixing, specific slang words)..."
-                className="flex-1 bg-studio-950 border border-studio-800 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-comic-yellow"
+                className="flex-1 bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40"
               />
               <button
                 type="button"
                 onClick={addRule}
-                className="px-4 py-2 rounded-xl bg-studio-800 hover:bg-studio-700 text-xs font-bold text-white"
+                className="px-3.5 py-1.5 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-xs font-medium text-[#ededed]"
               >
                 Add Rule
               </button>
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               {rules.map((rule, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-studio-950 border border-studio-800 text-xs text-studio-300"
+                  className="flex items-center justify-between px-3 py-1 rounded-[4px] bg-[#121212] border border-[#2e2e2e] text-xs text-[#a0a0a0]"
                 >
                   <span>• {rule}</span>
                   <button
                     type="button"
                     onClick={() => setRules(rules.filter((_, i) => i !== idx))}
-                    className="text-studio-500 hover:text-red-400 text-xs ml-2"
+                    className="text-[#707070] hover:text-red-400 text-xs ml-2"
                   >
                     ×
                   </button>
@@ -311,17 +304,17 @@ export default function SeriesPage() {
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 pt-3 border-t border-studio-800">
+          <div className="flex justify-end gap-2.5 pt-3 border-t border-[#2e2e2e]">
             <button
               type="button"
               onClick={() => setIsCreating(false)}
-              className="px-4 py-2 rounded-xl bg-studio-850 hover:bg-studio-800 text-xs font-bold text-studio-300"
+              className="px-3.5 py-1.5 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-xs font-medium text-[#a0a0a0]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-xl bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 text-xs font-black"
+              className="px-4 py-1.5 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] text-xs font-medium shadow-sm"
             >
               Save & Initialize Series
             </button>
@@ -330,41 +323,41 @@ export default function SeriesPage() {
       )}
 
       {/* Series Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {seriesList.map((series) => (
           <div
             key={series.id}
             onClick={() => setSelectedSeries(series)}
-            className={`cursor-pointer rounded-2xl p-6 border transition-all ${
+            className={`cursor-pointer rounded-[6px] p-5 border transition-all ${
               selectedSeries?.id === series.id
-                ? "bg-studio-900 border-comic-yellow/80 shadow-lg shadow-amber-500/10"
-                : "bg-studio-900/60 border-studio-800 hover:border-studio-700"
+                ? "bg-[#171717] border-brand shadow-[0_0_0_1px_rgba(62,207,142,0.3)]"
+                : "bg-[#171717] border-[#2e2e2e] hover:border-[#3e3e3e]"
             }`}
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-studio-950 text-comic-yellow border border-studio-800">
+            <div className="flex items-center justify-between mb-2.5">
+              <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-[#121212] text-brand border border-[#2e2e2e]">
                 {series.genre}
               </span>
-              <span className="flex items-center gap-1 text-[10px] font-bold text-studio-400">
+              <span className="flex items-center gap-1 text-[10px] font-medium text-[#707070]">
                 {series.isStyleLocked ? (
                   <>
-                    <Lock className="w-3 h-3 text-comic-yellow" />
+                    <Lock className="w-3 h-3 text-brand" />
                     Locked Style
                   </>
                 ) : (
-                  <Unlock className="w-3 h-3 text-studio-500" />
+                  <Unlock className="w-3 h-3 text-[#707070]" />
                 )}
               </span>
             </div>
 
-            <h3 className="text-xl font-black text-white">{series.title}</h3>
-            <p className="text-xs text-studio-400 mt-2 line-clamp-3 leading-relaxed">
+            <h3 className="text-base font-semibold text-[#ededed]">{series.title}</h3>
+            <p className="text-xs text-[#a0a0a0] mt-1.5 line-clamp-3 leading-relaxed">
               {series.description}
             </p>
 
-            <div className="mt-5 pt-4 border-t border-studio-800/80 flex items-center justify-between text-xs">
-              <span className="text-studio-400 font-medium">Style: <strong className="text-white">{series.artStyle}</strong></span>
-              <span className="text-comic-cyan font-bold">{series.episodeCount || 1} Episodes</span>
+            <div className="mt-4 pt-3 border-t border-[#2e2e2e] flex items-center justify-between text-xs">
+              <span className="text-[#707070]">Style: <strong className="text-[#ededed] font-medium">{series.artStyle}</strong></span>
+              <span className="text-brand font-medium">{series.episodeCount || 1} Episodes</span>
             </div>
           </div>
         ))}
@@ -372,74 +365,74 @@ export default function SeriesPage() {
 
       {/* Selected Series Detail View */}
       {selectedSeries && (
-        <div className="bg-studio-900 border border-studio-800 rounded-2xl p-6 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-studio-800">
+        <div className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-5 space-y-5 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-[#2e2e2e]">
             <div>
-              <h2 className="text-2xl font-black text-white flex items-center gap-2">
+              <h2 className="text-lg font-semibold text-[#ededed] flex items-center gap-2">
                 <span>{selectedSeries.title}</span>
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-comic-yellow border border-amber-500/30">
+                <span className="text-xs font-medium px-2 py-0.5 rounded bg-brand/10 text-brand border border-brand/25">
                   {selectedSeries.artStyle}
                 </span>
               </h2>
-              <p className="text-xs text-studio-400 mt-1">{selectedSeries.description}</p>
+              <p className="text-xs text-[#a0a0a0] mt-1">{selectedSeries.description}</p>
             </div>
             <div className="text-right">
-              <div className="text-xs text-studio-400">Series Brand Outro</div>
-              <div className="text-xs font-bold text-comic-yellow">{selectedSeries.brandIdentity?.outroHook}</div>
+              <div className="text-[11px] text-[#707070]">Series Brand Outro</div>
+              <div className="text-xs font-semibold text-brand">{selectedSeries.brandIdentity?.outroHook}</div>
             </div>
           </div>
 
           {/* Sub-Tab Navigation Bar */}
-          <div className="flex items-center gap-2 border-b border-studio-800 pb-2">
+          <div className="flex items-center gap-1.5 border-b border-[#2e2e2e] pb-2">
             <button
               onClick={() => setActiveSeriesTab("lore")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-[6px] text-xs font-medium transition-all flex items-center gap-1.5 ${
                 activeSeriesTab === "lore"
-                  ? "bg-comic-yellow text-studio-950 shadow-md shadow-amber-500/10"
-                  : "text-studio-400 hover:text-white hover:bg-studio-850"
+                  ? "bg-[#232323] text-brand border border-brand/25"
+                  : "text-[#a0a0a0] hover:text-[#ededed] hover:bg-[#1c1c1c]"
               }`}
             >
               <Shield className="w-3.5 h-3.5" />
-              Series Lore & Rules
+              <span>Series Lore & Rules</span>
             </button>
             <button
               onClick={() => setActiveSeriesTab("world")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-[6px] text-xs font-medium transition-all flex items-center gap-1.5 ${
                 activeSeriesTab === "world"
-                  ? "bg-comic-yellow text-studio-950 shadow-md shadow-amber-500/10"
-                  : "text-studio-400 hover:text-white hover:bg-studio-850"
+                  ? "bg-[#232323] text-brand border border-brand/25"
+                  : "text-[#a0a0a0] hover:text-[#ededed] hover:bg-[#1c1c1c]"
               }`}
             >
               <Globe className="w-3.5 h-3.5" />
-              World Universe & Architecture
+              <span>World Universe & Architecture</span>
             </button>
             <button
               onClick={() => setActiveSeriesTab("glossary")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-[6px] text-xs font-medium transition-all flex items-center gap-1.5 ${
                 activeSeriesTab === "glossary"
-                  ? "bg-comic-yellow text-studio-950 shadow-md shadow-amber-500/10"
-                  : "text-studio-400 hover:text-white hover:bg-studio-850"
+                  ? "bg-[#232323] text-brand border border-brand/25"
+                  : "text-[#a0a0a0] hover:text-[#ededed] hover:bg-[#1c1c1c]"
               }`}
             >
               <Languages className="w-3.5 h-3.5" />
-              Sheng & Swahili Glossary ({glossaryTerms.length})
+              <span>Sheng & Swahili Glossary ({glossaryTerms.length})</span>
             </button>
           </div>
 
           {/* TAB 1: Series Lore & World Rules */}
           {activeSeriesTab === "lore" && (
             <div>
-              <h4 className="text-xs font-bold text-studio-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 text-comic-yellow" />
+              <h4 className="text-xs font-semibold text-[#ededed] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 text-brand" />
                 World Rules & Sheng/Swahili Mixing Policies
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {selectedSeries.worldRules?.map((rule, idx) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-xl bg-studio-950 border border-studio-800 text-xs text-studio-200 leading-relaxed"
+                    className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] text-xs text-[#a0a0a0] leading-relaxed"
                   >
-                    <span className="text-comic-yellow font-bold mr-1.5">Rule {idx + 1}:</span>
+                    <span className="text-brand font-medium mr-1.5">Rule {idx + 1}:</span>
                     {rule}
                   </div>
                 ))}
@@ -452,34 +445,34 @@ export default function SeriesPage() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase flex items-center gap-1.5">
-                    <Globe className="w-3.5 h-3.5 text-comic-cyan" />
+                  <h4 className="text-xs font-semibold text-[#ededed] uppercase flex items-center gap-1.5">
+                    <Globe className="w-3.5 h-3.5 text-brand" />
                     {worldUniverse?.name || "Nairobi Metropolis"} — Architectural & Environmental World Bible
                   </h4>
-                  <p className="text-[11px] text-studio-400 mt-0.5">
+                  <p className="text-[11px] text-[#707070] mt-0.5">
                     {worldUniverse?.culturalTone || "Urban Hustle, Tech Innovation, Vibrant African Comic Energy"}
                   </p>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-500/10 text-comic-cyan border border-cyan-500/30">
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-brand/10 text-brand border border-brand/25">
                   Global Coherence Anchor
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                 {/* Architecture Rules */}
-                <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-2">
-                  <div className="text-[10px] font-bold uppercase text-comic-yellow flex items-center gap-1">
+                <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
+                  <div className="text-[10px] font-semibold uppercase text-brand flex items-center gap-1">
                     <MapPin className="w-3 h-3" />
                     Architecture & Urban Fabric Rules
                   </div>
-                  <ul className="text-xs text-studio-300 space-y-1.5">
+                  <ul className="text-xs text-[#a0a0a0] space-y-1">
                     {(worldUniverse?.architectureRules || [
                       "Buru Buru: 1980s terracotta-tiled maisonettes, walled residential courtyards with iron gates.",
                       "CBD Kencom: Brutalist glass-and-concrete high-rises with lively ground-level street kiosks.",
                       "Kilimani: Contemporary glass tech offices with lush perimeter jacaranda trees.",
                     ]).map((rule: string, i: number) => (
                       <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-comic-yellow font-bold">•</span>
+                        <span className="text-brand font-bold">•</span>
                         <span>{rule}</span>
                       </li>
                     ))}
@@ -487,57 +480,19 @@ export default function SeriesPage() {
                 </div>
 
                 {/* Lighting Rules */}
-                <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-2">
-                  <div className="text-[10px] font-bold uppercase text-comic-cyan flex items-center gap-1">
+                <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
+                  <div className="text-[10px] font-semibold uppercase text-brand flex items-center gap-1">
                     <Sparkles className="w-3 h-3" />
                     Cinematic Lighting & Atmosphere
                   </div>
-                  <ul className="text-xs text-studio-300 space-y-1.5">
+                  <ul className="text-xs text-[#a0a0a0] space-y-1">
                     {(worldUniverse?.lightingRules || [
                       "High-contrast equatorial sunlight with sharp deep shadows during midday.",
                       "Warm golden hour amber rays reflecting off metallic matatu paint.",
                       "Moody neon, halogen streetlamps, and warm shopfront fluorescent lighting at dusk.",
                     ]).map((rule: string, i: number) => (
                       <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-comic-cyan font-bold">•</span>
-                        <span>{rule}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Spatial Rules */}
-                <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-2">
-                  <div className="text-[10px] font-bold uppercase text-comic-purple flex items-center gap-1">
-                    <Layers className="w-3 h-3" />
-                    Spatial Scale & Density
-                  </div>
-                  <ul className="text-xs text-studio-300 space-y-1.5">
-                    {(worldUniverse?.spatialRules || [
-                      "Pedestrian congestion concentrated around bus stages and Kencom bus stops.",
-                      "Interior tech offices are compact with dual monitor setups and power strips.",
-                    ]).map((rule: string, i: number) => (
-                      <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-comic-purple font-bold">•</span>
-                        <span>{rule}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Social Dynamics */}
-                <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-2">
-                  <div className="text-[10px] font-bold uppercase text-emerald-400 flex items-center gap-1">
-                    <Shield className="w-3 h-3" />
-                    Social & Cultural Dynamics
-                  </div>
-                  <ul className="text-xs text-studio-300 space-y-1.5">
-                    {(worldUniverse?.socialDynamics || [
-                      "Fast-paced banter between conductors, hawkers, and commuters.",
-                      "Subtle deference in corporate meetings contrasting with energetic street-level peer slang.",
-                    ]).map((rule: string, i: number) => (
-                      <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-emerald-400 font-bold">•</span>
+                        <span className="text-brand font-bold">•</span>
                         <span>{rule}</span>
                       </li>
                     ))}
@@ -547,34 +502,34 @@ export default function SeriesPage() {
             </div>
           )}
 
-          {/* TAB 3: Sheng & Swahili Localization Glossary */}
+          {/* TAB 3: Sheng & Swahili Glossary */}
           {activeSeriesTab === "glossary" && (
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase flex items-center gap-1.5">
-                    <Languages className="w-3.5 h-3.5 text-comic-yellow" />
-                    Authentic Kenyan Sheng & Swahili Localization Glossary
+                  <h4 className="text-xs font-semibold text-[#ededed] uppercase flex items-center gap-1.5">
+                    <Languages className="w-3.5 h-3.5 text-brand" />
+                    Kenyan Sheng & Swahili Localization Glossary
                   </h4>
-                  <p className="text-[11px] text-studio-400 mt-0.5">
+                  <p className="text-[11px] text-[#707070] mt-0.5">
                     Integrated across AI Director dialogue synthesis to preserve authentic Nairobi rhythm.
                   </p>
                 </div>
 
                 <div className="relative">
-                  <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-studio-400" />
+                  <Search className="w-3 h-3 absolute left-2.5 top-2 text-[#707070]" />
                   <input
                     type="text"
                     value={glossarySearch}
                     onChange={(e) => setGlossarySearch(e.target.value)}
                     placeholder="Search terms or slang..."
-                    className="pl-8 pr-3 py-1.5 bg-studio-950 border border-studio-800 rounded-xl text-xs text-white focus:outline-none focus:border-comic-yellow w-48"
+                    className="pl-7 pr-2.5 py-1 bg-[#121212] border border-[#2e2e2e] rounded-[6px] text-xs text-[#ededed] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 w-44"
                   />
                 </div>
               </div>
 
               {/* Glossary Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                 {glossaryTerms
                   .filter((t) =>
                     glossarySearch
@@ -583,29 +538,29 @@ export default function SeriesPage() {
                       : true
                   )
                   .map((t, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1.5">
+                    <div key={idx} className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-black text-comic-yellow">{t.term}</span>
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-studio-900 border border-studio-800 text-studio-400 font-mono">
+                        <span className="text-xs font-semibold text-brand">{t.term}</span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#171717] border border-[#2e2e2e] text-[#707070] font-mono">
                           {t.context}
                         </span>
                       </div>
-                      <p className="text-xs text-white font-medium">{t.meaning}</p>
-                      <p className="text-[11px] text-studio-400 italic font-mono bg-studio-900/60 p-1.5 rounded border border-studio-850">
+                      <p className="text-xs text-[#ededed] font-medium">{t.meaning}</p>
+                      <p className="text-[11px] text-[#707070] italic font-mono bg-[#171717] p-1.5 rounded-[4px] border border-[#2e2e2e]">
                         "{t.usageExample}"
                       </p>
                     </div>
                   ))}
               </div>
 
-              {/* Interactive Code-Switching Dialogue Tester */}
-              <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-3">
+              {/* Code-Switching Dialogue Tester */}
+              <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <div className="text-xs font-bold text-white flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-comic-cyan" />
+                  <div className="text-xs font-semibold text-[#ededed] flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-brand" />
                     Interactive Dialogue Code-Switching Analyzer
                   </div>
-                  <span className="text-[10px] text-studio-400 font-mono">Real-time Sheng / English Verifier</span>
+                  <span className="text-[10px] text-[#707070] font-mono">Real-time Sheng / English Verifier</span>
                 </div>
 
                 <div className="flex gap-2">
@@ -614,26 +569,26 @@ export default function SeriesPage() {
                     value={testDialogue}
                     onChange={(e) => setTestDialogue(e.target.value)}
                     placeholder="Enter character line (e.g. Manze leo Kencom kuliwa ngori sana)..."
-                    className="flex-1 bg-studio-900 border border-studio-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-comic-yellow"
+                    className="flex-1 bg-[#171717] border border-[#2e2e2e] rounded-[6px] px-2.5 py-1.5 text-xs text-[#ededed] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40"
                   />
                   <button
                     onClick={handleAnalyzeDialogue}
                     disabled={isAnalyzing}
-                    className="px-4 py-2 rounded-xl bg-comic-cyan/10 hover:bg-comic-cyan/20 border border-comic-cyan/30 text-comic-cyan text-xs font-bold whitespace-nowrap"
+                    className="px-3 py-1.5 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-brand text-xs font-medium whitespace-nowrap"
                   >
                     {isAnalyzing ? "Analyzing..." : "Analyze Dialogue"}
                   </button>
                 </div>
 
                 {analyzedResult && (
-                  <div className="p-3 rounded-xl bg-studio-900 border border-cyan-500/20 text-xs space-y-2">
+                  <div className="p-2.5 rounded-[6px] bg-[#171717] border border-[#2e2e2e] text-xs space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-comic-cyan">Analysis Result</span>
-                      <span className="text-[10px] text-studio-400">
+                      <span className="font-semibold text-brand">Analysis Result</span>
+                      <span className="text-[10px] text-[#707070]">
                         Detected Slang: {analyzedResult.detectedSlang?.join(", ") || "None"}
                       </span>
                     </div>
-                    <p className="text-studio-300 text-[11px]">{analyzedResult.culturalNotes}</p>
+                    <p className="text-[#a0a0a0] text-[11px]">{analyzedResult.culturalNotes}</p>
                   </div>
                 )}
               </div>

@@ -124,7 +124,7 @@ export default function SocialClipsPage() {
   return (
     <div className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-studio-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#2e2e2e]">
         <div>
           <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-comic-pink mb-1">
             <Video className="w-3.5 h-3.5" />
@@ -139,14 +139,14 @@ export default function SocialClipsPage() {
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => router.push(`/editor/${episodeId}`)}
-            className="px-4 py-2 rounded-xl bg-studio-850 hover:bg-studio-800 border border-studio-700 text-studio-300 text-xs font-bold"
+            className="px-4 py-2 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-studio-300 text-xs font-bold"
           >
             ← Back to Editor
           </button>
           <button
             onClick={handleGenerateDerivatives}
             disabled={isGeneratingDerivatives}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-comic-yellow text-xs font-bold transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-[6px] bg-brand/10 hover:bg-brand/20 border border-brand/25 text-brand text-xs font-bold transition-colors"
           >
             <Layers className="w-4 h-4" />
             {isGeneratingDerivatives ? "Compiling..." : "5-in-1 Derivatives"}
@@ -154,7 +154,7 @@ export default function SocialClipsPage() {
           <button
             onClick={handleExtractClips}
             disabled={isExtracting}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-comic-pink to-comic-purple text-white font-black text-xs shadow-lg shadow-pink-500/20 hover:scale-102 transition-all disabled:opacity-50"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-[6px] bg-gradient-to-r from-comic-pink to-comic-purple text-white font-black text-xs shadow-lg shadow-pink-500/20 hover:scale-102 transition-all disabled:opacity-50"
           >
             <Sparkles className="w-4 h-4" />
             {isExtracting ? "Analyzing 30-min Episode..." : "Auto-Extract Clips"}
@@ -179,14 +179,14 @@ export default function SocialClipsPage() {
                 <div
                   key={clip.id}
                   onClick={() => setSelectedClip(clip)}
-                  className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                  className={`p-4 rounded-[6px] border transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-studio-900 border-comic-pink shadow-md shadow-pink-500/10"
-                      : "bg-studio-900/60 border-studio-800 hover:border-studio-700"
+                      ? "bg-[#171717] border-comic-pink shadow-md shadow-pink-500/10"
+                      : "bg-[#171717]/60 border-[#2e2e2e] hover:border-[#3e3e3e]"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-studio-950 text-comic-pink border border-studio-800">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#121212] text-comic-pink border border-[#2e2e2e]">
                       {clip.durationSeconds}s Clip
                     </span>
                     <span className="text-[10px] font-mono text-studio-400">
@@ -208,22 +208,22 @@ export default function SocialClipsPage() {
         <div className="lg:col-span-4 flex flex-col items-center">
           <div className="flex items-center justify-between w-full max-w-[320px] mb-2 text-xs">
             <span className="font-bold text-studio-400 uppercase">9:16 Mobile Simulator</span>
-            <label className="flex items-center gap-1.5 cursor-pointer text-[11px] text-comic-yellow">
+            <label className="flex items-center gap-1.5 cursor-pointer text-[11px] text-brand">
               <input
                 type="checkbox"
                 checked={showSafeZone}
                 onChange={(e) => setShowSafeZone(e.target.checked)}
-                className="rounded border-studio-700 text-comic-yellow"
+                className="rounded border-[#3e3e3e] text-brand"
               />
               <span>TikTok Safe Zone</span>
             </label>
           </div>
 
           {/* Smartphone Frame (9:16 Aspect Ratio) */}
-          <div className="w-full max-w-[320px] aspect-[9/16] rounded-[36px] bg-black border-4 border-studio-700 shadow-2xl relative overflow-hidden flex flex-col justify-between">
+          <div className="w-full max-w-[320px] aspect-[9/16] rounded-[36px] bg-black border-4 border-[#3e3e3e] shadow-2xl relative overflow-hidden flex flex-col justify-between">
             {/* Phone Notch / Speaker */}
             <div className="absolute top-2 inset-x-0 flex justify-center z-30 pointer-events-none">
-              <div className="w-24 h-4 bg-studio-900 rounded-full"></div>
+              <div className="w-24 h-4 bg-[#171717] rounded-full"></div>
             </div>
 
             {/* Video Background */}
@@ -253,8 +253,8 @@ export default function SocialClipsPage() {
 
             {/* TikTok Safe Zone Overlay Boundaries */}
             {showSafeZone && (
-              <div className="absolute inset-x-4 top-14 bottom-20 border border-dashed border-amber-400/40 rounded-2xl pointer-events-none z-10">
-                <div className="absolute top-1 left-2 text-[8px] font-mono font-bold text-comic-yellow bg-black/80 px-1 rounded">
+              <div className="absolute inset-x-4 top-14 bottom-20 border border-dashed border-amber-400/40 rounded-[6px] pointer-events-none z-10">
+                <div className="absolute top-1 left-2 text-[8px] font-mono font-bold text-brand bg-black/80 px-1 rounded">
                   SAFE TEXT ZONE
                 </div>
               </div>
@@ -280,13 +280,13 @@ export default function SocialClipsPage() {
                 </div>
                 <span className="text-[10px] font-bold mt-1">8.5K</span>
               </div>
-              <div className="w-8 h-8 rounded-full bg-studio-900 border-2 border-white animate-spin"></div>
+              <div className="w-8 h-8 rounded-full bg-[#171717] border-2 border-white animate-spin"></div>
             </div>
 
             {/* Captions in Center / Safe Area */}
             <div className="relative z-20 px-6 pt-24 text-center">
               {selectedClip && (
-                <div className="inline-block bg-black/85 backdrop-blur-md text-comic-yellow font-black text-sm px-4 py-2 rounded-xl border border-amber-400/30 shadow-xl leading-snug">
+                <div className="inline-block bg-black/85 backdrop-blur-md text-brand font-black text-sm px-4 py-2 rounded-[6px] border border-amber-400/30 shadow-xl leading-snug">
                   {selectedClip.hook}
                 </div>
               )}
@@ -302,7 +302,7 @@ export default function SocialClipsPage() {
                 {selectedClip?.title} 🇰🇪 #ComiksX #LifeInNairobi #KenyanAnimation
               </p>
               <div className="flex items-center gap-1 text-[10px] text-studio-300">
-                <Music className="w-3 h-3 text-comic-yellow" />
+                <Music className="w-3 h-3 text-brand" />
                 <span className="truncate">Original Sound - Comiks X Nairobi Beats</span>
               </div>
             </div>
@@ -310,8 +310,8 @@ export default function SocialClipsPage() {
         </div>
 
         {/* Right Column: Social Metadata & Fast Export (4 Cols) */}
-        <div className="lg:col-span-4 bg-studio-900 border border-studio-800 rounded-2xl p-6 space-y-5">
-          <div className="flex items-center justify-between pb-3 border-b border-studio-800">
+        <div className="lg:col-span-4 bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-6 space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-[#2e2e2e]">
             <h3 className="text-sm font-black text-white flex items-center gap-1.5">
               <Share2 className="w-4 h-4 text-comic-pink" />
               Posting Kit & Metadata
@@ -322,7 +322,7 @@ export default function SocialClipsPage() {
           {selectedClip ? (
             <div className="space-y-4 text-xs">
               {/* Retention & Virality Score Breakdown */}
-              <div className="p-3.5 rounded-xl bg-studio-950 border border-studio-800 space-y-2">
+              <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold uppercase text-studio-400 flex items-center gap-1">
                     <Flame className="w-3.5 h-3.5 text-comic-pink" />
@@ -343,7 +343,7 @@ export default function SocialClipsPage() {
                   </div>
                   <div>
                     <span className="text-studio-500 block">Engagement:</span>
-                    <strong className="text-comic-yellow font-bold">92%</strong>
+                    <strong className="text-brand font-bold">92%</strong>
                   </div>
                 </div>
               </div>
@@ -352,7 +352,7 @@ export default function SocialClipsPage() {
               <div>
                 <label className="text-[10px] font-bold text-studio-400 uppercase flex items-center justify-between mb-1.5">
                   <span>Viral Hook Variants (4 Angles)</span>
-                  <span className="text-comic-yellow text-[9px]">Click to Apply</span>
+                  <span className="text-brand text-[9px]">Click to Apply</span>
                 </label>
                 <div className="space-y-1.5">
                   {hookVariants.map((variant, idx) => (
@@ -360,13 +360,13 @@ export default function SocialClipsPage() {
                       key={idx}
                       type="button"
                       onClick={() => handleSelectHookVariant(variant.text)}
-                      className={`w-full p-2 rounded-xl text-left border transition-all ${
+                      className={`w-full p-2 rounded-[6px] text-left border transition-all ${
                         selectedClip.hook === variant.text
-                          ? "bg-amber-500/15 border-comic-yellow text-white shadow-sm shadow-amber-500/10"
-                          : "bg-studio-950 border-studio-800 text-studio-400 hover:border-studio-700 hover:text-studio-200"
+                          ? "bg-[#1c1c1c] border-brand shadow-[0_0_0_1px_rgba(62,207,142,0.3)] text-white shadow-sm shadow-amber-500/10"
+                          : "bg-[#121212] border-[#2e2e2e] text-studio-400 hover:border-[#3e3e3e] hover:text-studio-200"
                       }`}
                     >
-                      <span className="text-[9px] uppercase font-bold text-comic-yellow block">
+                      <span className="text-[9px] uppercase font-bold text-brand block">
                         {variant.label}
                       </span>
                       <p className="text-[11px] font-medium truncate mt-0.5">"{variant.text}"</p>
@@ -386,7 +386,7 @@ export default function SocialClipsPage() {
                     {copiedField === "title" ? "Copied!" : "Copy Title"}
                   </button>
                 </div>
-                <div className="p-2.5 rounded-xl bg-studio-950 border border-studio-800 text-white font-medium mt-1">
+                <div className="p-2.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] text-white font-medium mt-1">
                   {selectedClip.title}
                 </div>
               </div>
@@ -402,7 +402,7 @@ export default function SocialClipsPage() {
                     {copiedField === "desc" ? "Copied!" : "Copy Caption"}
                   </button>
                 </div>
-                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 text-studio-300 font-mono text-[11px] leading-relaxed mt-1 max-h-28 overflow-y-auto">
+                <div className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] text-studio-300 font-mono text-[11px] leading-relaxed mt-1 max-h-28 overflow-y-auto">
                   {selectedClip.description}
                 </div>
               </div>
@@ -414,7 +414,7 @@ export default function SocialClipsPage() {
                   {selectedClip.hashtags?.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 rounded-md bg-studio-950 text-comic-cyan border border-studio-800 text-[10px] font-mono"
+                      className="px-2 py-0.5 rounded-md bg-[#121212] text-comic-cyan border border-[#2e2e2e] text-[10px] font-mono"
                     >
                       {tag}
                     </span>
@@ -423,10 +423,10 @@ export default function SocialClipsPage() {
               </div>
 
               {/* Export Direct Button */}
-              <div className="pt-2 border-t border-studio-800">
+              <div className="pt-2 border-t border-[#2e2e2e]">
                 <button
                   onClick={() => alert(`Clip ${selectedClip.title} ready for 1080x1920 MP4 download!`)}
-                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-comic-pink to-comic-purple text-white font-black text-xs shadow-lg shadow-pink-500/20 hover:scale-102 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-2.5 rounded-[6px] bg-gradient-to-r from-comic-pink to-comic-purple text-white font-black text-xs shadow-lg shadow-pink-500/20 hover:scale-102 transition-all flex items-center justify-center gap-2"
                 >
                   <Video className="w-4 h-4" />
                   Export 1080×1920 TikTok MP4
@@ -442,11 +442,11 @@ export default function SocialClipsPage() {
       {/* Derivatives Bundle Modal */}
       {showDerivativesModal && derivativesBundle && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-studio-900 border border-studio-800 rounded-2xl max-w-3xl w-full p-6 space-y-5 max-h-[85vh] overflow-y-auto shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-studio-800">
+          <div className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] max-w-3xl w-full p-6 space-y-5 max-h-[85vh] overflow-y-auto shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#2e2e2e]">
               <div>
                 <h3 className="text-base font-black text-white flex items-center gap-2">
-                  <Layers className="w-5 h-5 text-comic-yellow" />
+                  <Layers className="w-5 h-5 text-brand" />
                   5-in-1 Social Derivative Content Bundle
                 </h3>
                 <p className="text-xs text-studio-400 mt-0.5">
@@ -465,13 +465,13 @@ export default function SocialClipsPage() {
             <div className="space-y-4 text-xs">
               {/* Quote Cards */}
               <div>
-                <h4 className="font-bold text-comic-yellow uppercase mb-2 flex items-center gap-1.5">
+                <h4 className="font-bold text-brand uppercase mb-2 flex items-center gap-1.5">
                   <Share2 className="w-3.5 h-3.5" />
                   1. Viral Quote Cards ({derivativesBundle.quoteCards?.length || 3})
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   {derivativesBundle.quoteCards?.map((card: any, idx: number) => (
-                    <div key={card.id || idx} className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1">
+                    <div key={card.id || idx} className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1">
                       <span className="text-[10px] font-bold text-comic-cyan block">{card.speaker}</span>
                       <p className="text-xs text-white italic">"{card.quote}"</p>
                       <span className="text-[9px] text-studio-500 font-mono block mt-1">{card.sceneSetting}</span>
@@ -488,10 +488,10 @@ export default function SocialClipsPage() {
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {derivativesBundle.comicPanels?.map((panel: any, idx: number) => (
-                    <div key={panel.id || idx} className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1">
+                    <div key={panel.id || idx} className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1">
                       <div className="flex items-center justify-between text-[10px]">
                         <span className="font-bold text-white">Panel #{panel.panelIndex}</span>
-                        <span className="text-comic-yellow font-mono">{panel.captionStyle}</span>
+                        <span className="text-brand font-mono">{panel.captionStyle}</span>
                       </div>
                       <p className="text-[11px] text-studio-300 line-clamp-2">{panel.actionPrompt}</p>
                     </div>
@@ -500,8 +500,8 @@ export default function SocialClipsPage() {
               </div>
 
               {/* Trailer & Recap EDL Config */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-studio-800">
-                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-[#2e2e2e]">
+                <div className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-comic-purple uppercase text-[11px]">3. Teaser Trailer EDL</span>
                     <span className="text-[10px] text-studio-400 font-mono">45s Duration</span>
@@ -510,7 +510,7 @@ export default function SocialClipsPage() {
                     Hook scene pacing with fast-paced cuts and cinematic outro brand logo sting.
                   </p>
                 </div>
-                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-1">
+                <div className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-emerald-400 uppercase text-[11px]">4. Episode Recap Manifest</span>
                     <span className="text-[10px] text-studio-400 font-mono">60s Duration</span>
@@ -522,10 +522,10 @@ export default function SocialClipsPage() {
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 pt-3 border-t border-studio-800">
+            <div className="flex justify-end gap-2 pt-3 border-t border-[#2e2e2e]">
               <button
                 onClick={() => setShowDerivativesModal(false)}
-                className="px-5 py-2 rounded-xl bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-black text-xs"
+                className="px-5 py-2 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium shadow-sm text-xs"
               >
                 Close & Ready for Export
               </button>

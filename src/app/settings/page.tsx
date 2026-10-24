@@ -2,15 +2,10 @@
 
 import { useState, useEffect } from "react";
 import {
-  Sliders,
   ShieldCheck,
-  Key,
   CheckCircle,
-  AlertTriangle,
-  Sparkles,
   Server,
   Save,
-  Radio,
   Lock,
 } from "lucide-react";
 
@@ -75,7 +70,6 @@ export default function SettingsPage() {
       if (data.success) {
         setStatusMessage("Provider configuration securely saved.");
         await fetchSettings();
-        // Clear plain text inputs after saving for security
         setLumaKey("");
         setRunwayKey("");
         setKlingKey("");
@@ -92,41 +86,43 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8">
+    <div className="max-w-6xl mx-auto w-full space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-studio-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#2e2e2e]">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-comic-yellow mb-1">
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-brand mb-1">
             <ShieldCheck className="w-3.5 h-3.5" />
-            Provider Independence & API Vault
+            Provider Independence & Vault
           </div>
-          <h1 className="text-3xl font-black text-white">AI Providers & Studio Settings</h1>
-          <p className="text-xs text-studio-400 mt-1 max-w-2xl">
-            Switch video generation engines without rewriting code. All API keys are securely stored server-side and never exposed to client browsers.
+          <h1 className="text-xl sm:text-2xl font-semibold text-[#ededed] tracking-tight">
+            AI Providers & Studio Settings
+          </h1>
+          <p className="text-xs text-[#a0a0a0] mt-1 max-w-2xl leading-relaxed">
+            Switch video generation engines without rewriting application code. All API keys are securely stored server-side and never exposed to client browsers.
           </p>
         </div>
       </div>
 
       {statusMessage && (
-        <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center justify-between">
+        <div className="p-3 rounded-[6px] bg-brand/10 border border-brand/25 text-brand text-xs flex items-center justify-between">
           <span className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4" />
             {statusMessage}
           </span>
-          <button onClick={() => setStatusMessage(null)}>✕</button>
+          <button onClick={() => setStatusMessage(null)} className="hover:opacity-75">✕</button>
         </div>
       )}
 
-      {/* Form Settings */}
-      <form onSubmit={handleSave} className="space-y-8">
-        {/* Active Video Engine Selector Cards */}
-        <div className="bg-studio-900 border border-studio-800 rounded-2xl p-6 space-y-4">
+      {/* Settings Form */}
+      <form onSubmit={handleSave} className="space-y-6">
+        {/* Active Provider Cards */}
+        <div className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-5 space-y-4 shadow-sm">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
-              <Server className="w-4 h-4 text-comic-yellow" />
+            <h3 className="text-xs font-semibold text-[#ededed] uppercase tracking-wider flex items-center gap-2">
+              <Server className="w-4 h-4 text-brand" />
               Active AI Video Provider
             </h3>
-            <span className="text-xs text-studio-400">Select default engine for scene rendering</span>
+            <span className="text-xs text-[#707070]">Select default engine for scene rendering</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -136,29 +132,29 @@ export default function SettingsPage() {
                 <div
                   key={p.id}
                   onClick={() => setActiveProvider(p.id)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-all ${
+                  className={`p-3.5 rounded-[6px] border cursor-pointer transition-all ${
                     isSelected
-                      ? "bg-amber-500/10 border-comic-yellow text-white shadow-md shadow-amber-500/10"
-                      : "bg-studio-950 border-studio-800 text-studio-400 hover:border-studio-700"
+                      ? "bg-[#1c1c1c] border-brand shadow-[0_0_0_1px_rgba(62,207,142,0.3)] text-white"
+                      : "bg-[#121212] border-[#2e2e2e] text-[#a0a0a0] hover:border-[#3e3e3e] hover:bg-[#171717]"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-white">{p.name}</span>
-                    {isSelected && <CheckCircle className="w-3.5 h-3.5 text-comic-yellow" />}
+                    <span className="text-xs font-semibold text-[#ededed]">{p.name}</span>
+                    {isSelected && <CheckCircle className="w-3.5 h-3.5 text-brand" />}
                   </div>
 
                   <div className="flex items-center gap-1.5 mt-2">
                     <span
-                      className={`w-2 h-2 rounded-full ${
-                        p.isConfigured ? "bg-emerald-400" : "bg-amber-400"
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        p.isConfigured ? "bg-brand" : "bg-amber-400"
                       }`}
-                    ></span>
-                    <span className="text-[10px] font-semibold text-studio-400">
-                      {p.isConfigured ? "API Key Configured" : "Key Needed"}
+                    />
+                    <span className="text-[10px] text-[#a0a0a0]">
+                      {p.isConfigured ? "Key Configured" : "Key Needed"}
                     </span>
                   </div>
 
-                  <div className="mt-3 pt-2 border-t border-studio-800/80 text-[9px] text-studio-500 space-y-0.5">
+                  <div className="mt-2.5 pt-2 border-t border-[#2e2e2e] text-[9px] text-[#707070] space-y-0.5">
                     <div>✓ Text-to-Video</div>
                     <div>✓ Image-to-Video</div>
                     <div>✓ Scene Regeneration</div>
@@ -169,30 +165,30 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Server-Side API Keys Configuration */}
-        <div className="bg-studio-900 border border-studio-800 rounded-2xl p-6 space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-studio-800">
+        {/* API Credentials Vault */}
+        <div className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-5 space-y-5 shadow-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-[#2e2e2e]">
             <div>
-              <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
-                <Lock className="w-4 h-4 text-emerald-400" />
+              <h3 className="text-xs font-semibold text-[#ededed] uppercase tracking-wider flex items-center gap-2">
+                <Lock className="w-4 h-4 text-brand" />
                 API Credentials Vault
               </h3>
-              <p className="text-xs text-studio-400 mt-0.5">
+              <p className="text-xs text-[#707070] mt-0.5">
                 Saved in server environment. Leave blank to preserve currently stored credentials.
               </p>
             </div>
-            <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-              End-to-End Server-Side Security
+            <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-brand/10 text-brand border border-brand/25">
+              Server-Side Vault
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Luma Dream Machine */}
-            <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-1.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            {/* Luma */}
+            <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-white">Luma Dream Machine API Key</label>
+                <label className="text-xs font-medium text-[#ededed]">Luma Dream Machine API Key</label>
                 {settings?.hasLumaKey && (
-                  <span className="text-[9px] text-emerald-400 font-bold">✓ Stored</span>
+                  <span className="text-[10px] text-brand font-mono font-medium">✓ Stored</span>
                 )}
               </div>
               <input
@@ -200,16 +196,16 @@ export default function SettingsPage() {
                 value={lumaKey}
                 onChange={(e) => setLumaKey(e.target.value)}
                 placeholder={settings?.hasLumaKey ? "••••••••••••••••••••••••" : "luma-api-key..."}
-                className="w-full bg-studio-900 border border-studio-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-comic-yellow font-mono"
+                className="w-full bg-[#171717] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] placeholder-[#707070] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 font-mono transition-all"
               />
             </div>
 
             {/* Runway */}
-            <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-1.5">
+            <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-white">Runway Gen-3 API Key</label>
+                <label className="text-xs font-medium text-[#ededed]">Runway Gen-3 API Key</label>
                 {settings?.hasRunwayKey && (
-                  <span className="text-[9px] text-emerald-400 font-bold">✓ Stored</span>
+                  <span className="text-[10px] text-brand font-mono font-medium">✓ Stored</span>
                 )}
               </div>
               <input
@@ -217,16 +213,16 @@ export default function SettingsPage() {
                 value={runwayKey}
                 onChange={(e) => setRunwayKey(e.target.value)}
                 placeholder={settings?.hasRunwayKey ? "••••••••••••••••••••••••" : "runway-key..."}
-                className="w-full bg-studio-900 border border-studio-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-comic-yellow font-mono"
+                className="w-full bg-[#171717] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] placeholder-[#707070] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 font-mono transition-all"
               />
             </div>
 
-            {/* Kling AI */}
-            <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-1.5">
+            {/* Kling */}
+            <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-white">Kling AI Video Key</label>
+                <label className="text-xs font-medium text-[#ededed]">Kling AI Video Key</label>
                 {settings?.hasKlingKey && (
-                  <span className="text-[9px] text-emerald-400 font-bold">✓ Stored</span>
+                  <span className="text-[10px] text-brand font-mono font-medium">✓ Stored</span>
                 )}
               </div>
               <input
@@ -234,16 +230,16 @@ export default function SettingsPage() {
                 value={klingKey}
                 onChange={(e) => setKlingKey(e.target.value)}
                 placeholder={settings?.hasKlingKey ? "••••••••••••••••••••••••" : "kling-key..."}
-                className="w-full bg-studio-900 border border-studio-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-comic-yellow font-mono"
+                className="w-full bg-[#171717] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] placeholder-[#707070] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 font-mono transition-all"
               />
             </div>
 
             {/* Fal.ai */}
-            <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-1.5">
+            <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-white">Fal.ai API Key (FAL_KEY)</label>
+                <label className="text-xs font-medium text-[#ededed]">Fal.ai API Key (FAL_KEY)</label>
                 {settings?.hasFalKey && (
-                  <span className="text-[9px] text-emerald-400 font-bold">✓ Stored</span>
+                  <span className="text-[10px] text-brand font-mono font-medium">✓ Stored</span>
                 )}
               </div>
               <input
@@ -251,16 +247,16 @@ export default function SettingsPage() {
                 value={falKey}
                 onChange={(e) => setFalKey(e.target.value)}
                 placeholder={settings?.hasFalKey ? "••••••••••••••••••••••••" : "fal-key..."}
-                className="w-full bg-studio-900 border border-studio-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-comic-yellow font-mono"
+                className="w-full bg-[#171717] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] placeholder-[#707070] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 font-mono transition-all"
               />
             </div>
 
-            {/* ElevenLabs for Voice */}
-            <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-1.5">
+            {/* ElevenLabs */}
+            <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-white">ElevenLabs API Key (Character Speech)</label>
+                <label className="text-xs font-medium text-[#ededed]">ElevenLabs API Key (Speech)</label>
                 {settings?.hasElevenlabsKey && (
-                  <span className="text-[9px] text-emerald-400 font-bold">✓ Stored</span>
+                  <span className="text-[10px] text-brand font-mono font-medium">✓ Stored</span>
                 )}
               </div>
               <input
@@ -268,16 +264,16 @@ export default function SettingsPage() {
                 value={elevenlabsKey}
                 onChange={(e) => setElevenlabsKey(e.target.value)}
                 placeholder={settings?.hasElevenlabsKey ? "••••••••••••••••••••••••" : "xi-api-key..."}
-                className="w-full bg-studio-900 border border-studio-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-comic-yellow font-mono"
+                className="w-full bg-[#171717] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] placeholder-[#707070] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 font-mono transition-all"
               />
             </div>
 
-            {/* Gemini API Key */}
-            <div className="p-4 rounded-xl bg-studio-950 border border-studio-800 space-y-1.5">
+            {/* Gemini */}
+            <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-white">Gemini API Key (Story & Script LLM)</label>
+                <label className="text-xs font-medium text-[#ededed]">Gemini API Key (Story LLM)</label>
                 {settings?.hasGeminiKey && (
-                  <span className="text-[9px] text-emerald-400 font-bold">✓ Stored</span>
+                  <span className="text-[10px] text-brand font-mono font-medium">✓ Stored</span>
                 )}
               </div>
               <input
@@ -285,29 +281,31 @@ export default function SettingsPage() {
                 value={geminiKey}
                 onChange={(e) => setGeminiKey(e.target.value)}
                 placeholder={settings?.hasGeminiKey ? "••••••••••••••••••••••••" : "gemini-api-key..."}
-                className="w-full bg-studio-900 border border-studio-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-comic-yellow font-mono"
+                className="w-full bg-[#171717] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-[#ededed] placeholder-[#707070] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 font-mono transition-all"
               />
             </div>
           </div>
         </div>
 
-        {/* Budget & Daily Cap */}
-        <div className="bg-studio-900 border border-studio-800 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Budget Guardrail */}
+        <div className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
           <div>
-            <h3 className="text-sm font-black text-white">Daily Cost Guardrail</h3>
-            <p className="text-xs text-studio-400 mt-0.5">
+            <h3 className="text-xs font-semibold text-[#ededed] uppercase tracking-wider">
+              Daily Cost Guardrail
+            </h3>
+            <p className="text-xs text-[#707070] mt-0.5">
               Halts scene generations if daily spend exceeds this threshold to prevent accidental billing spikes.
             </p>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="text-xs font-bold text-studio-400">$</span>
+            <span className="text-xs font-medium text-[#707070]">$</span>
             <input
               type="number"
               value={dailyBudget}
               onChange={(e) => setDailyBudget(Number(e.target.value))}
-              className="w-24 bg-studio-950 border border-studio-800 rounded-xl px-3 py-1.5 text-xs text-white font-bold"
+              className="w-24 bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-2.5 py-1 text-xs text-[#ededed] font-mono focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40"
             />
-            <span className="text-xs text-studio-400 font-medium">USD / day</span>
+            <span className="text-xs text-[#a0a0a0]">USD / day</span>
           </div>
         </div>
 
@@ -316,10 +314,10 @@ export default function SettingsPage() {
           <button
             type="submit"
             disabled={isSaving}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-black text-xs shadow-lg shadow-amber-500/20 hover:scale-102 transition-all disabled:opacity-50"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium text-xs shadow-sm transition-all disabled:opacity-50"
           >
-            <Save className="w-4 h-4" />
-            {isSaving ? "Saving Configuration..." : "Save Settings & Provider Selection"}
+            <Save className="w-3.5 h-3.5" />
+            <span>{isSaving ? "Saving..." : "Save Settings"}</span>
           </button>
         </div>
       </form>

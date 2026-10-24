@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Sparkles, MessageSquare, X, Send, Bot, User, ArrowRight, Lightbulb } from "lucide-react";
+import { Sparkles, X, Send, Bot, Lightbulb } from "lucide-react";
 
 interface AssistantMessage {
   id: string;
@@ -93,50 +93,52 @@ export function CreatorAssistant() {
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-2xl bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-black text-xs shadow-2xl shadow-amber-500/30 hover:scale-105 transition-all group"
+        className="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-3.5 py-2.5 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium text-xs shadow-[0_4px_16px_rgba(62,207,142,0.3)] transition-all group focus-visible:outline-brand focus-visible:outline-2"
         title="AI Creator Assistant"
+        aria-label="Toggle AI Director Copilot"
       >
-        <Sparkles className="w-4 h-4 stroke-[2.5] group-hover:rotate-12 transition-transform" />
+        <Sparkles className="w-4 h-4 stroke-[2.2] group-hover:rotate-12 transition-transform" />
         <span className="hidden sm:inline">AI Director Copilot</span>
       </button>
 
-      {/* Slide-Up Floating Assistant Drawer */}
+      {/* Floating Assistant Drawer */}
       {isOpen && (
-        <div className="fixed bottom-20 right-4 sm:right-6 z-50 w-[92vw] sm:w-[420px] max-h-[560px] h-[520px] flex flex-col bg-studio-900/95 backdrop-blur-xl border border-studio-800 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+        <div className="fixed bottom-16 right-4 sm:right-5 z-50 w-[92vw] sm:w-[400px] max-h-[540px] h-[500px] flex flex-col bg-[#1c1c1c] border border-[#2e2e2e] rounded-[8px] shadow-[0_16px_40px_rgba(0,0,0,0.6)] overflow-hidden animate-fade-in">
           {/* Header */}
-          <div className="px-5 py-4 border-b border-studio-800/80 bg-studio-950/80 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-comic-yellow to-amber-500 flex items-center justify-center text-studio-950 font-black">
-                <Bot className="w-4 h-4 stroke-[2.5]" />
+          <div className="px-4 py-3 border-b border-[#2e2e2e] bg-[#171717] flex items-center justify-between">
+            <div className="flex items-center space-x-2.5">
+              <div className="w-7 h-7 rounded-[4px] bg-brand/15 border border-brand/25 flex items-center justify-center text-brand font-bold">
+                <Bot className="w-4 h-4 stroke-[2]" />
               </div>
               <div>
-                <h4 className="text-xs font-black text-white">AI Director Copilot</h4>
-                <div className="text-[10px] text-emerald-400 flex items-center gap-1 font-mono">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  Active Studio Context
+                <h4 className="text-xs font-semibold text-[#ededed]">AI Director Copilot</h4>
+                <div className="text-[10px] text-brand flex items-center gap-1 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+                  Studio Context
                 </div>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 rounded-lg text-studio-400 hover:text-white hover:bg-studio-800 transition-colors"
+              className="p-1 rounded-[4px] text-[#707070] hover:text-[#ededed] hover:bg-[#232323] transition-colors"
+              aria-label="Close assistant"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Messages History */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 text-xs">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 text-xs hide-scrollbar">
             {messages.map((m) => (
               <div
                 key={m.id}
                 className={`flex flex-col ${m.sender === "user" ? "items-end" : "items-start"}`}
               >
                 <div
-                  className={`p-3 rounded-2xl max-w-[85%] leading-relaxed ${
+                  className={`p-2.5 rounded-[6px] max-w-[85%] leading-relaxed ${
                     m.sender === "user"
-                      ? "bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-medium rounded-tr-sm"
-                      : "bg-studio-950 border border-studio-800 text-studio-200 rounded-tl-sm"
+                      ? "bg-brand text-[#09090b] font-medium"
+                      : "bg-[#171717] border border-[#2e2e2e] text-[#ededed]"
                   }`}
                 >
                   <p>{m.text}</p>
@@ -149,7 +151,7 @@ export function CreatorAssistant() {
                       <button
                         key={i}
                         onClick={() => handleSend(action)}
-                        className="text-[10px] px-2.5 py-1 rounded-lg bg-studio-950 hover:bg-studio-800 border border-studio-800 hover:border-comic-yellow/50 text-comic-yellow text-left flex items-center gap-1 transition-colors"
+                        className="text-[10px] px-2 py-1 rounded-[4px] bg-[#171717] hover:bg-[#232323] border border-[#2e2e2e] hover:border-brand/40 text-brand text-left flex items-center gap-1 transition-colors"
                       >
                         <Lightbulb className="w-2.5 h-2.5" />
                         <span>{action}</span>
@@ -160,8 +162,8 @@ export function CreatorAssistant() {
               </div>
             ))}
             {isLoading && (
-              <div className="flex items-center space-x-2 text-[11px] text-studio-400 bg-studio-950 p-2.5 rounded-xl border border-studio-800 w-fit">
-                <Sparkles className="w-3.5 h-3.5 text-comic-yellow animate-spin" />
+              <div className="flex items-center space-x-2 text-[11px] text-[#a0a0a0] bg-[#171717] p-2 rounded-[6px] border border-[#2e2e2e] w-fit">
+                <Sparkles className="w-3.5 h-3.5 text-brand animate-spin" />
                 <span>Consulting AI Director & Continuity Engine...</span>
               </div>
             )}
@@ -174,19 +176,20 @@ export function CreatorAssistant() {
               e.preventDefault();
               handleSend();
             }}
-            className="p-3 border-t border-studio-800 bg-studio-950/80 flex items-center gap-2"
+            className="p-3 border-t border-[#2e2e2e] bg-[#171717] flex items-center gap-2"
           >
             <input
               type="text"
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
-              placeholder="Ask copilot about pacing, Sheng slang, model routing..."
-              className="flex-1 bg-studio-900 border border-studio-800 rounded-xl px-3 py-2 text-xs text-white placeholder-studio-500 focus:outline-none focus:border-comic-yellow"
+              placeholder="Ask about scene pacing, Sheng, model routing..."
+              className="flex-1 bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-2.5 py-1.5 text-xs text-[#ededed] placeholder-[#707070] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 transition-all"
             />
             <button
               type="submit"
               disabled={isLoading || !inputQuery.trim()}
-              className="p-2 rounded-xl bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-bold disabled:opacity-40 hover:scale-105 transition-all"
+              className="p-2 rounded-[6px] bg-brand hover:bg-brand-hover text-[#09090b] font-medium disabled:opacity-40 transition-all"
+              aria-label="Send message"
             >
               <Send className="w-3.5 h-3.5" />
             </button>

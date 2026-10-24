@@ -234,18 +234,18 @@ export default function EpisodeEditorPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-studio-950 text-white min-h-[calc(100vh-65px)]">
+    <div className="flex-1 flex flex-col bg-[#121212] text-white min-h-[calc(100vh-65px)]">
       {/* Top Bar Controls */}
-      <div className="border-b border-studio-800 bg-studio-900/90 px-4 md:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+      <div className="border-b border-[#2e2e2e] bg-[#171717]/90 px-4 md:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center space-x-3">
           <button
             onClick={() => router.push(`/storyboard/${episodeId}`)}
-            className="p-1.5 rounded-lg bg-studio-850 hover:bg-studio-800 text-studio-400 hover:text-white"
+            className="p-1.5 rounded-lg bg-[#1c1c1c] hover:bg-[#232323] text-studio-400 hover:text-white"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-comic-yellow block">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand block">
               Multi-Track Timeline Editor
             </span>
             <h2 className="text-base font-black text-white">{episode?.title}</h2>
@@ -254,14 +254,14 @@ export default function EpisodeEditorPage() {
 
         {/* Subtitle Style, Dubbing & Resolution Controls */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center space-x-1.5 bg-studio-950 px-2.5 py-1 rounded-xl border border-studio-800 text-xs">
-            <Languages className="w-3.5 h-3.5 text-comic-yellow" />
+          <div className="flex items-center space-x-1.5 bg-[#121212] px-2.5 py-1 rounded-[6px] border border-[#2e2e2e] text-xs">
+            <Languages className="w-3.5 h-3.5 text-brand" />
             <span className="text-studio-400 font-bold uppercase text-[10px]">Dub:</span>
             <select
               value={dubbingLanguage}
               onChange={(e) => handleApplyDubbing(e.target.value as any)}
               disabled={isDubbing}
-              className="bg-transparent text-xs text-comic-yellow font-bold focus:outline-none cursor-pointer"
+              className="bg-transparent text-xs text-brand font-bold focus:outline-none cursor-pointer"
             >
               <option value="original">Original (Mixed)</option>
               <option value="sheng">Authentic Sheng</option>
@@ -275,7 +275,7 @@ export default function EpisodeEditorPage() {
             <select
               value={subtitleStyle}
               onChange={(e) => setSubtitleStyle(e.target.value as any)}
-              className="bg-studio-950 border border-studio-800 rounded-lg px-2.5 py-1 text-xs text-comic-yellow focus:outline-none"
+              className="bg-[#121212] border border-[#2e2e2e] rounded-lg px-2.5 py-1 text-xs text-brand focus:outline-none"
             >
               <option value="comic">Comic Pop Yellow</option>
               <option value="anime">Anime Cel Glow</option>
@@ -286,19 +286,19 @@ export default function EpisodeEditorPage() {
 
           <button
             onClick={() => handleExport("srt")}
-            className="px-3 py-1.5 rounded-lg bg-studio-850 hover:bg-studio-800 border border-studio-700 text-xs font-bold text-studio-300"
+            className="px-3 py-1.5 rounded-lg bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-xs font-bold text-studio-300"
           >
             Download .SRT
           </button>
           <button
             onClick={() => handleExport("chapters")}
-            className="px-3 py-1.5 rounded-lg bg-studio-850 hover:bg-studio-800 border border-studio-700 text-xs font-bold text-studio-300"
+            className="px-3 py-1.5 rounded-lg bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-xs font-bold text-studio-300"
           >
             Copy Chapters
           </button>
           <button
             onClick={() => handleExport("manifest")}
-            className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-black text-xs shadow-md shadow-amber-500/20"
+            className="px-4 py-1.5 rounded-lg bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium shadow-sm text-xs shadow-md shadow-amber-500/20"
           >
             Render MP4 (1080p)
           </button>
@@ -313,11 +313,11 @@ export default function EpisodeEditorPage() {
       )}
 
       {/* Main Split: Video Preview Player & Inspector */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 md:p-6 bg-studio-950">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 md:p-6 bg-[#121212]">
         {/* Left 2 Cols: Synchronized Video Viewport */}
-        <div className="lg:col-span-2 flex flex-col items-center justify-center bg-studio-900 border border-studio-800 rounded-2xl p-4 relative overflow-hidden min-h-[360px]">
+        <div className="lg:col-span-2 flex flex-col items-center justify-center bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-4 relative overflow-hidden min-h-[360px]">
           {/* Active Scene Preview Screen */}
-          <div className="w-full max-w-2xl aspect-video rounded-xl bg-black relative overflow-hidden flex items-center justify-center border border-studio-800 shadow-2xl">
+          <div className="w-full max-w-2xl aspect-video rounded-[6px] bg-black relative overflow-hidden flex items-center justify-center border border-[#2e2e2e] shadow-2xl">
             {activeScene?.videoUrl ? (
               <video
                 ref={videoRef}
@@ -339,7 +339,7 @@ export default function EpisodeEditorPage() {
               >
                 <div className="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
                 <div className="relative z-10 space-y-2">
-                  <span className="px-2.5 py-0.5 rounded bg-comic-yellow text-studio-950 font-black text-xs">
+                  <span className="px-2.5 py-0.5 rounded bg-[#232323] text-brand border border-brand/25 font-black text-xs">
                     SCENE {activeScene?.sceneNumber} • {activeScene?.location}
                   </span>
                   <p className="text-xs text-white max-w-md">{activeScene?.action}</p>
@@ -373,25 +373,25 @@ export default function EpisodeEditorPage() {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => handleSeek(0)}
-                className="p-2 rounded-lg bg-studio-850 hover:bg-studio-800 text-studio-300"
+                className="p-2 rounded-lg bg-[#1c1c1c] hover:bg-[#232323] text-studio-300"
               >
                 <SkipBack className="w-4 h-4" />
               </button>
               <button
                 onClick={togglePlay}
-                className="p-2.5 rounded-xl bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 font-black shadow-md hover:scale-105 transition-all"
+                className="p-2.5 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium shadow-sm shadow-md hover:scale-105 transition-all"
               >
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-studio-950" />}
               </button>
               <button
                 onClick={() => handleSeek(Math.min(totalDuration, currentTimeSeconds + 10))}
-                className="p-2 rounded-lg bg-studio-850 hover:bg-studio-800 text-studio-300"
+                className="p-2 rounded-lg bg-[#1c1c1c] hover:bg-[#232323] text-studio-300"
               >
                 <SkipForward className="w-4 h-4" />
               </button>
 
               <div className="font-mono text-xs text-studio-300 ml-2">
-                <span className="text-comic-yellow font-bold">{formatTimecode(currentTimeSeconds)}</span> /{" "}
+                <span className="text-brand font-bold">{formatTimecode(currentTimeSeconds)}</span> /{" "}
                 <span>{formatTimecode(totalDuration)}</span>
               </div>
             </div>
@@ -399,7 +399,7 @@ export default function EpisodeEditorPage() {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setIsMuted(!isMuted)}
-                className="p-2 rounded-lg bg-studio-850 hover:bg-studio-800 text-studio-300"
+                className="p-2 rounded-lg bg-[#1c1c1c] hover:bg-[#232323] text-studio-300"
               >
                 {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4" />}
               </button>
@@ -420,10 +420,10 @@ export default function EpisodeEditorPage() {
         </div>
 
         {/* Right 1 Col: Active Scene Inspector & Quick Edit Actions */}
-        <div className="lg:col-span-1 bg-studio-900 border border-studio-800 rounded-2xl p-5 space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-studio-800">
+        <div className="lg:col-span-1 bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-5 space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#2e2e2e]">
             <h3 className="text-sm font-black text-white flex items-center gap-1.5">
-              <Sliders className="w-4 h-4 text-comic-yellow" />
+              <Sliders className="w-4 h-4 text-brand" />
               Selected Scene Controls
             </h3>
             <span className="text-xs font-mono text-studio-400">
@@ -443,16 +443,16 @@ export default function EpisodeEditorPage() {
                 <div className="flex items-center gap-2 mt-1">
                   <button
                     onClick={() => handleTrimScene(activeSceneIndex, -1)}
-                    className="px-2.5 py-1 rounded bg-studio-850 hover:bg-studio-800 border border-studio-700 text-xs font-bold"
+                    className="px-2.5 py-1 rounded bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-xs font-bold"
                   >
                     -1s
                   </button>
-                  <span className="font-mono text-sm font-bold text-comic-yellow px-2">
+                  <span className="font-mono text-sm font-bold text-brand px-2">
                     {activeScene.duration} Seconds
                   </span>
                   <button
                     onClick={() => handleTrimScene(activeSceneIndex, 1)}
-                    className="px-2.5 py-1 rounded bg-studio-850 hover:bg-studio-800 border border-studio-700 text-xs font-bold"
+                    className="px-2.5 py-1 rounded bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-xs font-bold"
                   >
                     +1s
                   </button>
@@ -460,12 +460,12 @@ export default function EpisodeEditorPage() {
               </div>
 
               {/* Action Buttons for Scene */}
-              <div className="pt-2 border-t border-studio-800 space-y-2">
+              <div className="pt-2 border-t border-[#2e2e2e] space-y-2">
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => handleMoveScene(activeSceneIndex, "left")}
                     disabled={activeSceneIndex === 0}
-                    className="p-2 rounded-xl bg-studio-850 hover:bg-studio-800 border border-studio-700 text-studio-300 font-bold flex items-center justify-center gap-1 disabled:opacity-30"
+                    className="p-2 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-studio-300 font-bold flex items-center justify-center gap-1 disabled:opacity-30"
                   >
                     <ChevronLeft className="w-3.5 h-3.5" />
                     Move Left
@@ -473,7 +473,7 @@ export default function EpisodeEditorPage() {
                   <button
                     onClick={() => handleMoveScene(activeSceneIndex, "right")}
                     disabled={activeSceneIndex === scenes.length - 1}
-                    className="p-2 rounded-xl bg-studio-850 hover:bg-studio-800 border border-studio-700 text-studio-300 font-bold flex items-center justify-center gap-1 disabled:opacity-30"
+                    className="p-2 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-studio-300 font-bold flex items-center justify-center gap-1 disabled:opacity-30"
                   >
                     Move Right
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -483,14 +483,14 @@ export default function EpisodeEditorPage() {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => handleDuplicateScene(activeSceneIndex)}
-                    className="p-2 rounded-xl bg-studio-850 hover:bg-studio-800 border border-studio-700 text-studio-300 font-bold flex items-center justify-center gap-1.5"
+                    className="p-2 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-studio-300 font-bold flex items-center justify-center gap-1.5"
                   >
                     <Copy className="w-3.5 h-3.5" />
                     Duplicate
                   </button>
                   <button
                     onClick={() => handleDeleteScene(activeSceneIndex)}
-                    className="p-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 font-bold flex items-center justify-center gap-1.5"
+                    className="p-2 rounded-[6px] bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 font-bold flex items-center justify-center gap-1.5"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     Delete
@@ -499,14 +499,14 @@ export default function EpisodeEditorPage() {
 
                 <button
                   onClick={() => router.push(`/storyboard/${episodeId}`)}
-                  className="w-full py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-comic-yellow font-bold flex items-center justify-center gap-1.5"
+                  className="w-full py-2 rounded-[6px] bg-brand/10 hover:bg-brand/20 border border-brand/25 text-brand font-bold flex items-center justify-center gap-1.5"
                 >
                   <RotateCw className="w-3.5 h-3.5" />
                   Regenerate Scene AI Video
                 </button>
 
                 {/* Version History & Rollback */}
-                <div className="p-3 rounded-xl bg-studio-950 border border-studio-800 space-y-2 mt-3">
+                <div className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-2 mt-3">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-bold uppercase text-studio-400 flex items-center gap-1">
                       <History className="w-3 h-3 text-comic-cyan" />
@@ -518,7 +518,7 @@ export default function EpisodeEditorPage() {
                   </div>
                   <button
                     onClick={() => handleRollbackVersion(activeScene.id)}
-                    className="w-full py-1.5 rounded-lg bg-studio-850 hover:bg-studio-800 border border-studio-700 text-[11px] font-bold text-studio-300 flex items-center justify-center gap-1.5"
+                    className="w-full py-1.5 rounded-lg bg-[#1c1c1c] hover:bg-[#232323] border border-[#3e3e3e] text-[11px] font-bold text-studio-300 flex items-center justify-center gap-1.5"
                   >
                     <Undo2 className="w-3 h-3" />
                     Rollback to Previous Take (v{Math.max(1, (sceneVersions[activeScene.id] || 2) - 1)})
@@ -533,7 +533,7 @@ export default function EpisodeEditorPage() {
       </div>
 
       {/* Bottom Section: Multi-Track Timeline (VIDEO, DIALOGUE, NARRATION, MUSIC, SFX, SUBTITLES) */}
-      <div className="border-t border-studio-800 bg-studio-900/90 p-4 space-y-2 overflow-x-auto">
+      <div className="border-t border-[#2e2e2e] bg-[#171717]/90 p-4 space-y-2 overflow-x-auto">
         <div className="text-[10px] font-bold text-studio-400 uppercase tracking-wider flex items-center justify-between mb-2">
           <span>Multi-Track Timeline Sequence</span>
           <span>Click any block to seek and inspect</span>
@@ -541,11 +541,11 @@ export default function EpisodeEditorPage() {
 
         {/* Track 1: VIDEO */}
         <div className="flex items-center space-x-2">
-          <div className="w-24 shrink-0 text-[11px] font-bold text-comic-yellow flex items-center gap-1">
+          <div className="w-24 shrink-0 text-[11px] font-bold text-brand flex items-center gap-1">
             <Film className="w-3.5 h-3.5" />
             VIDEO
           </div>
-          <div className="flex-1 flex gap-1 min-w-[600px] h-14 bg-studio-950 rounded-xl p-1 border border-studio-800">
+          <div className="flex-1 flex gap-1 min-w-[600px] h-14 bg-[#121212] rounded-[6px] p-1 border border-[#2e2e2e]">
             {scenes.map((scene, idx) => {
               const isSelected = idx === activeSceneIndex;
               return (
@@ -554,8 +554,8 @@ export default function EpisodeEditorPage() {
                   onClick={() => setActiveSceneIndex(idx)}
                   className={`h-full rounded-lg border p-1 cursor-pointer transition-all flex flex-col justify-between overflow-hidden ${
                     isSelected
-                      ? "bg-amber-500/20 border-comic-yellow shadow-md"
-                      : "bg-studio-900 border-studio-800 hover:border-studio-700"
+                      ? "bg-amber-500/20 border-brand shadow-md"
+                      : "bg-[#171717] border-[#2e2e2e] hover:border-[#3e3e3e]"
                   }`}
                   style={{ flex: scene.duration }}
                 >
@@ -576,7 +576,7 @@ export default function EpisodeEditorPage() {
             <Mic className="w-3.5 h-3.5" />
             DIALOGUE
           </div>
-          <div className="flex-1 flex gap-1 min-w-[600px] h-8 bg-studio-950 rounded-xl p-1 border border-studio-800">
+          <div className="flex-1 flex gap-1 min-w-[600px] h-8 bg-[#121212] rounded-[6px] p-1 border border-[#2e2e2e]">
             {scenes.map((scene, idx) => (
               <div
                 key={scene.id}
@@ -596,7 +596,7 @@ export default function EpisodeEditorPage() {
             <MessageSquare className="w-3.5 h-3.5" />
             NARRATION
           </div>
-          <div className="flex-1 flex gap-1 min-w-[600px] h-7 bg-studio-950 rounded-xl p-1 border border-studio-800">
+          <div className="flex-1 flex gap-1 min-w-[600px] h-7 bg-[#121212] rounded-[6px] p-1 border border-[#2e2e2e]">
             {scenes.map((scene, idx) => (
               <div
                 key={scene.id}
@@ -616,7 +616,7 @@ export default function EpisodeEditorPage() {
             <Music className="w-3.5 h-3.5" />
             MUSIC
           </div>
-          <div className="flex-1 flex gap-1 min-w-[600px] h-7 bg-studio-950 rounded-xl p-1 border border-studio-800">
+          <div className="flex-1 flex gap-1 min-w-[600px] h-7 bg-[#121212] rounded-[6px] p-1 border border-[#2e2e2e]">
             {scenes.map((scene, idx) => (
               <div
                 key={scene.id}
@@ -636,7 +636,7 @@ export default function EpisodeEditorPage() {
             <Sliders className="w-3.5 h-3.5" />
             SFX
           </div>
-          <div className="flex-1 flex gap-1 min-w-[600px] h-7 bg-studio-950 rounded-xl p-1 border border-studio-800">
+          <div className="flex-1 flex gap-1 min-w-[600px] h-7 bg-[#121212] rounded-[6px] p-1 border border-[#2e2e2e]">
             {scenes.map((scene, idx) => (
               <div
                 key={scene.id}
@@ -656,7 +656,7 @@ export default function EpisodeEditorPage() {
             <MessageSquare className="w-3.5 h-3.5" />
             SUBTITLES
           </div>
-          <div className="flex-1 flex gap-1 min-w-[600px] h-7 bg-studio-950 rounded-xl p-1 border border-studio-800">
+          <div className="flex-1 flex gap-1 min-w-[600px] h-7 bg-[#121212] rounded-[6px] p-1 border border-[#2e2e2e]">
             {scenes.map((scene, idx) => (
               <div
                 key={scene.id}
@@ -674,8 +674,8 @@ export default function EpisodeEditorPage() {
       {/* Render MP4 Manifest Modal */}
       {exportManifest && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-studio-900 border border-studio-800 rounded-2xl max-w-xl w-full p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-studio-800">
+          <div className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] max-w-xl w-full p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#2e2e2e]">
               <h3 className="text-base font-black text-white flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-emerald-400" />
                 Episode Assembly Manifest (1080p MP4 Ready)
@@ -685,13 +685,13 @@ export default function EpisodeEditorPage() {
             <p className="text-xs text-studio-300">
               Your 30-minute episode EDL and track assembly manifest is compiled.
             </p>
-            <div className="bg-studio-950 p-4 rounded-xl border border-studio-800 text-xs font-mono text-studio-300 max-h-60 overflow-y-auto">
+            <div className="bg-[#121212] p-4 rounded-[6px] border border-[#2e2e2e] text-xs font-mono text-studio-300 max-h-60 overflow-y-auto">
               <pre>{JSON.stringify(exportManifest.data || exportManifest, null, 2)}</pre>
             </div>
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setExportManifest(null)}
-                className="px-4 py-2 rounded-xl bg-studio-800 text-xs font-bold text-white"
+                className="px-4 py-2 rounded-[6px] bg-[#232323] text-xs font-bold text-white"
               >
                 Close
               </button>
