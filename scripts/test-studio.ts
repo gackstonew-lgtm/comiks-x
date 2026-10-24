@@ -712,6 +712,34 @@ async function runStudioTests() {
   const captionsRoutePath = path.join(process.cwd(), "src", "app", "api", "editor", "captions", "route.ts");
   assert(fs.existsSync(captionsRoutePath), "Server route api/editor/captions exists for auto-captions");
 
+  // TEST 34: Module 3 AI Training (Studio Memory, Guidelines, Character DNA Profiles, Feedback & Distilled Rules)
+  console.log("\n--- 34. Testing Module 3 AI Training & Studio Memory ---");
+  const memorySqlPath = path.join(process.cwd(), "supabase", "migrations", "20261025020000_studio_memory.sql");
+  assert(fs.existsSync(memorySqlPath), "Migration 20261025020000_studio_memory.sql exists");
+  const memorySql = fs.readFileSync(memorySqlPath, "utf8");
+  assert(memorySql.includes("CREATE TABLE IF NOT EXISTS public.studio_guidelines"), "studio_guidelines table defined");
+  assert(memorySql.includes("CREATE TABLE IF NOT EXISTS public.character_profiles"), "character_profiles table defined");
+  assert(memorySql.includes("CREATE TABLE IF NOT EXISTS public.generation_feedback"), "generation_feedback table defined");
+  assert(memorySql.includes("CREATE TABLE IF NOT EXISTS public.learned_rules"), "learned_rules table defined");
+
+  const guidelinesRoutePath = path.join(process.cwd(), "src", "app", "api", "training", "guidelines", "route.ts");
+  assert(fs.existsSync(guidelinesRoutePath), "Server route api/training/guidelines exists");
+
+  const profilesRoutePath = path.join(process.cwd(), "src", "app", "api", "training", "profiles", "route.ts");
+  assert(fs.existsSync(profilesRoutePath), "Server route api/training/profiles exists");
+
+  const feedbackRoutePath = path.join(process.cwd(), "src", "app", "api", "training", "feedback", "route.ts");
+  assert(fs.existsSync(feedbackRoutePath), "Server route api/training/feedback exists");
+
+  const rulesRoutePath = path.join(process.cwd(), "src", "app", "api", "training", "rules", "route.ts");
+  assert(fs.existsSync(rulesRoutePath), "Server route api/training/rules exists");
+
+  const distillRoutePath = path.join(process.cwd(), "src", "app", "api", "training", "distill", "route.ts");
+  assert(fs.existsSync(distillRoutePath), "Server route api/training/distill exists");
+
+  const onboardingPath = path.join(process.cwd(), "src", "components", "studio", "studio-onboarding-modal.tsx");
+  assert(fs.existsSync(onboardingPath), "<StudioOnboardingModal /> exists");
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");

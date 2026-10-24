@@ -6,6 +6,7 @@ import { StudioSidebar } from "./studio-sidebar";
 import { StudioTopBar } from "./studio-topbar";
 import { MobileBottomNav } from "./mobile-bottom-nav";
 import { CreatorAssistant } from "@/components/creator-assistant";
+import { StudioOnboardingModal } from "./studio-onboarding-modal";
 
 export function StudioShell({ children }: { children: React.ReactNode }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -47,6 +48,7 @@ export function StudioShell({ children }: { children: React.ReactNode }) {
 
       {/* Floating AI Director Copilot */}
       <CreatorAssistant />
+      <StudioOnboardingModal />
     </div>
   );
 }

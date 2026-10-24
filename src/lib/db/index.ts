@@ -851,6 +851,10 @@ class ComiksDb {
   }
 
   // --- Billing & Credits ---
+  public getBilling(): BillingAccount {
+    return this.getBillingAccount();
+  }
+
   public getBillingAccount(): BillingAccount {
     const b = this.data.billing || DEFAULT_BILLING;
     return {
@@ -993,6 +997,15 @@ class ComiksDb {
       return true;
     }
     return false;
+  }
+
+  public updateAsset(id: string, updates: Partial<MediaAsset>): MediaAsset | null {
+    if (!this.data.assets) return null;
+    const target = this.data.assets.find((a) => a.id === id);
+    if (!target) return null;
+    Object.assign(target, updates);
+    this.save();
+    return target;
   }
 }
 

@@ -130,4 +130,17 @@ export class ReplicateProvider implements IVideoProvider {
       return false;
     }
   }
+
+  public async getOutput(jobId: string): Promise<string | undefined> {
+    const s = await this.getGenerationStatus(jobId);
+    return s.outputUrl;
+  }
+
+  public async generateFromImage(imageUrl: string, request: SceneGenerationRequest): Promise<GenerationResponse> {
+    return this.generateScene({ ...request, imageUrl });
+  }
+
+  public async extendVideo(existingVideoUrl: string, additionalSeconds: number, request: SceneGenerationRequest): Promise<GenerationResponse> {
+    return this.generateScene({ ...request, previousSceneVideoUrl: existingVideoUrl, durationSeconds: additionalSeconds });
+  }
 }

@@ -32,14 +32,15 @@ export async function PATCH(
     }
 
     // Update in local DB store
-    const assets = db.getAssets();
-    const target = assets.find((a) => a.id === id);
-    if (target) {
-      if (name) target.name = target.title = name;
-      if (tags) target.tags = tags;
-      if (projectId !== undefined) target.projectId = projectId;
-      db.save();
+    const updatePayload: Partial<any> = {};
+    if (name) {
+      updatePayload.name = name;
+      updatePayload.title = name;
     }
+    if (tags) updatePayload.tags = tags;
+    if (projectId !== undefined) updatePayload.projectId = projectId;
+
+    const target = db.updateAsset(id, updatePayload);
 
     return NextResponse.json({ success: true, asset: target });
   } catch (error: any) {
