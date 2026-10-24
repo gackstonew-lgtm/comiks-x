@@ -29,9 +29,10 @@ import {
 export default function SocialClipsPage() {
   const params = useParams();
   const router = useRouter();
-  const episodeId = (params?.episodeId as string) || "ep-01-the-pitch";
+  const episodeId = (params?.episodeId as string) || "";
 
   const [episode, setEpisode] = useState<Episode | null>(null);
+  const [loading, setLoading] = useState(true);
   const [clips, setClips] = useState<SocialClip[]>([]);
   const [selectedClip, setSelectedClip] = useState<SocialClip | null>(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
@@ -45,23 +46,35 @@ export default function SocialClipsPage() {
 
 
   useEffect(() => {
-    fetchData();
+    if (episodeId) {
+      fetchData();
+    } else {
+      setLoading(false);
+    }
   }, [episodeId]);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const [epRes, clipsRes] = await Promise.all([
         fetch(`/api/episodes/${episodeId}`).then((r) => r.json()),
         fetch(`/api/clips?episodeId=${episodeId}`).then((r) => r.json()),
       ]);
 
-      if (epRes.success) setEpisode(epRes.data);
+      if (epRes.success) {
+        setEpisode(epRes.data);
+      } else {
+        setEpisode(null);
+      }
       if (clipsRes.success && clipsRes.data) {
         setClips(clipsRes.data);
         if (clipsRes.data.length > 0) setSelectedClip(clipsRes.data[0]);
       }
     } catch (err) {
       console.error(err);
+      setEpisode(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,10 +99,10 @@ export default function SocialClipsPage() {
   };
 
   const hookVariants = selectedClip ? [
-    { label: "Curiosity", text: `Wait until you see how this Nairobi situation unfolded...` },
-    { label: "High Stakes", text: `He had 10 minutes before the pitch, and then everything broke...` },
-    { label: "Kenyan Sheng", text: `Manze hii form ya Kevo na matatu ilienda ngori mbaya!` },
-    { label: "Satirical Twist", text: `Why you should never trust a Nairobi CBD matatu before a tech demo...` },
+    { label: "Curiosity", text: `Wait until you see how this scene unfolded...` },
+    { label: "High Stakes", text: `Only moments left before the deadline, and then everything broke...` },
+    { label: "Punchy Hook", text: `When everything that could go wrong happens all at once!` },
+    { label: "Behind The Scenes", text: `Breaking down this animated sequence frame by frame...` },
   ] : [];
 
   const handleSelectHookVariant = (hookText: string) => {
@@ -120,6 +133,32 @@ export default function SocialClipsPage() {
     setCopiedField(fieldName);
     setTimeout(() => setCopiedField(null), 2000);
   };
+
+  if (loading) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-8 text-studio-400 text-sm min-h-[50vh]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand" />
+      </div>
+    );
+  }
+
+  if (!episode) {
+    return (
+      <div className="flex-1 p-6 md:p-12 max-w-xl mx-auto flex flex-col items-center justify-center min-h-[50vh] text-center">
+        <Smartphone className="w-12 h-12 text-amber-400 mb-3" />
+        <h2 className="text-xl font-bold text-white mb-2">Episode Not Found</h2>
+        <p className="text-xs text-studio-400 mb-6">
+          The requested episode ID "{episodeId}" could not be located in your series.
+        </p>
+        <button
+          onClick={() => router.push("/clips")}
+          className="px-4 py-2 rounded-[6px] bg-brand text-[#09090b] font-medium text-xs hover:bg-brand-hover transition-colors"
+        >
+          View All Social Clips
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8">

@@ -35,7 +35,7 @@ export function HeroProductionCard({ activeEpisode }: { activeEpisode: Episode |
 
             {/* Central Play Button */}
             <Link
-              href={`/storyboard/${activeEpisode?.id || "ep-01-the-pitch"}`}
+              href={activeEpisode ? `/storyboard/${activeEpisode.id}` : "/story-creator"}
               className="absolute inset-0 flex items-center justify-center"
               aria-label="Play preview scene"
             >
@@ -46,7 +46,7 @@ export function HeroProductionCard({ activeEpisode }: { activeEpisode: Episode |
 
             {/* Media Metadata Tag */}
             <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-[11px] text-[#ededed] font-medium">
-              <span className="truncate">Nairobi Metropolis • Act 1 Scene 02</span>
+              <span className="truncate">{activeEpisode ? `${activeEpisode.title} • Production Active` : "Comiks X Creative Studio"}</span>
               <span className="bg-[#121212]/80 border border-[#2e2e2e] px-1.5 py-0.5 rounded text-[10px] font-mono text-[#a0a0a0]">
                 1080p
               </span>

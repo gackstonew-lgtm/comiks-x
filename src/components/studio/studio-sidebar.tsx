@@ -36,13 +36,13 @@ export function StudioSidebar({
     { name: "Series Hub", href: "/series", icon: BookOpen },
     { name: "Character Lab", href: "/characters", icon: User },
     { name: "Story Studio", href: "/story-creator", icon: Sparkles },
-    { name: "Storyboard", href: "/storyboard/ep-01-the-pitch", icon: Layers },
+    { name: "Storyboard", href: "/storyboard", icon: Layers },
     { name: "AI Queue", href: "/queue", icon: Activity },
   ];
 
   const productionNav = [
-    { name: "Timeline Editor", href: "/editor/ep-01-the-pitch", icon: PlaySquare },
-    { name: "Social Studio (9:16)", href: "/clips/ep-01-the-pitch", icon: Video },
+    { name: "Timeline Editor", href: "/editor", icon: PlaySquare },
+    { name: "Social Studio (9:16)", href: "/clips", icon: Video },
   ];
 
   const configNav = [

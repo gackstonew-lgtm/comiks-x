@@ -16,6 +16,9 @@ import {
   Globe,
   Languages,
   Search,
+  Trash2,
+  Edit2,
+  FolderPlus,
 } from "lucide-react";
 
 const ART_STYLES: { name: ComicArtStyle; desc: string; sample: string }[] = [
@@ -35,14 +38,17 @@ export default function SeriesPage() {
   const [seriesList, setSeriesList] = useState<ComicSeries[]>([]);
   const [selectedSeries, setSelectedSeries] = useState<ComicSeries | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [editingSeriesId, setEditingSeriesId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Series Detail Tabs & Extended Systems
   const [activeSeriesTab, setActiveSeriesTab] = useState<"lore" | "world" | "glossary">("lore");
   const [worldUniverse, setWorldUniverse] = useState<any | null>(null);
   const [glossaryTerms, setGlossaryTerms] = useState<any[]>([]);
   const [glossarySearch, setGlossarySearch] = useState("");
-  const [testDialogue, setTestDialogue] = useState("Manze leo Kencom kuliwa ngori sana!");
+  const [testDialogue, setTestDialogue] = useState("");
   const [analyzedResult, setAnalyzedResult] = useState<any | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
@@ -65,9 +71,14 @@ export default function SeriesPage() {
     try {
       const res = await fetch("/api/series");
       const data = await res.json();
-      if (data.success && data.data?.length > 0) {
-        setSeriesList(data.data);
-        if (!selectedSeries) setSelectedSeries(data.data[0]);
+      if (data.success) {
+        const list = Array.isArray(data.data) ? data.data : [];
+        setSeriesList(list);
+        if (list.length > 0) {
+          setSelectedSeries((prev) => (prev ? list.find((s: ComicSeries) => s.id === prev.id) || list[0] : list[0]));
+        } else {
+          setSelectedSeries(null);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -76,32 +87,93 @@ export default function SeriesPage() {
     }
   };
 
-  const handleCreateSeries = async (e: React.FormEvent) => {
+  const handleSaveSeries = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title) return;
+    setErrorMessage(null);
+    setStatusMessage(null);
+
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle || trimmedTitle.length < 2) {
+      setErrorMessage("Series title must be at least 2 characters.");
+      return;
+    }
 
     try {
-      const res = await fetch("/api/series", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          description,
-          genre,
-          artStyle,
-          isStyleLocked,
-          worldRules: rules,
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        await fetchSeries();
-        setIsCreating(false);
-        setTitle("");
-        setDescription("");
+      const payload = {
+        title: trimmedTitle,
+        description: description.trim(),
+        genre: genre.trim(),
+        artStyle,
+        isStyleLocked,
+        worldRules: rules,
+      };
+
+      if (editingSeriesId) {
+        const res = await fetch(`/api/series/${editingSeriesId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setStatusMessage("Series project updated successfully.");
+          await fetchSeries();
+          setIsCreating(false);
+          setEditingSeriesId(null);
+        } else {
+          setErrorMessage(data.error || "Failed to update series.");
+        }
+      } else {
+        const res = await fetch("/api/series", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setStatusMessage("Series project created successfully.");
+          await fetchSeries();
+          setSelectedSeries(data.data);
+          setIsCreating(false);
+          setTitle("");
+          setDescription("");
+        } else {
+          setErrorMessage(data.error || "Failed to create series.");
+        }
       }
     } catch (err) {
-      console.error(err);
+      setErrorMessage("An unexpected network error occurred.");
+    }
+  };
+
+  const startEditSeries = (series: ComicSeries) => {
+    setTitle(series.title);
+    setDescription(series.description || "");
+    setGenre(series.genre || "Animation / Urban Slice-of-Life");
+    setArtStyle(series.artStyle || "African Comic");
+    setIsStyleLocked(series.isStyleLocked ?? true);
+    setRules(series.worldRules || []);
+    setEditingSeriesId(series.id);
+    setIsCreating(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleDeleteSeries = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to delete "${name}"? All associated episodes, characters, and scenes will also be removed permanently.`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/series/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setStatusMessage(`Series "${name}" deleted.`);
+        await fetchSeries();
+      } else {
+        setErrorMessage(data.error || "Failed to delete series.");
+      }
+    } catch (err) {
+      setErrorMessage("Network error deleting series.");
     }
   };
 
@@ -122,6 +194,9 @@ export default function SeriesPage() {
           }
         })
         .catch(console.error);
+    } else {
+      setWorldUniverse(null);
+      setGlossaryTerms([]);
     }
   }, [selectedSeries]);
 
@@ -158,12 +233,23 @@ export default function SeriesPage() {
             Series System & World Rules
           </h1>
           <p className="text-xs text-[#a0a0a0] mt-1 max-w-xl leading-relaxed">
-            Configure series lore, lock visual comic art styles, and establish dialogue world rules across episodes.
+            Configure series projects, lock visual comic art styles, and establish dialogue world rules across episodes.
           </p>
         </div>
 
         <button
-          onClick={() => setIsCreating(!isCreating)}
+          onClick={() => {
+            if (isCreating) {
+              setIsCreating(false);
+              setEditingSeriesId(null);
+            } else {
+              setTitle("");
+              setDescription("");
+              setRules(["Mix English, Swahili, and authentic Sheng naturally."]);
+              setEditingSeriesId(null);
+              setIsCreating(true);
+            }
+          }}
           className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium text-xs shadow-sm transition-all self-start sm:self-auto"
         >
           <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -171,23 +257,37 @@ export default function SeriesPage() {
         </button>
       </div>
 
-      {/* Creation Modal / Form */}
+      {statusMessage && (
+        <div className="p-3 rounded-[6px] bg-brand/10 border border-brand/25 text-brand text-xs flex items-center justify-between">
+          <span>{statusMessage}</span>
+          <button onClick={() => setStatusMessage(null)} className="hover:opacity-75">✕</button>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="p-3 rounded-[6px] bg-red-500/10 border border-red-500/25 text-red-400 text-xs flex items-center justify-between">
+          <span>{errorMessage}</span>
+          <button onClick={() => setErrorMessage(null)} className="hover:opacity-75">✕</button>
+        </div>
+      )}
+
+      {/* Creation / Edit Modal Form */}
       {isCreating && (
         <form
-          onSubmit={handleCreateSeries}
+          onSubmit={handleSaveSeries}
           className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-5 space-y-5 shadow-sm"
         >
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-[#ededed] flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-brand" />
-              New Comic Series Setup
+              {editingSeriesId ? "Edit Comic Series" : "New Comic Series Setup"}
             </h3>
-            <span className="text-xs text-[#707070]">Unlimited episodes can be created under this series</span>
+            <span className="text-xs text-[#707070]">Episodes, characters, and scenes are grouped under this series</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-medium text-[#ededed] mb-1">Series Title</label>
+              <label className="block text-xs font-medium text-[#ededed] mb-1">Series Title *</label>
               <input
                 type="text"
                 value={title}
@@ -307,7 +407,10 @@ export default function SeriesPage() {
           <div className="flex justify-end gap-2.5 pt-3 border-t border-[#2e2e2e]">
             <button
               type="button"
-              onClick={() => setIsCreating(false)}
+              onClick={() => {
+                setIsCreating(false);
+                setEditingSeriesId(null);
+              }}
               className="px-3.5 py-1.5 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-xs font-medium text-[#a0a0a0]"
             >
               Cancel
@@ -316,52 +419,95 @@ export default function SeriesPage() {
               type="submit"
               className="px-4 py-1.5 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] text-xs font-medium shadow-sm"
             >
-              Save & Initialize Series
+              {editingSeriesId ? "Update Series" : "Save & Initialize Series"}
             </button>
           </div>
         </form>
       )}
 
-      {/* Series Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {seriesList.map((series) => (
-          <div
-            key={series.id}
-            onClick={() => setSelectedSeries(series)}
-            className={`cursor-pointer rounded-[6px] p-5 border transition-all ${
-              selectedSeries?.id === series.id
-                ? "bg-[#171717] border-brand shadow-[0_0_0_1px_rgba(62,207,142,0.3)]"
-                : "bg-[#171717] border-[#2e2e2e] hover:border-[#3e3e3e]"
-            }`}
-          >
-            <div className="flex items-center justify-between mb-2.5">
-              <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-[#121212] text-brand border border-[#2e2e2e]">
-                {series.genre}
-              </span>
-              <span className="flex items-center gap-1 text-[10px] font-medium text-[#707070]">
-                {series.isStyleLocked ? (
-                  <>
-                    <Lock className="w-3 h-3 text-brand" />
-                    Locked Style
-                  </>
-                ) : (
-                  <Unlock className="w-3 h-3 text-[#707070]" />
-                )}
-              </span>
-            </div>
-
-            <h3 className="text-base font-semibold text-[#ededed]">{series.title}</h3>
-            <p className="text-xs text-[#a0a0a0] mt-1.5 line-clamp-3 leading-relaxed">
-              {series.description}
-            </p>
-
-            <div className="mt-4 pt-3 border-t border-[#2e2e2e] flex items-center justify-between text-xs">
-              <span className="text-[#707070]">Style: <strong className="text-[#ededed] font-medium">{series.artStyle}</strong></span>
-              <span className="text-brand font-medium">{series.episodeCount || 1} Episodes</span>
-            </div>
+      {/* Series List or Empty State */}
+      {seriesList.length === 0 ? (
+        <div className="rounded-[6px] bg-[#171717] border border-[#2e2e2e] p-8 text-center space-y-4">
+          <div className="w-12 h-12 rounded-[6px] bg-brand/10 border border-brand/25 flex items-center justify-center text-brand mx-auto">
+            <FolderPlus className="w-6 h-6 stroke-[1.8]" />
           </div>
-        ))}
-      </div>
+          <div className="space-y-1 max-w-md mx-auto">
+            <h3 className="text-base font-semibold text-[#ededed]">No Comic Series Projects Yet</h3>
+            <p className="text-xs text-[#a0a0a0] leading-relaxed">
+              Start your animation universe by creating your first comic series. Define its art style, genre, and world rules.
+            </p>
+          </div>
+          <div>
+            <button
+              onClick={() => {
+                setTitle("");
+                setDescription("");
+                setIsCreating(true);
+              }}
+              className="px-4 py-2 rounded-[6px] bg-brand hover:bg-brand-hover text-[#09090b] font-medium text-xs shadow-sm transition-all inline-flex items-center gap-1.5"
+            >
+              <Plus className="w-4 h-4 stroke-[2.5]" />
+              <span>Create Your First Series</span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {seriesList.map((series) => (
+            <div
+              key={series.id}
+              onClick={() => setSelectedSeries(series)}
+              className={`cursor-pointer rounded-[6px] p-5 border transition-all flex flex-col justify-between ${
+                selectedSeries?.id === series.id
+                  ? "bg-[#171717] border-brand shadow-[0_0_0_1px_rgba(62,207,142,0.3)]"
+                  : "bg-[#171717] border-[#2e2e2e] hover:border-[#3e3e3e]"
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2.5">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-[#121212] text-brand border border-[#2e2e2e]">
+                    {series.genre}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        startEditSeries(series);
+                      }}
+                      className="p-1 rounded text-[#707070] hover:text-[#ededed] hover:bg-[#232323] transition-colors"
+                      title="Edit series"
+                      aria-label="Edit series"
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteSeries(series.id, series.title);
+                      }}
+                      className="p-1 rounded text-[#707070] hover:text-red-400 hover:bg-[#232323] transition-colors"
+                      title="Delete series"
+                      aria-label="Delete series"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+
+                <h3 className="text-base font-semibold text-[#ededed]">{series.title}</h3>
+                <p className="text-xs text-[#a0a0a0] mt-1.5 line-clamp-3 leading-relaxed">
+                  {series.description || "No premise description provided."}
+                </p>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-[#2e2e2e] flex items-center justify-between text-xs">
+                <span className="text-[#707070]">Style: <strong className="text-[#ededed] font-medium">{series.artStyle}</strong></span>
+                <span className="text-brand font-medium">{series.episodeCount || 0} Episodes</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Selected Series Detail View */}
       {selectedSeries && (
@@ -376,9 +522,21 @@ export default function SeriesPage() {
               </h2>
               <p className="text-xs text-[#a0a0a0] mt-1">{selectedSeries.description}</p>
             </div>
-            <div className="text-right">
-              <div className="text-[11px] text-[#707070]">Series Brand Outro</div>
-              <div className="text-xs font-semibold text-brand">{selectedSeries.brandIdentity?.outroHook}</div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => startEditSeries(selectedSeries)}
+                className="px-3 py-1.5 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-xs font-medium text-[#ededed] inline-flex items-center gap-1.5"
+              >
+                <Edit2 className="w-3.5 h-3.5" />
+                <span>Edit Project</span>
+              </button>
+              <button
+                onClick={() => handleDeleteSeries(selectedSeries.id, selectedSeries.title)}
+                className="px-3 py-1.5 rounded-[6px] bg-red-500/10 hover:bg-red-500/20 border border-red-500/25 text-xs font-medium text-red-400 inline-flex items-center gap-1.5"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete</span>
+              </button>
             </div>
           </div>
 
@@ -404,7 +562,7 @@ export default function SeriesPage() {
               }`}
             >
               <Globe className="w-3.5 h-3.5" />
-              <span>World Universe & Architecture</span>
+              <span>World Universe</span>
             </button>
             <button
               onClick={() => setActiveSeriesTab("glossary")}
@@ -415,7 +573,7 @@ export default function SeriesPage() {
               }`}
             >
               <Languages className="w-3.5 h-3.5" />
-              <span>Sheng & Swahili Glossary ({glossaryTerms.length})</span>
+              <span>Glossary ({glossaryTerms.length})</span>
             </button>
           </div>
 
@@ -424,95 +582,74 @@ export default function SeriesPage() {
             <div>
               <h4 className="text-xs font-semibold text-[#ededed] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
                 <Shield className="w-3.5 h-3.5 text-brand" />
-                World Rules & Sheng/Swahili Mixing Policies
+                World Rules & Directing Guidelines
               </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {selectedSeries.worldRules?.map((rule, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] text-xs text-[#a0a0a0] leading-relaxed"
-                  >
-                    <span className="text-brand font-medium mr-1.5">Rule {idx + 1}:</span>
-                    {rule}
-                  </div>
-                ))}
-              </div>
+              {selectedSeries.worldRules && selectedSeries.worldRules.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {selectedSeries.worldRules.map((rule, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] text-xs text-[#a0a0a0] leading-relaxed"
+                    >
+                      <span className="text-brand font-medium mr-1.5">Rule {idx + 1}:</span>
+                      {rule}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-xs text-[#707070] italic">No world rules established for this series yet.</p>
+              )}
             </div>
           )}
 
           {/* TAB 2: World Universe & Architecture */}
           {activeSeriesTab === "world" && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="text-xs font-semibold text-[#ededed] uppercase flex items-center gap-1.5">
-                    <Globe className="w-3.5 h-3.5 text-brand" />
-                    {worldUniverse?.name || "Nairobi Metropolis"} — Architectural & Environmental World Bible
-                  </h4>
-                  <p className="text-[11px] text-[#707070] mt-0.5">
-                    {worldUniverse?.culturalTone || "Urban Hustle, Tech Innovation, Vibrant African Comic Energy"}
-                  </p>
-                </div>
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-brand/10 text-brand border border-brand/25">
-                  Global Coherence Anchor
-                </span>
+              <div>
+                <h4 className="text-xs font-semibold text-[#ededed] uppercase flex items-center gap-1.5">
+                  <Globe className="w-3.5 h-3.5 text-brand" />
+                  {worldUniverse?.name || `${selectedSeries.title} World Space`}
+                </h4>
+                <p className="text-[11px] text-[#707070] mt-0.5">
+                  {worldUniverse?.description || "Dynamic environment guidelines for AI camera angles and scene coherence."}
+                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                {/* Architecture Rules */}
                 <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
                   <div className="text-[10px] font-semibold uppercase text-brand flex items-center gap-1">
                     <MapPin className="w-3 h-3" />
-                    Architecture & Urban Fabric Rules
+                    Urban & Spatial Environment
                   </div>
-                  <ul className="text-xs text-[#a0a0a0] space-y-1">
-                    {(worldUniverse?.architectureRules || [
-                      "Buru Buru: 1980s terracotta-tiled maisonettes, walled residential courtyards with iron gates.",
-                      "CBD Kencom: Brutalist glass-and-concrete high-rises with lively ground-level street kiosks.",
-                      "Kilimani: Contemporary glass tech offices with lush perimeter jacaranda trees.",
-                    ]).map((rule: string, i: number) => (
-                      <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-brand font-bold">•</span>
-                        <span>{rule}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="text-xs text-[#a0a0a0]">
+                    {worldUniverse?.architectureStyle || "Configured per scene location prompts."}
+                  </p>
                 </div>
 
-                {/* Lighting Rules */}
                 <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
                   <div className="text-[10px] font-semibold uppercase text-brand flex items-center gap-1">
                     <Sparkles className="w-3 h-3" />
-                    Cinematic Lighting & Atmosphere
+                    Lighting & Aesthetic Rules
                   </div>
-                  <ul className="text-xs text-[#a0a0a0] space-y-1">
-                    {(worldUniverse?.lightingRules || [
-                      "High-contrast equatorial sunlight with sharp deep shadows during midday.",
-                      "Warm golden hour amber rays reflecting off metallic matatu paint.",
-                      "Moody neon, halogen streetlamps, and warm shopfront fluorescent lighting at dusk.",
-                    ]).map((rule: string, i: number) => (
-                      <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-brand font-bold">•</span>
-                        <span>{rule}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="text-xs text-[#a0a0a0]">
+                    {worldUniverse?.lightingRules || "High-contrast comic shading adhering to locked series art style."}
+                  </p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* TAB 3: Sheng & Swahili Glossary */}
+          {/* TAB 3: Glossary */}
           {activeSeriesTab === "glossary" && (
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h4 className="text-xs font-semibold text-[#ededed] uppercase flex items-center gap-1.5">
                     <Languages className="w-3.5 h-3.5 text-brand" />
-                    Kenyan Sheng & Swahili Localization Glossary
+                    Localization Glossary
                   </h4>
                   <p className="text-[11px] text-[#707070] mt-0.5">
-                    Integrated across AI Director dialogue synthesis to preserve authentic Nairobi rhythm.
+                    Terms analyzed during AI Director dialogue synthesis.
                   </p>
                 </div>
 
@@ -522,75 +659,59 @@ export default function SeriesPage() {
                     type="text"
                     value={glossarySearch}
                     onChange={(e) => setGlossarySearch(e.target.value)}
-                    placeholder="Search terms or slang..."
+                    placeholder="Search terms..."
                     className="pl-7 pr-2.5 py-1 bg-[#121212] border border-[#2e2e2e] rounded-[6px] text-xs text-[#ededed] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40 w-44"
                   />
                 </div>
               </div>
 
-              {/* Glossary Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-                {glossaryTerms
-                  .filter((t) =>
-                    glossarySearch
-                      ? t.term.toLowerCase().includes(glossarySearch.toLowerCase()) ||
-                        t.meaning.toLowerCase().includes(glossarySearch.toLowerCase())
-                      : true
-                  )
-                  .map((t, idx) => (
-                    <div key={idx} className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-brand">{t.term}</span>
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#171717] border border-[#2e2e2e] text-[#707070] font-mono">
-                          {t.context}
-                        </span>
+              {glossaryTerms.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                  {glossaryTerms
+                    .filter((t) =>
+                      glossarySearch
+                        ? t.term.toLowerCase().includes(glossarySearch.toLowerCase()) ||
+                          t.meaning.toLowerCase().includes(glossarySearch.toLowerCase())
+                        : true
+                    )
+                    .map((t, idx) => (
+                      <div key={idx} className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-semibold text-brand">{t.term}</span>
+                          <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#171717] border border-[#2e2e2e] text-[#707070] font-mono">
+                            {t.context}
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#ededed] font-medium">{t.meaning}</p>
                       </div>
-                      <p className="text-xs text-[#ededed] font-medium">{t.meaning}</p>
-                      <p className="text-[11px] text-[#707070] italic font-mono bg-[#171717] p-1.5 rounded-[4px] border border-[#2e2e2e]">
-                        "{t.usageExample}"
-                      </p>
-                    </div>
-                  ))}
-              </div>
+                    ))}
+                </div>
+              ) : (
+                <p className="text-xs text-[#707070] italic">No custom glossary terms registered yet.</p>
+              )}
 
               {/* Code-Switching Dialogue Tester */}
               <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <div className="text-xs font-semibold text-[#ededed] flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-brand" />
-                    Interactive Dialogue Code-Switching Analyzer
-                  </div>
-                  <span className="text-[10px] text-[#707070] font-mono">Real-time Sheng / English Verifier</span>
+                <div className="text-xs font-semibold text-[#ededed] flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-brand" />
+                  Dialogue Analyzer
                 </div>
-
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={testDialogue}
                     onChange={(e) => setTestDialogue(e.target.value)}
-                    placeholder="Enter character line (e.g. Manze leo Kencom kuliwa ngori sana)..."
+                    placeholder="Enter character line to analyze cultural phrasing..."
                     className="flex-1 bg-[#171717] border border-[#2e2e2e] rounded-[6px] px-2.5 py-1.5 text-xs text-[#ededed] focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40"
                   />
                   <button
                     onClick={handleAnalyzeDialogue}
-                    disabled={isAnalyzing}
-                    className="px-3 py-1.5 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-brand text-xs font-medium whitespace-nowrap"
+                    disabled={isAnalyzing || !testDialogue.trim()}
+                    className="px-3 py-1.5 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-brand text-xs font-medium whitespace-nowrap disabled:opacity-40"
                   >
                     {isAnalyzing ? "Analyzing..." : "Analyze Dialogue"}
                   </button>
                 </div>
-
-                {analyzedResult && (
-                  <div className="p-2.5 rounded-[6px] bg-[#171717] border border-[#2e2e2e] text-xs space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-brand">Analysis Result</span>
-                      <span className="text-[10px] text-[#707070]">
-                        Detected Slang: {analyzedResult.detectedSlang?.join(", ") || "None"}
-                      </span>
-                    </div>
-                    <p className="text-[#a0a0a0] text-[11px]">{analyzedResult.culturalNotes}</p>
-                  </div>
-                )}
               </div>
             </div>
           )}

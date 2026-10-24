@@ -15,7 +15,7 @@ import {
 
 export default function QueuePage() {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
-  const [selectedEpisodeId, setSelectedEpisodeId] = useState<string>("ep-01-the-pitch");
+  const [selectedEpisodeId, setSelectedEpisodeId] = useState<string>("");
   const [queueData, setQueueData] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -38,9 +38,15 @@ export default function QueuePage() {
       const data = await res.json();
       if (data.success && data.data?.length > 0) {
         setEpisodes(data.data);
+        setSelectedEpisodeId(data.data[0].id);
+      } else {
+        setEpisodes([]);
+        setSelectedEpisodeId("");
+        setLoading(false);
       }
     } catch (err) {
       console.error(err);
+      setLoading(false);
     }
   };
 
@@ -81,6 +87,26 @@ export default function QueuePage() {
   const progress = queueData?.progress;
   const cost = queueData?.costEstimate;
   const currentEp = episodes.find((e) => e.id === selectedEpisodeId);
+
+  if (!loading && episodes.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto w-full p-8 flex flex-col items-center justify-center min-h-[50vh] text-center">
+        <div className="w-14 h-14 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mb-4">
+          <Clock className="w-7 h-7" />
+        </div>
+        <h2 className="text-xl font-bold text-white mb-2">Generation Queue Idle</h2>
+        <p className="text-xs text-studio-400 max-w-md mb-6 leading-relaxed">
+          No episodes are currently queued or pending generation. Create an episode in Story Creator to generate scenes and track AI rendering jobs.
+        </p>
+        <a
+          href="/story-creator"
+          className="px-4 py-2 rounded-[6px] bg-brand text-[#09090b] font-medium text-xs hover:bg-brand-hover transition-colors"
+        >
+          Create Episode
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto w-full space-y-6">

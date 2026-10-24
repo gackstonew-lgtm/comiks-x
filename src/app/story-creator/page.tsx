@@ -24,9 +24,7 @@ export default function StoryCreatorPage() {
   const [seriesList, setSeriesList] = useState<ComicSeries[]>([]);
   const [selectedSeriesId, setSelectedSeriesId] = useState<string>("");
   const [mode, setMode] = useState<"idea" | "script" | "outline">("idea");
-  const [promptContent, setPromptContent] = useState(
-    "A young Kenyan developer gets his first big client but everything goes wrong: a dead laptop battery, an unruly matatu ride through Nairobi traffic, and an escalating race against time."
-  );
+  const [promptContent, setPromptContent] = useState("");
   const [targetDurationMinutes, setTargetDurationMinutes] = useState(30);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedEpisode, setGeneratedEpisode] = useState<Episode | null>(null);
@@ -155,31 +153,51 @@ export default function StoryCreatorPage() {
           {/* Series Picker */}
           <div className="flex items-center space-x-2">
             <span className="text-xs font-bold text-studio-300 uppercase">Target Series:</span>
-            <select
-              value={selectedSeriesId}
-              onChange={(e) => setSelectedSeriesId(e.target.value)}
-              className="bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-white focus:outline-none focus:border-brand"
-            >
-              {seriesList.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.title} ({s.artStyle})
-                </option>
-              ))}
-            </select>
+            {seriesList.length > 0 ? (
+              <select
+                value={selectedSeriesId}
+                onChange={(e) => setSelectedSeriesId(e.target.value)}
+                className="bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-3 py-1.5 text-xs text-white focus:outline-none focus:border-brand"
+              >
+                {seriesList.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.title} ({s.artStyle})
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <span className="text-xs text-amber-400">No series found</span>
+            )}
           </div>
         </div>
+
+        {seriesList.length === 0 && (
+          <div className="p-4 rounded-[6px] bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2 text-xs text-amber-300">
+              <AlertTriangle className="w-4 h-4 shrink-0 text-amber-400" />
+              <span>You need a Comic Series before generating structured episodes.</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => router.push("/series")}
+              className="px-3 py-1.5 rounded-[6px] bg-amber-500 hover:bg-amber-400 text-[#09090b] font-medium text-xs self-start sm:self-auto transition-colors"
+            >
+              Create Series Project →
+            </button>
+          </div>
+        )}
 
         {/* Quick Idea Presets */}
         <div>
           <span className="text-[11px] font-bold text-studio-400 uppercase tracking-wider block mb-2">
-            Quick Idea Starters (Click to load):
+            Story Starters (Click to load):
           </span>
           <div className="flex flex-wrap gap-2">
             {[
-              "A young Kenyan developer gets his first big client but everything goes wrong.",
-              "Kevo borrows an expensive video camera for a Nairobi TikTok shoot and accidentally leaves it in a matatu.",
-              "Mary's fintech company gets hacked by a mysterious rival and Brian has to solve it during an Eastlands blackout.",
-              "An eccentric billionaire arrives in Nairobi offering 10M KES to whoever creates the most viral comic episode.",
+              "A rogue hacker stumbles upon an AI conspiracy inside a mega-corporation and must evade security.",
+              "Two rival detectives are forced to team up when an ancient artifact vanishes from a locked museum.",
+              "A spaceship crew wakes from cryo-sleep to find navigation steering toward an uncharted anomaly.",
+              "A street racer enters a high-stakes championship to save their family garage from foreclosure.",
             ].map((preset, idx) => (
               <button
                 key={idx}
@@ -202,7 +220,7 @@ export default function StoryCreatorPage() {
             value={promptContent}
             onChange={(e) => setPromptContent(e.target.value)}
             rows={5}
-            placeholder="Type your story idea, dialogue script, or episode premise here..."
+            placeholder="Describe your episode premise, plot twists, character goals, or paste your script..."
             className="w-full bg-[#121212] border border-[#2e2e2e] rounded-[6px] p-4 text-sm text-white focus:outline-none focus:border-brand leading-relaxed"
           />
         </div>
@@ -246,8 +264,8 @@ export default function StoryCreatorPage() {
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            disabled={isGenerating}
-            className="flex items-center gap-2 px-6 py-3 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium shadow-sm text-sm shadow-sm hover:scale-102 transition-all disabled:opacity-50"
+            disabled={isGenerating || seriesList.length === 0 || !promptContent.trim()}
+            className="flex items-center gap-2 px-6 py-3 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium shadow-sm text-sm shadow-sm hover:scale-102 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Sparkles className="w-4 h-4 stroke-[2.5]" />
             {isGenerating ? "Decomposing 30-Min Story Structure..." : "Transform into Structured Episode"}

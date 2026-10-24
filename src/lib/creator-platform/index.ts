@@ -49,26 +49,7 @@ export class CreatorPlatformManager {
   }
 
   private initDefaultPlan() {
-    this.contentPlanStore = [
-      {
-        id: "plan-01",
-        episodeId: "ep-01-the-pitch",
-        assetType: "clip",
-        title: "Teaser: The Matatu Shortcut",
-        platform: "tiktok",
-        scheduledDate: new Date(Date.now() + 86400000).toISOString(),
-        status: "ready",
-      },
-      {
-        id: "plan-02",
-        episodeId: "ep-01-the-pitch",
-        assetType: "episode",
-        title: "Full Episode 01: The Big Pitch (30 Min)",
-        platform: "youtube",
-        scheduledDate: new Date(Date.now() + 172800000).toISOString(),
-        status: "planned",
-      },
-    ];
+    this.contentPlanStore = [];
   }
 
   // --- Brand Kit ---
@@ -197,8 +178,9 @@ export class CreatorPlatformManager {
       };
     }
 
+    const seriesTitle = currentSeries?.title ? `project "${currentSeries.title}"` : "your studio workspace";
     return {
-      response: `I've analyzed project "${currentSeries?.title || "Life in Nairobi"}". You have ${characters.length} characters in the Character Bible, ${currentEpisode?.scenes.length || 0} storyboarded scenes, and full 9:16 viral clip derivatives ready. What would you like to refine?`,
+      response: `I've analyzed ${seriesTitle}. You have ${characters.length} characters in the Character Bible, ${currentEpisode?.scenes.length || 0} storyboarded scenes, and generation pipelines ready. What would you like to create or refine?`,
       relevantContext: "Project Architecture Inspector",
     };
   }

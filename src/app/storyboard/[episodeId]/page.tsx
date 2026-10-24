@@ -28,9 +28,10 @@ import {
 export default function StoryboardPage() {
   const params = useParams();
   const router = useRouter();
-  const episodeId = (params?.episodeId as string) || "ep-01-the-pitch";
+  const episodeId = (params?.episodeId as string) || "";
 
   const [episode, setEpisode] = useState<Episode | null>(null);
+  const [loading, setLoading] = useState(true);
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
   const [regeneratingSceneId, setRegeneratingSceneId] = useState<string | null>(null);
@@ -44,7 +45,11 @@ export default function StoryboardPage() {
   const [loadingShots, setLoadingShots] = useState(false);
 
   useEffect(() => {
-    fetchEpisode();
+    if (episodeId) {
+      fetchEpisode();
+    } else {
+      setLoading(false);
+    }
   }, [episodeId]);
 
   useEffect(() => {
@@ -65,6 +70,7 @@ export default function StoryboardPage() {
 
 
   const fetchEpisode = async () => {
+    setLoading(true);
     try {
       const res = await fetch(`/api/episodes/${episodeId}`);
       const data = await res.json();
@@ -74,9 +80,14 @@ export default function StoryboardPage() {
         if (data.data.scenes?.length > 0 && !selectedScene) {
           setSelectedScene(data.data.scenes[0]);
         }
+      } else {
+        setEpisode(null);
       }
     } catch (err) {
       console.error(err);
+      setEpisode(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,6 +116,32 @@ export default function StoryboardPage() {
   };
 
   const filteredScenes = filterAct ? scenes.filter((s) => s.actNumber === filterAct) : scenes;
+
+  if (loading) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-8 text-studio-400 text-sm min-h-[50vh]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand" />
+      </div>
+    );
+  }
+
+  if (!episode) {
+    return (
+      <div className="flex-1 p-6 md:p-12 max-w-xl mx-auto flex flex-col items-center justify-center min-h-[50vh] text-center">
+        <AlertTriangle className="w-12 h-12 text-amber-400 mb-3" />
+        <h2 className="text-xl font-bold text-white mb-2">Episode Not Found</h2>
+        <p className="text-xs text-studio-400 mb-6">
+          The requested episode ID "{episodeId}" could not be located in your series.
+        </p>
+        <button
+          onClick={() => router.push("/storyboard")}
+          className="px-4 py-2 rounded-[6px] bg-brand text-[#09090b] font-medium text-xs hover:bg-brand-hover transition-colors"
+        >
+          View All Storyboards
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8">

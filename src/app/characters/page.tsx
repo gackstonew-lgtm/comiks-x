@@ -55,14 +55,14 @@ export default function CharacterBiblePage() {
   // Form fields
   const [formData, setFormData] = useState<Partial<Character>>({
     name: "",
-    age: 24,
+    age: 25,
     personality: "",
     appearance: "",
     clothing: "",
     hairstyle: "",
     skinTone: "",
     bodyType: "",
-    accent: "Kenyan English",
+    accent: "Standard",
     speechStyle: "",
     characterDescription: "",
     isLocked: true,
@@ -171,7 +171,7 @@ export default function CharacterBiblePage() {
     setVoiceTesting(true);
     setVoiceTestAudio(null);
     try {
-      const testPhrase = `Sasa! I am ${char.name}. I am ready for the upcoming episode in Nairobi!`;
+      const testPhrase = `Hello! I am ${char.name}. I am ready for the upcoming production scene.`;
       const res = await fetch("/api/scenes/voice", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -192,9 +192,27 @@ export default function CharacterBiblePage() {
     }
   };
 
+  const handleDeleteCharacter = async (charId: string) => {
+    if (!confirm("Are you sure you want to delete this character anchor? This cannot be undone.")) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/characters/${charId}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        const remaining = characters.filter((c) => c.id !== charId);
+        setCharacters(remaining);
+        setSelectedCharacter(remaining.length > 0 ? remaining[0] : null);
+        setStatusMessage("Character removed from bible.");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleSaveCharacter = async (e: React.FormEvent) => {
     e.preventDefault();
-    const seriesId = seriesList[0]?.id || "series-nairobi-01";
+    const seriesId = seriesList[0]?.id || "";
 
     if (isCreating) {
       const res = await fetch("/api/characters", {
@@ -333,16 +351,16 @@ export default function CharacterBiblePage() {
             setSelectedCharacter(null);
             setFormData({
               name: "",
-              age: 23,
-              personality: "Witty and energetic",
-              appearance: "Expressive eyes, warm brown skin",
-              clothing: "Modern urban Kenyan streetwear",
-              hairstyle: "Short fade with waves",
-              skinTone: "Deep warm bronze",
-              bodyType: "Lean athletic",
-              accent: "Kenyan English / Sheng",
-              speechStyle: "Casual, witty, fast-paced",
-              characterDescription: "New recurring cast member.",
+              age: 25,
+              personality: "",
+              appearance: "",
+              clothing: "",
+              hairstyle: "",
+              skinTone: "",
+              bodyType: "",
+              accent: "Standard English",
+              speechStyle: "",
+              characterDescription: "",
               isLocked: true,
             });
           }}
@@ -373,58 +391,97 @@ export default function CharacterBiblePage() {
           </div>
 
           <div className="space-y-3">
-            {characters.map((char) => {
-              const isSelected = selectedCharacter?.id === char.id;
-              return (
-                <div
-                  key={char.id}
-                  onClick={() => handleSelectCharacter(char)}
-                  className={`p-4 rounded-[6px] border transition-all cursor-pointer ${
-                    isSelected
-                      ? "bg-[#171717] border-brand shadow-sm"
-                      : "bg-[#171717]/60 border-[#2e2e2e] hover:border-[#3e3e3e]"
-                  }`}
+            {characters.length === 0 ? (
+              <div className="p-6 rounded-[6px] border border-dashed border-[#2e2e2e] text-center space-y-3 bg-[#171717]/40">
+                <div className="w-10 h-10 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center mx-auto text-brand">
+                  <User className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white">No Characters Found</div>
+                  <p className="text-[11px] text-studio-400 mt-1">
+                    Create characters to lock facial features, voice, and clothing consistency.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCreating(true);
+                    setIsEditing(false);
+                    setSelectedCharacter(null);
+                    setFormData({
+                      name: "",
+                      age: 25,
+                      personality: "",
+                      appearance: "",
+                      clothing: "",
+                      hairstyle: "",
+                      skinTone: "",
+                      bodyType: "",
+                      accent: "Standard English",
+                      speechStyle: "",
+                      characterDescription: "",
+                      isLocked: true,
+                    });
+                  }}
+                  className="px-3 py-1.5 rounded-[6px] bg-brand text-[#09090b] font-medium text-xs hover:bg-brand-hover transition-colors inline-block"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-[6px] bg-brand/15 border border-brand/30 flex items-center justify-center font-semibold text-brand text-base shadow-sm">
-                        {char.name.charAt(0)}
-                      </div>
-                      <div>
-                        <div className="font-black text-white text-sm">{char.name}</div>
-                        <div className="text-[11px] text-studio-400 mt-0.5">
-                          Age {char.age} • {char.accent}
+                  + Add First Character
+                </button>
+              </div>
+            ) : (
+              characters.map((char) => {
+                const isSelected = selectedCharacter?.id === char.id;
+                return (
+                  <div
+                    key={char.id}
+                    onClick={() => handleSelectCharacter(char)}
+                    className={`p-4 rounded-[6px] border transition-all cursor-pointer ${
+                      isSelected
+                        ? "bg-[#171717] border-brand shadow-sm"
+                        : "bg-[#171717]/60 border-[#2e2e2e] hover:border-[#3e3e3e]"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 rounded-[6px] bg-brand/15 border border-brand/30 flex items-center justify-center font-semibold text-brand text-base shadow-sm">
+                          {char.name.charAt(0)}
+                        </div>
+                        <div>
+                          <div className="font-black text-white text-sm">{char.name}</div>
+                          <div className="text-[11px] text-studio-400 mt-0.5">
+                            Age {char.age} • {char.accent}
+                          </div>
                         </div>
                       </div>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleLock(char.id);
+                        }}
+                        title={char.isLocked ? "Design is locked (consistency enforced)" : "Design is unlocked"}
+                        className={`p-1.5 rounded-lg border text-xs transition-colors ${
+                          char.isLocked
+                            ? "bg-brand/10 border-brand/25 text-brand"
+                            : "bg-[#232323] border-[#3e3e3e] text-studio-400"
+                        }`}
+                      >
+                        {char.isLocked ? <Lock className="w-3.5 h-3.5" /> : <Unlock className="w-3.5 h-3.5" />}
+                      </button>
                     </div>
 
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleToggleLock(char.id);
-                      }}
-                      title={char.isLocked ? "Design is locked (consistency enforced)" : "Design is unlocked"}
-                      className={`p-1.5 rounded-lg border text-xs transition-colors ${
-                        char.isLocked
-                          ? "bg-brand/10 border-brand/25 text-brand"
-                          : "bg-[#232323] border-[#3e3e3e] text-studio-400"
-                      }`}
-                    >
-                      {char.isLocked ? <Lock className="w-3.5 h-3.5" /> : <Unlock className="w-3.5 h-3.5" />}
-                    </button>
-                  </div>
+                    <p className="text-xs text-studio-300 mt-3 line-clamp-2 leading-relaxed">
+                      {char.clothing}
+                    </p>
 
-                  <p className="text-xs text-studio-300 mt-3 line-clamp-2 leading-relaxed">
-                    {char.clothing}
-                  </p>
-
-                  <div className="mt-3 pt-2 border-t border-[#2e2e2e] flex items-center justify-between text-[10px] text-studio-400">
-                    <span>Hairstyle: <strong className="text-white">{char.hairstyle}</strong></span>
-                    <span className="text-comic-cyan font-bold">{char.voice?.gender}</span>
+                    <div className="mt-3 pt-2 border-t border-[#2e2e2e] flex items-center justify-between text-[10px] text-studio-400">
+                      <span>Hairstyle: <strong className="text-white">{char.hairstyle}</strong></span>
+                      <span className="text-comic-cyan font-bold">{char.voice?.gender}</span>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
 
@@ -612,6 +669,14 @@ export default function CharacterBiblePage() {
                   >
                     {selectedCharacter.isLocked ? <Unlock className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5" />}
                     {selectedCharacter.isLocked ? "Unlock" : "Lock Design"}
+                  </button>
+                  <button
+                    onClick={() => handleDeleteCharacter(selectedCharacter.id)}
+                    className="p-2 rounded-[6px] bg-[#1c1c1c] hover:bg-red-500/10 border border-[#3e3e3e] hover:border-red-500/30 text-studio-400 hover:text-red-400 text-xs font-bold flex items-center gap-1.5 transition-colors"
+                    title="Delete character"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    Delete
                   </button>
                 </div>
               </div>

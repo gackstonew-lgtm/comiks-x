@@ -16,6 +16,7 @@ import { qualityGate, assetVersionControl } from "../src/lib/quality";
 import { audioDubbingStudio } from "../src/lib/audio-studio";
 import { retentionEngine, derivativesGenerator } from "../src/lib/social-director";
 import { creatorPlatform } from "../src/lib/creator-platform";
+import { seedDevData } from "./dev-seed";
 
 async function runStudioTests() {
   console.log("==================================================");
@@ -25,7 +26,7 @@ async function runStudioTests() {
   let passed = 0;
   let failed = 0;
 
-  function assert(condition: boolean, message: string) {
+  const assert = (condition: boolean, message: string) => {
     if (condition) {
       console.log(`✅ [PASS] ${message}`);
       passed++;
@@ -33,14 +34,18 @@ async function runStudioTests() {
       console.error(`❌ [FAIL] ${message}`);
       failed++;
     }
-  }
+  };
 
-  // TEST 1: Comic Series System
-  console.log("--- 1. Testing Comic Series System ---");
-  const seriesList = db.getSeries();
-  assert(seriesList.length > 0, `Series loaded: found ${seriesList.length} series`);
-  const nairobiSeries = seriesList[0];
-  assert(nairobiSeries.artStyle === "African Comic", `Series art style is "${nairobiSeries.artStyle}"`);
+  try {
+    // Ensure test fixtures are available for unit validation
+    seedDevData();
+
+    // TEST 1: Comic Series System
+    console.log("--- 1. Testing Comic Series System ---");
+    const seriesList = db.getSeries();
+    assert(seriesList.length > 0, `Series loaded: found ${seriesList.length} series`);
+    const nairobiSeries = seriesList.find((s) => s.id === "series-nairobi-01") || seriesList[0];
+    assert(nairobiSeries.artStyle === "African Comic", `Series art style is "${nairobiSeries.artStyle}"`);
   assert(nairobiSeries.isStyleLocked === true, "Visual art style is locked across series");
   assert(nairobiSeries.worldRules.length > 0, `World rules defined: ${nairobiSeries.worldRules.length} rules`);
 
@@ -290,6 +295,23 @@ async function runStudioTests() {
   const brandKit = creatorPlatform.getBrandKit(nairobiSeries.id);
   assert(Boolean(brandKit.primaryColor && brandKit.secondaryColor), `Brand kit verified: Primary ${brandKit.primaryColor}, Secondary ${brandKit.secondaryColor}, Font: ${brandKit.typography}`);
 
+  creatorPlatform.addContentPlanItem({
+    episodeId: newEpisode.id,
+    assetType: "clip",
+    title: "Episode Teaser",
+    platform: "tiktok",
+    scheduledDate: new Date().toISOString(),
+    status: "planned",
+  });
+  creatorPlatform.addContentPlanItem({
+    episodeId: newEpisode.id,
+    assetType: "clip",
+    title: "Viral Action Cut",
+    platform: "shorts",
+    scheduledDate: new Date().toISOString(),
+    status: "ready",
+  });
+
   const plan = creatorPlatform.getContentPlan();
   assert(plan.length >= 2, `Content plan populated with ${plan.length} scheduled production drop items`);
 
@@ -301,11 +323,15 @@ async function runStudioTests() {
   assert(Boolean(assistantResponse.response), `AI Creator Assistant delivered contextual director guidance: "${assistantResponse.response.substring(0, 60)}..."`);
   assert(Boolean(assistantResponse.relevantContext), `Context identified: ${assistantResponse.relevantContext}`);
 
-  console.log("\n==================================================");
-  console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
-  console.log("==================================================");
+    console.log("\n==================================================");
+    console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
+    console.log("==================================================");
 
-  if (failed > 0) process.exit(1);
+    if (failed > 0) process.exit(1);
+  } finally {
+    console.log("Restoring clean production database state...");
+    db.resetToEmpty();
+  }
 }
 
 runStudioTests().catch((err) => {

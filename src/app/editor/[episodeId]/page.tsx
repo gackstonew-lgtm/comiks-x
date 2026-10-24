@@ -34,9 +34,10 @@ import {
 export default function EpisodeEditorPage() {
   const params = useParams();
   const router = useRouter();
-  const episodeId = (params?.episodeId as string) || "ep-01-the-pitch";
+  const episodeId = (params?.episodeId as string) || "";
 
   const [episode, setEpisode] = useState<Episode | null>(null);
+  const [loading, setLoading] = useState(true);
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [activeSceneIndex, setActiveSceneIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -58,19 +59,29 @@ export default function EpisodeEditorPage() {
   const playbackTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    fetchEpisode();
+    if (episodeId) {
+      fetchEpisode();
+    } else {
+      setLoading(false);
+    }
   }, [episodeId]);
 
   const fetchEpisode = async () => {
+    setLoading(true);
     try {
       const res = await fetch(`/api/episodes/${episodeId}`);
       const data = await res.json();
       if (data.success && data.data) {
         setEpisode(data.data);
         setScenes(data.data.scenes || []);
+      } else {
+        setEpisode(null);
       }
     } catch (err) {
       console.error(err);
+      setEpisode(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -182,7 +193,7 @@ export default function EpisodeEditorPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          characterId: diag.characterId || "char-brian-01",
+          characterId: diag.characterId || "",
           originalText: diag.line,
           targetLanguage: lang,
         }),
@@ -232,6 +243,32 @@ export default function EpisodeEditorPage() {
     const s = Math.floor(sec % 60);
     return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
   };
+
+  if (loading) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-8 text-studio-400 text-sm min-h-[50vh]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand" />
+      </div>
+    );
+  }
+
+  if (!episode) {
+    return (
+      <div className="flex-1 p-6 md:p-12 max-w-xl mx-auto flex flex-col items-center justify-center min-h-[50vh] text-center">
+        <Film className="w-12 h-12 text-amber-400 mb-3" />
+        <h2 className="text-xl font-bold text-white mb-2">Episode Not Found</h2>
+        <p className="text-xs text-studio-400 mb-6">
+          The requested episode ID "{episodeId}" could not be located in your series.
+        </p>
+        <button
+          onClick={() => router.push("/editor")}
+          className="px-4 py-2 rounded-[6px] bg-brand text-[#09090b] font-medium text-xs hover:bg-brand-hover transition-colors"
+        >
+          View All Episodes
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 flex flex-col bg-[#121212] text-white min-h-[calc(100vh-65px)]">

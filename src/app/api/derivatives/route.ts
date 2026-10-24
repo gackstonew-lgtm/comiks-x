@@ -5,7 +5,10 @@ import { db } from "@/lib/db";
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const episodeId = searchParams.get("episodeId") || "ep-01-the-pitch";
+    const episodeId = searchParams.get("episodeId") || db.getEpisodes()[0]?.id;
+    if (!episodeId) {
+      return NextResponse.json({ success: false, error: "No episode available" }, { status: 404 });
+    }
 
     const ep = db.getEpisodeById(episodeId);
     if (!ep) return NextResponse.json({ success: false, error: "Episode not found" }, { status: 404 });
