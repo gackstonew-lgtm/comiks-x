@@ -601,6 +601,25 @@ async function runStudioTests() {
   assert(signupRouteCode.includes("auth.admin.createUser"), "Signup route calls auth.admin.createUser");
   assert(signupRouteCode.includes("checkRateLimit"), "Signup route applies per-IP rate limiting abuse protection");
 
+  // TEST 30: Zero Sparkles/Stars & 5 Core Modules Navigation
+  console.log("\n--- 30. Testing Zero Sparkle/Stars Icons & 5 Core Modules Navigation ---");
+  const sidebarPath = path.join(process.cwd(), "src", "components", "studio", "studio-sidebar.tsx");
+  const sidebarContent = fs.readFileSync(sidebarPath, "utf8");
+  assert(!sidebarContent.includes("Sparkle"), "Studio sidebar has zero Sparkles icons");
+  assert(sidebarContent.includes("Video Generator"), "Sidebar has Video Generator module");
+  assert(sidebarContent.includes("Video Editor"), "Sidebar has Video Editor module");
+  assert(sidebarContent.includes("AI Training"), "Sidebar has AI Training module");
+  assert(sidebarContent.includes("Projects & Library"), "Sidebar has Projects & Library module");
+  assert(sidebarContent.includes("Credits & Usage"), "Sidebar has Credits & Usage module");
+
+  const mobileNavPath = path.join(process.cwd(), "src", "components", "studio", "mobile-bottom-nav.tsx");
+  const mobileNavContent = fs.readFileSync(mobileNavPath, "utf8");
+  assert(!mobileNavContent.includes("Sparkle"), "Mobile bottom nav has zero Sparkles icons");
+  assert(mobileNavContent.includes("/video-generator"), "Mobile nav links to video-generator");
+  assert(mobileNavContent.includes("/editor"), "Mobile nav links to editor");
+  assert(mobileNavContent.includes("/training"), "Mobile nav links to training");
+  assert(mobileNavContent.includes("/projects"), "Mobile nav links to projects");
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");

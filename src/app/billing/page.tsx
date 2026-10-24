@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
   CreditCard,
-  Sparkles,
+  Wallet,
   CheckCircle2,
   Zap,
   ShieldCheck,
@@ -127,7 +127,7 @@ export default function BillingCreditsPage() {
             </div>
           </div>
           <p className="text-[11px] text-[#888] mt-4 flex items-center gap-1.5">
-            <Sparkles className="w-3 h-3 text-brand" />
+            <Zap className="w-3 h-3 text-brand" />
             Never expires on active plans
           </p>
         </div>

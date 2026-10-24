@@ -5,7 +5,7 @@ import {
   Mic,
   Music,
   Volume2,
-  Sparkles,
+  Zap,
   Play,
   Pause,
   Download,
@@ -174,7 +174,7 @@ export default function VoiceMusicStudioPage() {
               : "text-[#a0a0a0] hover:text-[#ededed]"
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5" />
+          <Zap className="w-3.5 h-3.5" />
           Cartoon SFX Library
         </button>
         <button
@@ -271,7 +271,7 @@ export default function VoiceMusicStudioPage() {
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4" />
+                    <Zap className="w-4 h-4 stroke-[2]" />
                     Generate Voice Track (1 Credit)
                   </>
                 )}

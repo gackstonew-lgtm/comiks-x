@@ -4,19 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard,
-  Video,
-  Image as ImageIcon,
-  Layers,
-  Sliders,
-  UserCheck,
-  Mic,
-  Users,
-  FolderKanban,
-  LayoutTemplate,
-  Stamp,
-  CreditCard,
-  Building2,
+  Clapperboard,
+  Scissors,
+  BrainCircuit,
+  Film,
+  Wallet,
   Settings,
   ChevronLeft,
   ChevronRight,
@@ -39,22 +31,13 @@ export function StudioSidebar({
   const [isHovered, setIsHovered] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Exact 14 primary modules in requested order
+  // Exact 5 primary modules in requested product scope
   const navigationModules = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "AI Video Generator", href: "/video-generator", icon: Video },
-    { name: "AI Image Generator", href: "/image-generator", icon: ImageIcon },
-    { name: "Script & Storyboard", href: "/storyboard", icon: Layers },
-    { name: "Timeline Editor", href: "/editor", icon: Sliders },
-    { name: "AI Avatars", href: "/avatars", icon: UserCheck },
-    { name: "Voice & Music Studio", href: "/voice-music", icon: Mic },
-    { name: "Characters & Styles", href: "/characters", icon: Users },
-    { name: "Projects & Assets", href: "/projects", icon: FolderKanban },
-    { name: "Templates", href: "/templates", icon: LayoutTemplate },
-    { name: "Brand Kit", href: "/brand-kit", icon: Stamp },
-    { name: "Billing & Credits", href: "/billing", icon: CreditCard },
-    { name: "Team Workspace", href: "/team", icon: Building2 },
-    { name: "Settings", href: "/settings", icon: Settings },
+    { name: "Video Generator", href: "/video-generator", icon: Clapperboard },
+    { name: "Video Editor", href: "/editor", icon: Scissors },
+    { name: "AI Training", href: "/training", icon: BrainCircuit },
+    { name: "Projects & Library", href: "/projects", icon: Film },
+    { name: "Credits & Usage", href: "/billing", icon: Wallet },
   ];
 
   // Load persistent collapse preference on mount
@@ -78,7 +61,6 @@ export function StudioSidebar({
   };
 
   const isActive = (href: string) => {
-    if (href === "/dashboard") return pathname === "/dashboard";
     return pathname.startsWith(href);
   };
 
@@ -99,54 +81,48 @@ export function StudioSidebar({
     }, 100);
   };
 
-  // Desktop sidebar is open if not collapsed OR if hovered while collapsed
   const isExpanded = !isCollapsed || isHovered;
 
   return (
     <>
-      {/* Mobile Dimmed Backdrop */}
+      {/* Mobile Backdrop Overlay */}
       {isMobileOpen && (
         <div
           onClick={onCloseMobile}
-          className="fixed inset-0 bg-black/75 backdrop-blur-xs z-40 md:hidden transition-opacity duration-200"
           aria-hidden="true"
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 md:hidden transition-opacity"
         />
       )}
 
-      {/* Main Studio Sidebar */}
+      {/* Sidebar Container */}
       <aside
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        aria-label="Studio Main Navigation"
-        className={`fixed top-0 left-0 bottom-0 z-50 flex flex-col bg-[#1c1c1c] border-r border-[#2e2e2e] select-none transition-[width,transform] duration-200 ease-in-out ${
-          // Desktop: collapsed 56px (w-14) vs expanded 240px (w-60)
-          isExpanded
-            ? "md:w-60 shadow-[0_0_0_1px_#2e2e2e,0_12px_32px_0_rgba(0,0,0,0.6)]"
-            : "md:w-14"
-        } ${
-          // Mobile: drawer slides in full height 240px
-          isMobileOpen ? "translate-x-0 w-60" : "-translate-x-full md:translate-x-0"
-        }`}
+        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col bg-[#171717] border-r border-[#2e2e2e] transition-[width,transform] duration-200 ease-in-out select-none ${
+          isMobileOpen
+            ? "translate-x-0 w-64"
+            : "-translate-x-full md:translate-x-0"
+        } ${isExpanded ? "md:w-60 shadow-xl" : "md:w-14"}`}
+        aria-label="Studio Navigation"
       >
-        {/* Workspace Brand Header & Collapse Chevron */}
-        <div className="h-14 border-b border-[#2e2e2e] flex items-center justify-between px-2.5 overflow-hidden whitespace-nowrap">
+        {/* Brand Header */}
+        <div className="h-14 flex items-center px-3 border-b border-[#2e2e2e] overflow-hidden whitespace-nowrap">
           <Link
-            href="/dashboard"
+            href="/projects"
             onClick={onCloseMobile}
-            className="flex items-center gap-2.5 p-1 rounded-md hover:bg-[#232323] transition-colors focus-visible:outline-brand focus-visible:outline-2"
+            className="flex items-center gap-2.5 flex-1 min-w-0 group"
           >
-            {/* Supabase-style Brand Mark */}
-            <div className="w-7 h-7 rounded-md bg-brand/15 border border-brand/30 flex items-center justify-center text-brand font-bold text-xs shrink-0 shadow-xs">
+            <div className="w-8 h-8 rounded-md bg-brand flex items-center justify-center text-[#09090b] font-black text-sm shrink-0 shadow-xs group-hover:scale-105 transition-transform">
               CX
             </div>
             <div
-              className={`transition-all duration-150 ${
+              className={`transition-all duration-150 flex flex-col ${
                 isExpanded || isMobileOpen
                   ? "opacity-100 translate-x-0"
                   : "opacity-0 -translate-x-2 pointer-events-none w-0"
               }`}
             >
-              <div className="text-xs font-semibold text-[#ededed] leading-tight">
+              <div className="text-xs font-bold text-white tracking-tight flex items-center gap-1.5">
                 Comiks X
               </div>
               <div className="text-[10px] text-[#707070] leading-tight">
@@ -179,9 +155,9 @@ export function StudioSidebar({
           </button>
         </div>
 
-        {/* 14 Navigation Modules */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden p-2 space-y-0.5 hide-scrollbar">
-          {navigationModules.map((item, idx) => {
+        {/* 5 Navigation Modules */}
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden p-2 space-y-1 hide-scrollbar">
+          {navigationModules.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
 
@@ -193,16 +169,16 @@ export function StudioSidebar({
                 aria-label={item.name}
                 aria-current={active ? "page" : undefined}
                 title={!isExpanded && !isMobileOpen ? item.name : undefined}
-                className={`relative flex items-center h-8.5 px-2 rounded-md text-xs font-medium transition-colors duration-150 whitespace-nowrap overflow-hidden group focus-visible:outline-brand focus-visible:outline-2 ${
+                className={`relative flex items-center h-9 px-2 rounded-md text-xs font-medium transition-colors duration-150 whitespace-nowrap overflow-hidden group focus-visible:outline-brand focus-visible:outline-2 ${
                   active
-                    ? "bg-[#232323] text-[#ededed] font-semibold shadow-xs"
-                    : "text-[#a0a0a0] hover:text-[#ededed] hover:bg-[#232323]"
+                    ? "bg-[#232323] text-white font-semibold shadow-xs"
+                    : "text-[#a0a0a0] hover:text-[#ededed] hover:bg-[#202020]"
                 }`}
               >
                 {/* Active Left Indicator Bar */}
                 {active && (
                   <span
-                    className="absolute left-0 top-1 bottom-1 w-[2.5px] bg-brand rounded-r-full"
+                    className="absolute left-0 top-1.5 bottom-1.5 w-[3px] bg-brand rounded-r-full"
                     aria-hidden="true"
                   />
                 )}
@@ -233,8 +209,30 @@ export function StudioSidebar({
           })}
         </nav>
 
-        {/* Pinned Bottom Status / Credit Summary */}
-        <div className="p-2 border-t border-[#2e2e2e] overflow-hidden whitespace-nowrap">
+        {/* Settings & Pinned Bottom Status */}
+        <div className="p-2 border-t border-[#2e2e2e] space-y-1 overflow-hidden whitespace-nowrap">
+          <Link
+            href="/settings"
+            onClick={onCloseMobile}
+            className={`flex items-center h-8.5 px-2 rounded-md text-xs font-medium text-[#a0a0a0] hover:text-[#ededed] hover:bg-[#202020] transition-colors ${
+              pathname.startsWith("/settings") ? "bg-[#232323] text-white" : ""
+            }`}
+            title="Settings"
+          >
+            <span className="flex items-center justify-center w-6 h-6 shrink-0">
+              <Settings className="w-4 h-4" />
+            </span>
+            <span
+              className={`ml-2 text-xs transition-all duration-150 ${
+                isExpanded || isMobileOpen
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-2 pointer-events-none w-0"
+              }`}
+            >
+              Settings
+            </span>
+          </Link>
+
           <Link
             href="/billing"
             className="flex items-center h-9 px-2 rounded-md bg-[#171717] hover:bg-[#202020] border border-[#2e2e2e] transition-colors group"

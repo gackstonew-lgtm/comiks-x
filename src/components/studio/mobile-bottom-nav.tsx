@@ -2,22 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Video, Plus, Sliders, FolderKanban } from "lucide-react";
+import { Clapperboard, Scissors, Zap, BrainCircuit, Film } from "lucide-react";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
 
   const navItems = [
-    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { label: "Video", href: "/video-generator", icon: Video },
-    { label: "Create", href: "/storyboard", icon: Plus, isPrimary: true },
-    { label: "Editor", href: "/editor", icon: Sliders },
-    { label: "Assets", href: "/projects", icon: FolderKanban },
+    { label: "Generator", href: "/video-generator", icon: Clapperboard },
+    { label: "Editor", href: "/editor", icon: Scissors },
+    { label: "Create", href: "/video-generator?new=true", icon: Zap, isPrimary: true },
+    { label: "Training", href: "/training", icon: BrainCircuit },
+    { label: "Projects", href: "/projects", icon: Film },
   ];
 
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
-    return pathname.startsWith(href);
+    const cleanHref = href.split("?")[0];
+    return pathname.startsWith(cleanHref);
   };
 
   return (
@@ -35,7 +35,7 @@ export function MobileBottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                aria-label="Create Episode"
+                aria-label="Create Video"
                 aria-current={active ? "page" : undefined}
                 className="relative -top-3 flex flex-col items-center justify-center group focus-visible:outline-brand focus-visible:outline-2"
               >
@@ -46,7 +46,7 @@ export function MobileBottomNav() {
                       : "bg-brand hover:bg-brand-hover text-[#09090b] shadow-brand/10"
                   }`}
                 >
-                  <Icon className="w-6 h-6 stroke-[2.5]" />
+                  <Icon className="w-5 h-5 stroke-[2.2]" />
                 </div>
                 <span className="text-[10px] font-semibold text-brand mt-0.5">
                   {item.label}
@@ -68,12 +68,12 @@ export function MobileBottomNav() {
               }`}
             >
               <div className="relative">
-                <Icon className="w-5 h-5" />
+                <Icon className="w-4 h-4 stroke-[2]" />
                 {active && (
                   <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-brand" />
                 )}
               </div>
-              <span className={`text-[10px] mt-1 font-medium ${active ? "font-semibold" : ""}`}>
+              <span className={`text-[10px] mt-1 font-medium ${active ? "font-semibold text-white" : ""}`}>
                 {item.label}
               </span>
             </Link>

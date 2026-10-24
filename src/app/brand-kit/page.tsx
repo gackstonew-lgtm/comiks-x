@@ -5,7 +5,7 @@ import {
   Palette,
   Save,
   CheckCircle2,
-  Sparkles,
+  Zap,
   Type,
   Sliders,
   Video,

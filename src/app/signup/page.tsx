@@ -88,7 +88,7 @@ export default function SignupPage() {
 
       // 3. User is signed in immediately; redirect straight to studio dashboard
       if (signInData.user) {
-        router.push("/dashboard");
+        router.push("/projects");
         router.refresh();
       }
     } catch {

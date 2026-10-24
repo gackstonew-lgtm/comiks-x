@@ -9,7 +9,7 @@ import { Eye, EyeOff, AlertCircle, ArrowRight } from "lucide-react";
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") || "/dashboard";
+  const redirectTo = searchParams.get("redirectTo") || "/projects";
   const errorParam = searchParams.get("error");
   const prefilledEmail = searchParams.get("email") || "";
 

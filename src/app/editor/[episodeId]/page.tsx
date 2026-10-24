@@ -19,7 +19,6 @@ import {
   Music,
   Mic,
   MessageSquare,
-  Sparkles,
   Layers,
   ChevronLeft,
   ChevronRight,

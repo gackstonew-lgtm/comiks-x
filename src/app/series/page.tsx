@@ -9,7 +9,7 @@ import {
   Unlock,
   Palette,
   MapPin,
-  Sparkles,
+  Zap,
   Layers,
   CheckCircle,
   Shield,
@@ -279,7 +279,7 @@ export default function SeriesPage() {
         >
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-[#ededed] flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-brand" />
+              <Zap className="w-4 h-4 text-brand" />
               {editingSeriesId ? "Edit Comic Series" : "New Comic Series Setup"}
             </h3>
             <span className="text-xs text-[#707070]">Episodes, characters, and scenes are grouped under this series</span>
@@ -628,7 +628,7 @@ export default function SeriesPage() {
 
                 <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-1.5">
                   <div className="text-[10px] font-semibold uppercase text-brand flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
+                    <Zap className="w-3 h-3 text-brand" />
                     Lighting & Aesthetic Rules
                   </div>
                   <p className="text-xs text-[#a0a0a0]">
@@ -693,7 +693,7 @@ export default function SeriesPage() {
               {/* Code-Switching Dialogue Tester */}
               <div className="p-3.5 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-2.5">
                 <div className="text-xs font-semibold text-[#ededed] flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-brand" />
+                  <Zap className="w-3.5 h-3.5 text-brand" />
                   Dialogue Analyzer
                 </div>
                 <div className="flex gap-2">

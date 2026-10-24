@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ComicSeries, Episode } from "@/types";
 import {
-  Sparkles,
+  Clapperboard,
   BookOpen,
   Film,
   Layers,
@@ -105,7 +105,7 @@ export default function StoryCreatorPage() {
       {/* Header */}
       <div className="pb-6 border-b border-[#2e2e2e]">
         <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-comic-purple mb-1">
-          <Sparkles className="w-3.5 h-3.5" />
+          <Clapperboard className="w-3.5 h-3.5" />
           AI Story & Script Decomposition Engine
         </div>
         <h1 className="text-3xl font-black text-white">Story Creator & 30-Minute Architecture</h1>
@@ -267,7 +267,7 @@ export default function StoryCreatorPage() {
             disabled={isGenerating || seriesList.length === 0 || !promptContent.trim()}
             className="flex items-center gap-2 px-6 py-3 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium shadow-sm text-sm shadow-sm hover:scale-102 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Sparkles className="w-4 h-4 stroke-[2.5]" />
+            <Clapperboard className="w-4 h-4 stroke-[2]" />
             {isGenerating ? "Decomposing 30-Min Story Structure..." : "Transform into Structured Episode"}
           </button>
         </div>

@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Episode, SocialClip } from "@/types";
 import {
   Video,
-  Sparkles,
+  Scissors,
   Smartphone,
   Copy,
   CheckCircle,
@@ -195,7 +195,7 @@ export default function SocialClipsPage() {
             disabled={isExtracting}
             className="flex items-center gap-2 px-5 py-2.5 rounded-[6px] bg-gradient-to-r from-comic-pink to-comic-purple text-white font-black text-xs shadow-lg shadow-pink-500/20 hover:scale-102 transition-all disabled:opacity-50"
           >
-            <Sparkles className="w-4 h-4" />
+            <Scissors className="w-4 h-4 stroke-[2]" />
             {isExtracting ? "Analyzing 30-min Episode..." : "Auto-Extract Clips"}
           </button>
         </div>

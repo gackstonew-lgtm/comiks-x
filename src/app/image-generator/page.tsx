@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
   Image as ImageIcon,
-  Sparkles,
+  ImagePlus,
   Layers,
   Download,
   Scissors,
@@ -240,7 +240,7 @@ export default function ImageGeneratorPage() {
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4" />
+                  <ImagePlus className="w-4 h-4 stroke-[2]" />
                   Generate Image (2 Credits)
                 </>
               )}

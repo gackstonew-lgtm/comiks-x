@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import {
   Video,
   Play,
-  Sparkles,
+  Clapperboard,
+  Zap,
   Sliders,
   Maximize2,
   Download,
@@ -233,7 +234,7 @@ export default function VideoGeneratorPage() {
                 onClick={handleEnhancePrompt}
                 className="text-[11px] text-brand hover:underline inline-flex items-center gap-1 font-medium"
               >
-                <Sparkles className="w-3 h-3" />
+                <Zap className="w-3 h-3" />
                 Enhance Prompt
               </button>
             </div>
@@ -361,7 +362,7 @@ export default function VideoGeneratorPage() {
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4" />
+                  <Clapperboard className="w-4 h-4" />
                   Generate Video ({estimatedCost} Credits)
                 </>
               )}

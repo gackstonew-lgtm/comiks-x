@@ -47,7 +47,7 @@ export default function ResetPasswordPage() {
 
       setSuccess(true);
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push("/projects");
       }, 2000);
     } catch {
       setErrorMessage("Failed to update password. Link may have expired.");

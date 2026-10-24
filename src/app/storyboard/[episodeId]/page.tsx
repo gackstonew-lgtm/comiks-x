@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Episode, Scene } from "@/types";
 import {
   Layers,
-  Sparkles,
+  Zap,
   Play,
   RotateCw,
   Video,
@@ -22,7 +22,6 @@ import {
   ArrowRight,
   ShieldCheck,
   Award,
-  Zap,
 } from "lucide-react";
 
 export default function StoryboardPage() {
@@ -172,7 +171,7 @@ export default function StoryboardPage() {
             onClick={() => router.push(`/queue`)}
             className="flex items-center gap-2 px-4 py-2 rounded-[6px] bg-gradient-to-r from-comic-yellow to-amber-500 text-studio-950 text-xs font-black shadow-sm hover:scale-102 transition-all"
           >
-            <Sparkles className="w-4 h-4" />
+            <Zap className="w-4 h-4 stroke-[2]" />
             Send to Generation Queue
           </button>
         </div>

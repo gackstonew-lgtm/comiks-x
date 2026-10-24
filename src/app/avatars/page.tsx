@@ -6,7 +6,7 @@ import {
   Plus,
   Play,
   ShieldCheck,
-  Sparkles,
+  Zap,
   Loader2,
   Trash2,
   CheckCircle2,
@@ -326,7 +326,7 @@ export default function AvatarsPage() {
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4" />
+                    <Zap className="w-4 h-4" />
                     Generate Talking Avatar Video
                   </>
                 )}

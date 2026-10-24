@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
   LayoutTemplate,
-  Sparkles,
+  Zap,
   ArrowRight,
   Clock,
   Film,

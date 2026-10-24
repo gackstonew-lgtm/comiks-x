@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  Sparkles,
+  Clapperboard,
   BookOpen,
   User,
   Video,
@@ -67,7 +67,7 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-3">
             {user ? (
               <Link
-                href="/dashboard"
+                href="/projects"
                 className="px-4 py-2 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-semibold text-xs shadow-sm transition-all flex items-center gap-1.5"
               >
                 <span>Open Studio</span>
@@ -139,7 +139,7 @@ export default function LandingPage() {
             <div className="pt-3 border-t border-[#2e2e2e] flex flex-col gap-2">
               {user ? (
                 <Link
-                  href="/dashboard"
+                  href="/projects"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full py-2.5 rounded-[6px] bg-brand text-[#09090b] text-center font-semibold text-xs"
                 >
@@ -175,7 +175,7 @@ export default function LandingPage() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand/10 border border-brand/25 text-brand text-xs font-semibold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5" />
+            <Zap className="w-3.5 h-3.5" />
             End-to-End AI Comic Animation Studio
           </div>
 
@@ -196,7 +196,7 @@ export default function LandingPage() {
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             {user ? (
               <Link
-                href="/dashboard"
+                href="/projects"
                 className="w-full sm:w-auto px-6 py-3 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-semibold text-sm shadow-[0_4px_16px_rgba(62,207,142,0.25)] transition-all flex items-center justify-center gap-2 group"
               >
                 <span>Enter Studio Dashboard</span>
@@ -269,7 +269,7 @@ export default function LandingPage() {
           {/* Feature 1 */}
           <div className="p-6 rounded-[8px] bg-[#171717] border border-[#2e2e2e] hover:border-brand/40 transition-all space-y-3 group shadow-sm">
             <div className="w-10 h-10 rounded-[6px] bg-brand/10 border border-brand/25 flex items-center justify-center text-brand group-hover:scale-105 transition-transform">
-              <Sparkles className="w-5 h-5" />
+              <Clapperboard className="w-5 h-5" />
             </div>
             <h3 className="text-base font-bold text-white">30-Minute Story Decomposition</h3>
             <p className="text-xs text-[#a0a0a0] leading-relaxed">
@@ -520,7 +520,7 @@ export default function LandingPage() {
           </p>
           <div className="flex justify-center gap-3">
             <Link
-              href={user ? "/dashboard" : "/signup"}
+              href={user ? "/projects" : "/signup"}
               className="px-6 py-3 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-semibold text-sm shadow-md transition-all flex items-center gap-2"
             >
               <span>{user ? "Go to Studio Dashboard" : "Get Started Now"}</span>

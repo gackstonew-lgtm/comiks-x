@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "check:icons": "tsx scripts/check-no-sparkles.ts",
     "test": "tsx scripts/test-studio.ts"
   },
   "dependencies": {

@@ -8,7 +8,8 @@ import {
   Lock,
   Unlock,
   Copy,
-  Sparkles,
+  Zap,
+  BrainCircuit,
   Volume2,
   Trash2,
   Edit,
@@ -816,7 +817,7 @@ export default function CharacterBiblePage() {
                         onClick={() => handleGenerateSheetPrompt(selectedCharacter.id)}
                         className="px-4 py-1.5 rounded-[6px] bg-comic-cyan/10 hover:bg-comic-cyan/20 border border-comic-cyan/30 text-xs font-bold text-comic-cyan flex items-center gap-1.5"
                       >
-                        <Sparkles className="w-3.5 h-3.5" />
+                        <Zap className="w-3.5 h-3.5" />
                         Generate Turnaround Prompt
                       </button>
                     </div>
@@ -866,7 +867,7 @@ export default function CharacterBiblePage() {
                     {/* Personality DNA */}
                     <div className="p-4 rounded-[6px] bg-[#121212] border border-[#2e2e2e] space-y-2">
                       <div className="text-[10px] font-bold text-comic-purple uppercase flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5" />
+                        <Zap className="w-3.5 h-3.5" />
                         Personality DNA
                       </div>
                       <div className="text-xs text-studio-300 space-y-1">
