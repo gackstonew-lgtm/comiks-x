@@ -29,7 +29,11 @@ import {
   Languages,
   History,
   Undo2,
+  Tv,
 } from "lucide-react";
+import { ComiksPlayer } from "@/remotion/ComiksPlayer";
+import { SAMPLE_CHURCH_SEED_SPEC_LIMITED, SAMPLE_CHURCH_SEED_SPEC_PUPPET } from "@/lib/render-engine/sample-seed-scene";
+import { ProductionMode } from "@/lib/render-engine/schema";
 
 export default function EpisodeEditorPage() {
   const params = useParams();
@@ -53,6 +57,9 @@ export default function EpisodeEditorPage() {
   const [dubbingLanguage, setDubbingLanguage] = useState<"original" | "sheng" | "swahili">("original");
   const [isDubbing, setIsDubbing] = useState(false);
   const [sceneVersions, setSceneVersions] = useState<Record<string, number>>({});
+  const [previewEngine, setPreviewEngine] = useState<"cel_animation" | "raw_video">("cel_animation");
+  const [selectedProductionMode, setSelectedProductionMode] = useState<ProductionMode>("limited_animation");
+  const [showSafeZones, setShowSafeZones] = useState(true);
 
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -307,6 +314,48 @@ export default function EpisodeEditorPage() {
             {isDubbing && <span className="text-[10px] text-amber-400 animate-pulse">Syncing...</span>}
           </div>
 
+          {/* Engine Selector */}
+          <div className="flex items-center space-x-2 text-xs">
+            <span className="text-studio-400 font-bold uppercase">Engine:</span>
+            <div className="flex rounded-lg border border-[#2e2e2e] bg-[#121212] p-0.5">
+              <button
+                onClick={() => setPreviewEngine("cel_animation")}
+                className={`px-2 py-1 rounded-md text-xs font-bold transition-all ${
+                  previewEngine === "cel_animation"
+                    ? "bg-brand text-black shadow-xs"
+                    : "text-studio-400 hover:text-white"
+                }`}
+              >
+                2D Cel (FlipaClip)
+              </button>
+              <button
+                onClick={() => setPreviewEngine("raw_video")}
+                className={`px-2 py-1 rounded-md text-xs font-bold transition-all ${
+                  previewEngine === "raw_video"
+                    ? "bg-brand text-black shadow-xs"
+                    : "text-studio-400 hover:text-white"
+                }`}
+              >
+                Raw Viewport
+              </button>
+            </div>
+          </div>
+
+          {/* Mode Selector */}
+          <div className="flex items-center space-x-2 text-xs">
+            <span className="text-studio-400 font-bold uppercase">Mode:</span>
+            <select
+              value={selectedProductionMode}
+              onChange={(e) => setSelectedProductionMode(e.target.value as any)}
+              className="bg-[#121212] border border-[#2e2e2e] rounded-lg px-2.5 py-1 text-xs text-brand focus:outline-none"
+            >
+              <option value="limited_animation">Limited Animation (on-twos)</option>
+              <option value="rigged_puppet">Rigged Puppet (Joint Kinematics)</option>
+              <option value="ai_motion_hybrid">AI Motion Hybrid (12fps)</option>
+              <option value="motion_comic">Motion Comic (2.5D Parallax)</option>
+            </select>
+          </div>
+
           <div className="flex items-center space-x-2 text-xs">
             <span className="text-studio-400 font-bold uppercase">Subtitles:</span>
             <select
@@ -354,56 +403,66 @@ export default function EpisodeEditorPage() {
         {/* Left 2 Cols: Synchronized Video Viewport */}
         <div className="lg:col-span-2 flex flex-col items-center justify-center bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-4 relative overflow-hidden min-h-[360px]">
           {/* Active Scene Preview Screen */}
-          <div className="w-full max-w-2xl aspect-video rounded-[6px] bg-black relative overflow-hidden flex items-center justify-center border border-[#2e2e2e] shadow-2xl">
-            {activeScene?.videoUrl ? (
-              <video
-                ref={videoRef}
-                src={activeScene.videoUrl}
-                className="w-full h-full object-cover"
-                loop
-                muted={isMuted}
-                autoPlay={isPlaying}
+          {previewEngine === "cel_animation" ? (
+            <div className="w-full max-w-xs md:max-w-sm aspect-[9/16] rounded-xl overflow-hidden shadow-2xl border-2 border-emerald-500/30 relative">
+              <ComiksPlayer
+                spec={selectedProductionMode === "rigged_puppet" ? SAMPLE_CHURCH_SEED_SPEC_PUPPET : SAMPLE_CHURCH_SEED_SPEC_LIMITED}
+                currentFrame={Math.round((currentTimeSeconds * 30) % 300)}
+                showSafeZones={showSafeZones}
               />
-            ) : (
-              <div
-                className="w-full h-full bg-cover bg-center flex flex-col items-center justify-center p-6 text-center"
-                style={{
-                  backgroundImage: `url(${
-                    activeScene?.thumbnailUrl ||
-                    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop"
-                  })`,
-                }}
-              >
-                <div className="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
-                <div className="relative z-10 space-y-2">
-                  <span className="px-2.5 py-0.5 rounded bg-[#232323] text-brand border border-brand/25 font-black text-xs">
-                    SCENE {activeScene?.sceneNumber} • {activeScene?.location}
-                  </span>
-                  <p className="text-xs text-white max-w-md">{activeScene?.action}</p>
-                </div>
-              </div>
-            )}
-
-            {/* Live Subtitle Overlay */}
-            {activeScene?.dialogue && activeScene.dialogue.length > 0 && (
-              <div className="absolute bottom-6 inset-x-4 flex justify-center pointer-events-none z-20">
+            </div>
+          ) : (
+            <div className="w-full max-w-2xl aspect-video rounded-[6px] bg-black relative overflow-hidden flex items-center justify-center border border-[#2e2e2e] shadow-2xl">
+              {activeScene?.videoUrl ? (
+                <video
+                  ref={videoRef}
+                  src={activeScene.videoUrl}
+                  className="w-full h-full object-cover"
+                  loop
+                  muted={isMuted}
+                  autoPlay={isPlaying}
+                />
+              ) : (
                 <div
-                  className={`px-4 py-1.5 rounded-lg text-center max-w-lg transition-all ${
-                    subtitleStyle === "comic"
-                      ? "bg-amber-400 text-studio-950 font-black text-sm tracking-wide shadow-lg border-2 border-black"
-                      : subtitleStyle === "anime"
-                      ? "bg-black/75 text-cyan-300 font-bold text-xs tracking-wider border border-cyan-400/50 shadow-cyan-500/20 shadow-lg"
-                      : "bg-black/90 text-white text-xs px-3 py-1 font-mono"
-                  }`}
+                  className="w-full h-full bg-cover bg-center flex flex-col items-center justify-center p-6 text-center"
+                  style={{
+                    backgroundImage: `url(${
+                      activeScene?.thumbnailUrl ||
+                      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop"
+                    })`,
+                  }}
                 >
-                  <span className="opacity-75 mr-1 font-bold">
-                    {activeScene.dialogue[0].characterName}:
-                  </span>
-                  "{activeScene.dialogue[0].line}"
+                  <div className="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+                  <div className="relative z-10 space-y-2">
+                    <span className="px-2.5 py-0.5 rounded bg-[#232323] text-brand border border-brand/25 font-black text-xs">
+                      SCENE {activeScene?.sceneNumber} • {activeScene?.location}
+                    </span>
+                    <p className="text-xs text-white max-w-md">{activeScene?.action}</p>
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+
+              {/* Live Subtitle Overlay */}
+              {activeScene?.dialogue && activeScene.dialogue.length > 0 && (
+                <div className="absolute bottom-6 inset-x-4 flex justify-center pointer-events-none z-20">
+                  <div
+                    className={`px-4 py-1.5 rounded-lg text-center max-w-lg transition-all ${
+                      subtitleStyle === "comic"
+                        ? "bg-amber-400 text-studio-950 font-black text-sm tracking-wide shadow-lg border-2 border-black"
+                        : subtitleStyle === "anime"
+                        ? "bg-black/75 text-cyan-300 font-bold text-xs tracking-wider border border-cyan-400/50 shadow-cyan-500/20 shadow-lg"
+                        : "bg-black/90 text-white text-xs px-3 py-1 font-mono"
+                    }`}
+                  >
+                    <span className="opacity-75 mr-1 font-bold">
+                      {activeScene.dialogue[0].characterName}:
+                    </span>
+                    "{activeScene.dialogue[0].line}"
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Transport Controls Bar */}
           <div className="w-full max-w-2xl mt-4 flex items-center justify-between text-xs">

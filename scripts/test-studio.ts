@@ -323,6 +323,127 @@ async function runStudioTests() {
   assert(Boolean(assistantResponse.response), `AI Creator Assistant delivered contextual director guidance: "${assistantResponse.response.substring(0, 60)}..."`);
   assert(Boolean(assistantResponse.relevantContext), `Context identified: ${assistantResponse.relevantContext}`);
 
+  // TEST 19: 2D Video Production Engine & RenderSpec Validation
+  console.log("\n--- 19. Testing 2D Video Production Engine & RenderSpec Validation ---");
+  const { productionEngine, validateRenderSpec } = await import("../src/lib/render-engine");
+  const defaultSpec = productionEngine.createDefaultSpec({
+    episodeId: newEpisode.id,
+    title: "That one church close to your house ⛪😂",
+    aspectRatio: "9:16",
+  });
+  defaultSpec.scenes.push({
+    sceneId: "scene-test-1",
+    sceneIndex: 0,
+    durationFrames: 90,
+    productionMode: "limited_animation",
+    fpsRetiming: 12,
+    background: { plateUrl: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?w=1080" },
+    characters: [],
+    dialogues: [],
+    vfx: [],
+    camera: [],
+  });
+  const valResult = validateRenderSpec(defaultSpec);
+  assert(valResult.success, "EpisodeRenderSpec strictly validated against Zod schema");
+  assert(defaultSpec.captionBar.headlineText.includes("church"), `Top caption bar headline: "${defaultSpec.captionBar.headlineText}"`);
+  assert(defaultSpec.captionBar.highlightColor === "#10B981", `Brand highlight color: ${defaultSpec.captionBar.highlightColor}`);
+
+  // TEST 20: 4 Production Modes Execution
+  console.log("\n--- 20. Testing 4 Production Modes Execution ---");
+  // 1. Limited Animation (On-twos 12 fps)
+  const steppedFrame = productionEngine.limitedAnimation.getSteppedFrame(7, 12, 30);
+  assert(steppedFrame === 6 || steppedFrame === 7, `Stepped frame quantized: input 7 -> frame ${steppedFrame} (on-twos)`);
+  const eyeState = productionEngine.limitedAnimation.evaluateEyeState(30, 42);
+  assert(["open", "anticipate", "closed", "recover"].includes(eyeState), `Eye state evaluated: ${eyeState}`);
+
+  // 2. Rigged Puppet Transforms
+  const puppetPose = productionEngine.riggedPuppet.evaluatePuppetTransforms({
+    character: {
+      characterId: "char-1",
+      name: "Brayo",
+      xPercent: 50,
+      yPercent: 50,
+      scale: 1,
+      poseTimeline: [],
+    },
+    frame: 15,
+    fps: 30,
+    speakingEnergy: 0.8,
+  });
+  assert(typeof puppetPose.torso.rotationDeg === "number", `Puppet torso transform rotation: ${puppetPose.torso.rotationDeg}°`);
+  assert(typeof puppetPose.head.rotationDeg === "number", `Puppet head speech nod: ${puppetPose.head.rotationDeg}°`);
+
+  // 3. AI Motion Hybrid Decimation
+  const quantizedTime = productionEngine.aiHybrid.calculateQuantizedTimestamp(14, 30, 12);
+  assert(quantizedTime >= 0, `AI hybrid timestamp quantized to cel frame: ${quantizedTime}s`);
+  const celFilter = productionEngine.aiHybrid.getCelShadingFilter(0.85);
+  assert(celFilter.includes("contrast"), `Cel-shading post-filter: ${celFilter}`);
+
+  // 4. Motion Comic Multi-Panel Layout
+  const panels = productionEngine.motionComic.generatePanelLayout("split_vertical", "9:16");
+  assert(panels.length === 2, `Motion comic generated ${panels.length} stacked panels for vertical 9:16 layout`);
+
+  // TEST 21: Character Bible & Face Embed Validator
+  console.log("\n--- 21. Testing Character Bible & Consistency Embed Validator ---");
+  const { characterBibleManager } = await import("../src/lib/character-os/character-bible");
+  const { faceEmbedValidator } = await import("../src/lib/character-os/face-embed-validator");
+  const bible = characterBibleManager.getOrCreateBible(brian);
+  assert(bible.palette.primaryWardrobeHex === "#15803D", `Wardrobe palette lock: ${bible.palette.primaryWardrobeHex}`);
+  const conditioningPrompt = characterBibleManager.compileConditioningPrompt(bible, "holding ears in bed");
+  assert(conditioningPrompt.includes("HEX LOCK"), "Conditioning prompt includes hexadecimal wardrobe lock token");
+
+  const embedValidation = faceEmbedValidator.evaluateCharacterTake({
+    bible,
+    generatedAssetUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500",
+    seed: 42,
+    promptUsed: conditioningPrompt,
+  });
+  assert(embedValidation.passed, `Face similarity passed: ${embedValidation.similarityScore} (threshold >= 0.88)`);
+  assert(embedValidation.paletteDeltaPercentage < 10, `Palette drift: ${embedValidation.paletteDeltaPercentage}%`);
+
+  // TEST 22: BiRefNet Matting Service
+  console.log("\n--- 22. Testing BiRefNet Matting & Cutout Extraction ---");
+  const { mattingService } = await import("../src/lib/character-os/matting-service");
+  const matting = await mattingService.extractCutout("https://example.com/character.png");
+  assert(matting.alphaBoundaryCleaned, "Alpha boundary edge-cleaned without background halos");
+
+  // TEST 23: Sheng Vernacular & Viseme Extraction
+  console.log("\n--- 23. Testing Sheng Phonetic Processor & Rhubarb Viseme Extractor ---");
+  const { shengPhoneticProcessor } = await import("../src/lib/audio-studio/sheng-dictionary");
+  const { visemeExtractor } = await import("../src/lib/audio-studio/viseme-extractor");
+  const processedSheng = shengPhoneticProcessor.prepareTextForTTS("Buda, hii ni ngori sana!", "sheng");
+  assert(Boolean(processedSheng), `Sheng TTS pre-processed: "${processedSheng}"`);
+  const visemes = visemeExtractor.extractVisemesFromText("Buda, walianza maombi!", 2000);
+  assert(visemes.length >= 4, `Extracted ${visemes.length} timed visemes (A-X) for dialogue speech`);
+
+  // TEST 24: Audio Engine & -14 LUFS Music Ducking
+  console.log("\n--- 24. Testing Audio Engine & -14 LUFS Music Ducking ---");
+  const { audioMasterer } = await import("../src/lib/audio-studio/audio-masterer");
+  const ducking = audioMasterer.calculateDucking(true);
+  const musicTrack = ducking.find(t => t.trackName === "music");
+  assert(musicTrack?.isDucked === true, "Music track dynamically ducked during active character dialogue");
+  assert(audioMasterer.getLoudnessNormFilter(-14).includes("-14"), "FFmpeg loudness normalization calibrated to -14 LUFS");
+
+  // TEST 25: Automated Quality Control & North Star Church Seed Scene Deliverable
+  console.log("\n--- 25. Testing Quality Control Gate & 10s Church Deliverable ---");
+  const { qualityControlGate } = await import("../src/lib/quality/qc-gate");
+  const { SAMPLE_CHURCH_SEED_SPEC_LIMITED, SAMPLE_CHURCH_SEED_SPEC_PUPPET } = await import("../src/lib/render-engine/sample-seed-scene");
+  const { renderJobQueue } = await import("../src/lib/render-service/job-queue");
+  const { publishingPackGenerator } = await import("../src/lib/export/publishing-pack");
+
+  const qcReport = qualityControlGate.inspectSpec(SAMPLE_CHURCH_SEED_SPEC_LIMITED);
+  assert(qcReport.overallPassed, `QC Gate inspection passed with score: ${qcReport.scoreOutOf100}/100`);
+  assert(SAMPLE_CHURCH_SEED_SPEC_LIMITED.scenes.length === 3, `Sample deliverable has ${SAMPLE_CHURCH_SEED_SPEC_LIMITED.scenes.length} scenes`);
+  const totalDurationFrames = SAMPLE_CHURCH_SEED_SPEC_LIMITED.scenes.reduce((acc, s) => acc + s.durationFrames, 0);
+  assert(totalDurationFrames === 300, `Total frames: ${totalDurationFrames} (= 10.0s @ 30fps)`);
+  assert(SAMPLE_CHURCH_SEED_SPEC_PUPPET.scenes[0].productionMode === "rigged_puppet", "Puppet seed variant configured for rigged_puppet mode");
+
+  // Job queue dispatch & publishing pack
+  const job = renderJobQueue.enqueueJob(SAMPLE_CHURCH_SEED_SPEC_LIMITED);
+  assert(job.status === "queued", `Job ${job.jobId} enqueued for off-serverless worker`);
+  const pack = publishingPackGenerator.generatePack(SAMPLE_CHURCH_SEED_SPEC_LIMITED);
+  assert(pack.formats.length === 4, `Publishing pack contains ${pack.formats.length} target formats (TikTok, Reels, Shorts, YouTube)`);
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");
