@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "check:icons": "tsx scripts/check-no-sparkles.ts",
+    "generate:icons": "tsx scripts/generate-pwa-icons.ts",
     "test": "tsx scripts/test-studio.ts"
   },
   "dependencies": {
