@@ -11,7 +11,9 @@ import {
   BookOpen,
   X,
   Menu,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "@/components/auth/auth-provider";
 
 interface StudioTopBarProps {
   onToggleMobile?: () => void;
@@ -20,6 +22,7 @@ interface StudioTopBarProps {
 export function StudioTopBar({ onToggleMobile }: StudioTopBarProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [results, setResults] = useState<{
     episodes: Array<{ id: string; title: string }>;
     characters: Array<{ id: string; name: string }>;
@@ -27,6 +30,8 @@ export function StudioTopBar({ onToggleMobile }: StudioTopBarProps) {
   }>({ episodes: [], characters: [], series: [] });
 
   const searchRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     async function fetchIndex() {
@@ -54,6 +59,9 @@ export function StudioTopBar({ onToggleMobile }: StudioTopBarProps) {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
         setIsSearching(false);
       }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setShowUserMenu(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -74,6 +82,9 @@ export function StudioTopBar({ onToggleMobile }: StudioTopBarProps) {
     (filteredEpisodes.length > 0 ||
       filteredCharacters.length > 0 ||
       filteredSeries.length > 0);
+
+  const userInitial = user?.user_metadata?.full_name?.charAt(0) || user?.email?.charAt(0)?.toUpperCase() || "C";
+  const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Studio Creator";
 
   return (
     <header className="h-14 border-b border-[#2e2e2e] bg-[#171717]/90 backdrop-blur-md px-4 lg:px-6 flex items-center justify-between gap-3 sticky top-0 z-30 select-none">
@@ -117,7 +128,7 @@ export function StudioTopBar({ onToggleMobile }: StudioTopBarProps) {
             )}
           </div>
 
-          {/* Live Search Results Dropdown (Supabase Flyout Panel) */}
+          {/* Live Search Results Dropdown */}
           {isSearching && hasAnyResults && (
             <div className="absolute top-10 left-0 right-0 rounded-[8px] bg-[#1c1c1c] border border-[#2e2e2e] shadow-[0_12px_32px_0_rgba(0,0,0,0.6)] p-2 z-50 max-h-80 overflow-y-auto space-y-2">
               {filteredEpisodes.length > 0 && (
@@ -183,7 +194,7 @@ export function StudioTopBar({ onToggleMobile }: StudioTopBarProps) {
 
       {/* Right Controls */}
       <div className="flex items-center gap-2.5">
-        {/* Primary Creation Action Button (Supabase Brand Green Solid Button) */}
+        {/* Primary Creation Action Button */}
         <Link
           href="/story-creator"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-brand hover:bg-brand-hover active:bg-brand-active text-[#09090b] font-medium text-xs shadow-sm transition-all focus-visible:outline-brand focus-visible:outline-2"
@@ -212,12 +223,44 @@ export function StudioTopBar({ onToggleMobile }: StudioTopBarProps) {
           <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-brand" />
         </button>
 
-        {/* User Profile Avatar */}
-        <div
-          className="w-8 h-8 rounded-[6px] bg-[#232323] border border-[#2e2e2e] flex items-center justify-center text-[#ededed] text-xs font-semibold select-none"
-          title="Studio Creator Profile"
-        >
-          CX
+        {/* User Profile Avatar with dropdown */}
+        <div ref={userMenuRef} className="relative">
+          <button
+            onClick={() => setShowUserMenu((prev) => !prev)}
+            className="w-8 h-8 rounded-[6px] bg-brand/15 border border-brand/30 flex items-center justify-center text-brand text-xs font-semibold select-none hover:bg-brand/25 transition-colors focus-visible:outline-brand"
+            title={user?.email || "Studio Creator Profile"}
+            aria-label="User profile menu"
+          >
+            {userInitial}
+          </button>
+
+          {showUserMenu && (
+            <div className="absolute right-0 top-10 w-56 rounded-[8px] bg-[#1c1c1c] border border-[#2e2e2e] shadow-[0_12px_32px_0_rgba(0,0,0,0.6)] p-2 z-50 text-xs animate-scale-in">
+              <div className="px-2.5 py-2 border-b border-[#2e2e2e] mb-1">
+                <div className="font-semibold text-white truncate">{displayName}</div>
+                <div className="text-[11px] text-[#a0a0a0] truncate">{user?.email || "creator@comiks-x.studio"}</div>
+              </div>
+
+              <Link
+                href="/settings"
+                onClick={() => setShowUserMenu(false)}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-[4px] hover:bg-[#232323] text-[#ededed] transition-colors"
+              >
+                Settings & API Keys
+              </Link>
+
+              <button
+                onClick={() => {
+                  setShowUserMenu(false);
+                  signOut();
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-[4px] hover:bg-red-500/10 hover:text-red-400 text-[#a0a0a0] transition-colors mt-1"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

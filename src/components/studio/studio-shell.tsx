@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { StudioSidebar } from "./studio-sidebar";
 import { StudioTopBar } from "./studio-topbar";
 import { MobileBottomNav } from "./mobile-bottom-nav";
@@ -8,6 +9,19 @@ import { CreatorAssistant } from "@/components/creator-assistant";
 
 export function StudioShell({ children }: { children: React.ReactNode }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isMarketingOrAuth =
+    pathname === "/" ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/signup") ||
+    pathname.startsWith("/forgot-password") ||
+    pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/auth");
+
+  if (isMarketingOrAuth) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="min-h-[100dvh] bg-[#121212] text-[#ededed] flex overflow-hidden">

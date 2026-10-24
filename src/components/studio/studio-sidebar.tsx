@@ -32,7 +32,7 @@ export function StudioSidebar({
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const mainNav = [
-    { name: "Home", href: "/", icon: Home },
+    { name: "Dashboard", href: "/dashboard", icon: Home },
     { name: "Series Hub", href: "/series", icon: BookOpen },
     { name: "Character Lab", href: "/characters", icon: User },
     { name: "Story Studio", href: "/story-creator", icon: Sparkles },

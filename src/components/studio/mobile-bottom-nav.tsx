@@ -8,7 +8,7 @@ export function MobileBottomNav() {
   const pathname = usePathname();
 
   const navItems = [
-    { label: "Home", href: "/", icon: Home },
+    { label: "Dashboard", href: "/dashboard", icon: Home },
     { label: "Series", href: "/series", icon: BookOpen },
     { label: "Create", href: "/story-creator", icon: Plus, isPrimary: true },
     { label: "Characters", href: "/characters", icon: User },
