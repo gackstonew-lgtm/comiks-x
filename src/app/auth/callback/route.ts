@@ -1,19 +1,26 @@
 import { createClient } from "@/lib/supabase/server";
+import { getSiteUrl } from "@/lib/utils/url";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/dashboard";
+  const siteUrl = getSiteUrl();
 
   if (code) {
-    const supabase = createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      if (!error) {
+        const destination = next.startsWith("/") ? next : `/${next}`;
+        return NextResponse.redirect(`${siteUrl}${destination}`);
+      }
+    } catch {
+      // Failed to exchange session
     }
   }
 
-  // Return the user to an error page or login with instructions
-  return NextResponse.redirect(`${origin}/login?error=Could%20not%20authenticate%20user`);
+  // Redirect to login with error parameter matching the spec
+  return NextResponse.redirect(`${siteUrl}/login?error=verification_failed`);
 }

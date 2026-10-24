@@ -444,6 +444,60 @@ async function runStudioTests() {
   const pack = publishingPackGenerator.generatePack(SAMPLE_CHURCH_SEED_SPEC_LIMITED);
   assert(pack.formats.length === 4, `Publishing pack contains ${pack.formats.length} target formats (TikTok, Reels, Shorts, YouTube)`);
 
+  // TEST 26: Site URL Helper & Supabase Auth Verification Redirect
+  console.log("\n--- 26. Testing Site URL Helper & Auth Callback Redirect ---");
+  const { getSiteUrl } = await import("../src/lib/utils/url");
+  const siteUrl = getSiteUrl();
+  assert(Boolean(siteUrl), `getSiteUrl() resolved: ${siteUrl}`);
+  assert(!siteUrl.endsWith("/"), "getSiteUrl() consistently strips trailing slashes");
+  const callbackUrl = `${siteUrl}/auth/callback`;
+  assert(callbackUrl.endsWith("/auth/callback"), `Auth callback URL formatted correctly: ${callbackUrl}`);
+
+  // Test priority hierarchy
+  const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const originalVercelUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+  try {
+    process.env.NEXT_PUBLIC_SITE_URL = "https://custom-studio.com/";
+    assert(getSiteUrl() === "https://custom-studio.com", "NEXT_PUBLIC_SITE_URL takes precedence and strips trailing slash");
+
+    delete process.env.NEXT_PUBLIC_SITE_URL;
+    process.env.NEXT_PUBLIC_VERCEL_URL = "comiks-preview.vercel.app";
+    assert(getSiteUrl() === "https://comiks-preview.vercel.app", "NEXT_PUBLIC_VERCEL_URL is prefixed with https://");
+  } finally {
+    process.env.NEXT_PUBLIC_SITE_URL = originalSiteUrl;
+    process.env.NEXT_PUBLIC_VERCEL_URL = originalVercelUrl;
+  }
+
+  // TEST 27: PWA Manifest, Icons, Service Worker & Install Banner
+  console.log("\n--- 27. Testing PWA Manifest, Icons, Service Worker & Install Banner ---");
+  const fs = await import("fs");
+  const path = await import("path");
+
+  // Verify manifest
+  const manifestPath = path.join(process.cwd(), "public", "manifest.webmanifest");
+  assert(fs.existsSync(manifestPath), "public/manifest.webmanifest exists");
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  assert(manifest.name === "Comiks X", `Manifest name: ${manifest.name}`);
+  assert(manifest.short_name === "Comiks X", `Manifest short_name: ${manifest.short_name}`);
+  assert(manifest.display === "standalone", `Manifest display: ${manifest.display}`);
+  assert(manifest.theme_color === "#34d399", `Manifest theme_color: ${manifest.theme_color}`);
+  assert(manifest.icons.length >= 3, `Manifest has ${manifest.icons.length} configured icons`);
+
+  // Verify icons exist
+  const iconsDir = path.join(process.cwd(), "public", "icons");
+  assert(fs.existsSync(path.join(iconsDir, "icon-192x192.png")), "192x192 icon exists");
+  assert(fs.existsSync(path.join(iconsDir, "icon-512x512.png")), "512x512 icon exists");
+  assert(fs.existsSync(path.join(iconsDir, "icon-maskable-512x512.png")), "512x512 maskable icon exists");
+  assert(fs.existsSync(path.join(iconsDir, "apple-touch-icon.png")), "apple-touch-icon exists");
+
+  // Verify service worker
+  const swPath = path.join(process.cwd(), "public", "sw.js");
+  assert(fs.existsSync(swPath), "public/sw.js service worker exists");
+  const swContent = fs.readFileSync(swPath, "utf8");
+  assert(swContent.includes("/offline"), "Service worker caches offline fallback page");
+  assert(swContent.includes("/auth/"), "Service worker explicitly excludes /auth/* from caching");
+  assert(swContent.includes("supabase.co"), "Service worker explicitly excludes Supabase endpoints from caching");
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");

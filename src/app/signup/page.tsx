@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { getSiteUrl } from "@/lib/utils/url";
 import { Sparkles, Eye, EyeOff, AlertCircle, CheckCircle, ArrowRight, Mail } from "lucide-react";
 
 export default function SignupPage() {
@@ -52,7 +53,7 @@ export default function SignupPage() {
     setErrorMessage(null);
 
     try {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+      const siteUrl = getSiteUrl();
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
