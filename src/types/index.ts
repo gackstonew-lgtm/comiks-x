@@ -304,7 +304,8 @@ export interface UsageRecord {
 }
 
 export interface VideoProviderConfig {
-  activeProvider: "luma" | "runway" | "kling" | "fal" | "sora" | "minimax";
+  activeProvider: "luma" | "runway" | "kling" | "fal" | "sora" | "minimax" | "replicate";
+  replicateApiKey?: string;
   lumaApiKey?: string;
   runwayApiKey?: string;
   klingApiKey?: string;

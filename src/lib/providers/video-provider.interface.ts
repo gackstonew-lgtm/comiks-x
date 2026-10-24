@@ -3,7 +3,7 @@ export interface SceneGenerationRequest {
   prompt: string;
   negativePrompt?: string;
   durationSeconds: number; // e.g. 5, 10, 15
-  aspectRatio: "16:9" | "9:16";
+  aspectRatio: "16:9" | "9:16" | "1:1";
   stylePreset?: string;
   characterReferenceUrls?: string[];
   imageUrl?: string; // Image-to-video keyframe
@@ -25,7 +25,7 @@ export interface GenerationResponse {
 export interface IVideoProvider {
   readonly providerId: string;
   readonly name: string;
-  readonly supportedAspectRatios: Array<"16:9" | "9:16">;
+  readonly supportedAspectRatios: Array<"16:9" | "9:16" | "1:1">;
   readonly supportsImageToVideo: boolean;
   readonly supportsVideoExtension: boolean;
   readonly supportsCharacterReference: boolean;

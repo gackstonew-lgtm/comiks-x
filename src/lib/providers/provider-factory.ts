@@ -3,6 +3,7 @@ import { LumaDreamMachineProvider } from "./luma-provider";
 import { RunwayProvider } from "./runway-provider";
 import { KlingProvider } from "./kling-provider";
 import { FalProvider } from "./fal-provider";
+import { ReplicateProvider } from "./replicate-provider";
 import { SoraProvider } from "./sora-provider";
 import { db } from "@/lib/db";
 
@@ -20,6 +21,8 @@ export class VideoProviderFactory {
         return new KlingProvider(overrideApiKey || settings.klingApiKey);
       case "fal":
         return new FalProvider(overrideApiKey || settings.falApiKey);
+      case "replicate":
+        return new ReplicateProvider(overrideApiKey || settings.replicateApiKey);
       case "sora":
         return new SoraProvider(overrideApiKey || settings.openaiApiKey);
       default:
@@ -63,6 +66,13 @@ export class VideoProviderFactory {
         isConfigured: Boolean(settings.falApiKey || process.env.FAL_KEY),
         supportsImageToVideo: true,
         supportsVideoExtension: true,
+      },
+      {
+        id: "replicate",
+        name: "Replicate (Wan 2.1 / Luma)",
+        isConfigured: Boolean(settings.replicateApiKey || process.env.REPLICATE_API_TOKEN),
+        supportsImageToVideo: true,
+        supportsVideoExtension: false,
       },
       {
         id: "sora",

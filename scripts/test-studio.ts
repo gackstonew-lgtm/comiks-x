@@ -643,6 +643,37 @@ async function runStudioTests() {
   const modalPath = path.join(process.cwd(), "src", "components", "media", "reference-library-modal.tsx");
   assert(fs.existsSync(modalPath), "<ReferenceLibraryModal /> component exists");
 
+  // TEST 32: Module 1 Video Generator (5-Step Pipeline, Provider Abstraction & Credit Gating)
+  console.log("\n--- 32. Testing Module 1 Video Generator (5-Step Flow & Provider Abstraction) ---");
+  const pipelineSqlPath = path.join(process.cwd(), "supabase", "migrations", "20261025010000_video_generator_pipeline.sql");
+  assert(fs.existsSync(pipelineSqlPath), "Migration 20261025010000_video_generator_pipeline.sql exists");
+  const pipelineSql = fs.readFileSync(pipelineSqlPath, "utf8");
+  assert(pipelineSql.includes("CREATE TABLE IF NOT EXISTS public.projects"), "projects table defined in pipeline migration");
+  assert(pipelineSql.includes("CREATE TABLE IF NOT EXISTS public.scenes"), "scenes table defined in pipeline migration");
+  assert(pipelineSql.includes("CREATE TABLE IF NOT EXISTS public.generations"), "generations table defined in pipeline migration");
+  assert(pipelineSql.includes("CREATE TABLE IF NOT EXISTS public.renders"), "renders table defined in pipeline migration");
+
+  // Verify Replicate provider implementation
+  const { ReplicateProvider } = await import("../src/lib/providers/replicate-provider");
+  const replicateProvider = new ReplicateProvider("test_dummy_token");
+  assert(replicateProvider.providerId === "replicate", "Replicate provider initialized with providerId 'replicate'");
+  assert(replicateProvider.supportsImageToVideo === true, "Replicate provider supports image-to-video");
+  assert(replicateProvider.supportedAspectRatios.includes("1:1"), "Replicate provider supports 1:1 aspect ratio");
+
+  // Verify brief route
+  const briefRoutePath = path.join(process.cwd(), "src", "app", "api", "video-generator", "brief", "route.ts");
+  assert(fs.existsSync(briefRoutePath), "Server route api/video-generator/brief exists");
+  const briefCode = fs.readFileSync(briefRoutePath, "utf8");
+  assert(briefCode.includes("duration: 5"), "Brief splits scripts into 5-second atomic scenes");
+
+  // Verify keyframe & animate routes
+  const keyframeRoutePath = path.join(process.cwd(), "src", "app", "api", "video-generator", "keyframe", "route.ts");
+  assert(fs.existsSync(keyframeRoutePath), "Server route api/video-generator/keyframe exists");
+  const animateRoutePath = path.join(process.cwd(), "src", "app", "api", "video-generator", "animate", "route.ts");
+  assert(fs.existsSync(animateRoutePath), "Server route api/video-generator/animate exists");
+  const animateCode = fs.readFileSync(animateRoutePath, "utf8");
+  assert(animateCode.includes("VideoProviderFactory.getProvider"), "Animation dispatches via VideoProviderFactory abstraction");
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");
