@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-studio-950 text-zinc-100 min-h-screen font-sans antialiased selection:bg-studioOrange selection:text-white">
+      <body className="bg-studio-950 text-studio-100 min-h-screen font-sans antialiased selection:bg-brand selection:text-black">
         <StudioShell>{children}</StudioShell>
       </body>
     </html>
