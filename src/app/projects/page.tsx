@@ -16,9 +16,12 @@ import {
   CheckCircle2,
   Copy,
   Download,
+  Upload,
 } from "lucide-react";
 import Link from "next/link";
 import { ComicSeries, MediaAsset } from "@/types";
+import { MediaUploader } from "@/components/media/media-uploader";
+
 
 export default function ProjectsAssetsPage() {
   const [activeTab, setActiveTab] = useState<"projects" | "assets">("projects");
@@ -31,6 +34,7 @@ export default function ProjectsAssetsPage() {
   const [newLogline, setNewLogline] = useState("");
   const [newRatio, setNewRatio] = useState("9:16");
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [showUploader, setShowUploader] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -235,6 +239,29 @@ export default function ProjectsAssetsPage() {
       {/* Tab 2: Assets */}
       {activeTab === "assets" && (
         <div className="space-y-4">
+          <div className="flex items-center justify-between pb-2 border-b border-[#2e2e2e]">
+            <div>
+              <h3 className="text-sm font-semibold text-white">Reference Library</h3>
+              <p className="text-[11px] text-[#707070]">Private Supabase Storage for character stills, audio, and mood boards</p>
+            </div>
+            <button
+              onClick={() => setShowUploader(!showUploader)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-brand hover:bg-brand-hover text-[#09090b] font-semibold text-xs transition-all"
+            >
+              <Upload className="w-3.5 h-3.5" />
+              <span>{showUploader ? "Close Uploader" : "Upload Reference"}</span>
+            </button>
+          </div>
+
+          {showUploader && (
+            <div className="p-4 rounded-[8px] bg-[#141414] border border-[#2e2e2e]">
+              <MediaUploader
+                onUploadComplete={(newAssets) => {
+                  setAssets((prev) => [...newAssets, ...prev]);
+                }}
+              />
+            </div>
+          )}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             {/* Filter Pills */}
             <div className="flex items-center gap-1.5 text-xs">

@@ -782,10 +782,12 @@ export interface ProjectComment {
 }
 
 export interface MediaAsset {
+  userId?: string;
+  projectId?: string | null;
   id: string;
   name: string;
   title?: string;
-  type: "video" | "image" | "audio" | "character_sheet" | "comic_panel" | "turnaround" | string;
+  type: "video" | "image" | "audio" | "document" | "character_sheet" | "comic_panel" | "turnaround" | string;
   url: string;
   thumbnailUrl?: string;
   fileSizeMb?: number;

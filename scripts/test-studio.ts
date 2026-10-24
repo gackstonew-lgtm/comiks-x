@@ -620,6 +620,29 @@ async function runStudioTests() {
   assert(mobileNavContent.includes("/training"), "Mobile nav links to training");
   assert(mobileNavContent.includes("/projects"), "Mobile nav links to projects");
 
+  // TEST 31: Global Reference Media Uploads & Private Storage Bucket
+  console.log("\n--- 31. Testing Global Reference Media Uploads & Private Storage Bucket ---");
+  const mediaSqlPath = path.join(process.cwd(), "supabase", "migrations", "20261025000000_media_assets_and_references.sql");
+  assert(fs.existsSync(mediaSqlPath), "Migration 20261025000000_media_assets_and_references.sql exists");
+  const mediaSql = fs.readFileSync(mediaSqlPath, "utf8");
+  assert(mediaSql.includes("CREATE TABLE IF NOT EXISTS public.media_assets"), "media_assets table defined in migration");
+  assert(mediaSql.includes("'references'"), "references private bucket registered in storage.buckets");
+  assert(mediaSql.includes("ENABLE ROW LEVEL SECURITY"), "RLS enabled on media_assets");
+  assert(mediaSql.includes("bucket_id = 'references'"), "RLS policies guard private references bucket");
+
+  const mediaRoutePath = path.join(process.cwd(), "src", "app", "api", "media", "route.ts");
+  assert(fs.existsSync(mediaRoutePath), "Server route src/app/api/media/route.ts exists");
+  const mediaRouteCode = fs.readFileSync(mediaRoutePath, "utf8");
+  assert(mediaRouteCode.includes("20 * 1024 * 1024"), "Image size limit 20MB enforced");
+  assert(mediaRouteCode.includes("50 * 1024 * 1024"), "Audio size limit 50MB enforced");
+  assert(mediaRouteCode.includes("200 * 1024 * 1024"), "Video size limit 200MB enforced");
+  assert(mediaRouteCode.includes("10 * 1024 * 1024"), "Document size limit 10MB enforced");
+
+  const uploaderPath = path.join(process.cwd(), "src", "components", "media", "media-uploader.tsx");
+  assert(fs.existsSync(uploaderPath), "<MediaUploader /> component exists");
+  const modalPath = path.join(process.cwd(), "src", "components", "media", "reference-library-modal.tsx");
+  assert(fs.existsSync(modalPath), "<ReferenceLibraryModal /> component exists");
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");

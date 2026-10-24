@@ -35,7 +35,7 @@
       "aspectRatio": "9:16",
       "isCustom": false,
       "consentVerified": true,
-      "createdAt": "2026-10-24T13:34:28.712Z"
+      "createdAt": "2026-10-24T13:45:44.876Z"
     },
     {
       "id": "avatar-kevo-02",
@@ -49,7 +49,7 @@
       "aspectRatio": "9:16",
       "isCustom": false,
       "consentVerified": true,
-      "createdAt": "2026-10-24T13:34:28.713Z"
+      "createdAt": "2026-10-24T13:45:44.879Z"
     },
     {
       "id": "avatar-amina-03",
@@ -63,7 +63,7 @@
       "aspectRatio": "16:9",
       "isCustom": false,
       "consentVerified": true,
-      "createdAt": "2026-10-24T13:34:28.713Z"
+      "createdAt": "2026-10-24T13:45:44.880Z"
     }
   ],
   "templates": [
@@ -236,7 +236,7 @@
       "backgroundPill": true
     },
     "defaultAspectRatio": "9:16",
-    "updatedAt": "2026-10-24T13:34:28.713Z"
+    "updatedAt": "2026-10-24T13:45:44.880Z"
   },
   "billing": {
     "userId": "user-creator",
@@ -249,7 +249,7 @@
     "monthlyCreditLimit": 500,
     "usedThisCycle": 85,
     "creditsUsedThisMonth": 85,
-    "nextRenewalDate": "2026-11-17T13:34:28.713Z",
+    "nextRenewalDate": "2026-11-17T13:45:44.880Z",
     "isStripeConfigured": false
   },
   "creditTransactions": [],
@@ -266,7 +266,7 @@
         "email": "creator@studio.com",
         "role": "owner",
         "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
-        "joinedAt": "2026-10-24T13:34:28.713Z",
+        "joinedAt": "2026-10-24T13:45:44.880Z",
         "status": "active"
       },
       {
@@ -276,13 +276,13 @@
         "email": "animator@studio.com",
         "role": "animator",
         "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
-        "joinedAt": "2026-10-24T13:34:28.713Z",
+        "joinedAt": "2026-10-24T13:45:44.880Z",
         "status": "active"
       }
     ],
     "sharedProjectIds": [],
-    "createdAt": "2026-10-24T13:34:28.713Z",
-    "updatedAt": "2026-10-24T13:34:28.713Z"
+    "createdAt": "2026-10-24T13:45:44.880Z",
+    "updatedAt": "2026-10-24T13:45:44.880Z"
   },
   "assets": [],
   "comments": [],
