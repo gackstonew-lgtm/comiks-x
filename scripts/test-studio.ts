@@ -674,6 +674,44 @@ async function runStudioTests() {
   const animateCode = fs.readFileSync(animateRoutePath, "utf8");
   assert(animateCode.includes("VideoProviderFactory.getProvider"), "Animation dispatches via VideoProviderFactory abstraction");
 
+  // TEST 33: Module 2 Video Editor (Timeline Manifest, Off-Vercel Worker Integration, Autosave & Captions)
+  console.log("\n--- 33. Testing Module 2 Video Editor & Render Worker Integration ---");
+  const { renderWorker } = await import("../src/lib/render-worker");
+  assert(Boolean(renderWorker), "RenderWorkerClient initialized");
+
+  const exportResult = await renderWorker.dispatchExport("proj-test", {
+    aspectRatio: "9:16",
+    resolution: "1080p",
+    fps: 30,
+    clips: [
+      {
+        id: "c1",
+        name: "Test Scene 1",
+        url: "https://example.com/c1.mp4",
+        duration: 5,
+        trimStart: 0,
+        trimEnd: 5,
+        speed: 1,
+        volume: 1,
+        transition: "cut",
+      },
+    ],
+    bgMusic: { volume: 0.5, ducking: true },
+    watermark: { enabled: true, opacity: 0.85, position: "top-right" },
+  });
+
+  assert(exportResult.status === "completed" || exportResult.status === "rendering", "Export dispatched to render worker");
+  assert(Boolean(exportResult.outputUrl), "Export artifact has valid outputUrl");
+
+  const timelineRoutePath = path.join(process.cwd(), "src", "app", "api", "editor", "timeline", "route.ts");
+  assert(fs.existsSync(timelineRoutePath), "Server route api/editor/timeline exists for autosave");
+
+  const exportRoutePath = path.join(process.cwd(), "src", "app", "api", "editor", "export", "route.ts");
+  assert(fs.existsSync(exportRoutePath), "Server route api/editor/export exists");
+
+  const captionsRoutePath = path.join(process.cwd(), "src", "app", "api", "editor", "captions", "route.ts");
+  assert(fs.existsSync(captionsRoutePath), "Server route api/editor/captions exists for auto-captions");
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");
