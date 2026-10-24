@@ -7,9 +7,16 @@ import {
   Server,
   Save,
   Lock,
+  Download,
+  Trash2,
+  Smartphone,
+  CheckCircle2,
 } from "lucide-react";
+import { usePwa } from "@/components/pwa/pwa-context";
 
 export default function SettingsPage() {
+  const { isStandalone, canInstall, promptInstall, clearAppCaches } = usePwa();
+  const [cacheCleared, setCacheCleared] = useState(false);
   const [settings, setSettings] = useState<any | null>(null);
   const [providers, setProviders] = useState<any[]>([]);
   const [activeProvider, setActiveProvider] = useState("luma");
@@ -306,6 +313,64 @@ export default function SettingsPage() {
               className="w-24 bg-[#121212] border border-[#2e2e2e] rounded-[6px] px-2.5 py-1 text-xs text-[#ededed] font-mono focus:outline-none focus:border-brand/60 focus:ring-1 focus:ring-brand/40"
             />
             <span className="text-xs text-[#a0a0a0]">USD / day</span>
+          </div>
+        </div>
+
+        {/* Progressive Web App & Offline Storage */}
+        <div className="bg-[#171717] border border-[#2e2e2e] rounded-[6px] p-5 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-[6px] bg-[#121212] border border-[#2e2e2e] text-brand">
+                <Smartphone className="w-4 h-4 stroke-[2]" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-[#ededed] uppercase tracking-wider">
+                  Progressive Web App & Offline Cache
+                </h3>
+                <p className="text-xs text-[#707070] mt-0.5">
+                  Install the studio natively on Windows, macOS, Android, or iOS for full-screen performance.
+                </p>
+              </div>
+            </div>
+
+            {isStandalone ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-brand/10 border border-brand/25 text-brand text-xs font-semibold">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                Standalone Mode Active
+              </span>
+            ) : canInstall ? (
+              <button
+                type="button"
+                onClick={promptInstall}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-brand hover:bg-brand-hover text-[#09090b] text-xs font-bold shadow-sm transition-all"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Install Studio App
+              </button>
+            ) : (
+              <span className="text-xs text-[#707070]">Browser Managed</span>
+            )}
+          </div>
+
+          <div className="pt-3 border-t border-[#262626] flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-[#ededed]">Studio Cache Storage</p>
+              <p className="text-[11px] text-[#707070]">
+                Purge cached app shell and static resources if experiencing stale UI states.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={async () => {
+                await clearAppCaches();
+                setCacheCleared(true);
+                setTimeout(() => setCacheCleared(false), 3000);
+              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-[#121212] hover:bg-[#202020] border border-[#2e2e2e] text-[#ededed] text-xs font-medium transition-colors"
+            >
+              <Trash2 className="w-3.5 h-3.5 text-[#a0a0a0]" />
+              <span>{cacheCleared ? "Cache Cleared!" : "Clear Cache"}</span>
+            </button>
           </div>
         </div>
 

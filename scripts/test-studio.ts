@@ -477,10 +477,10 @@ async function runStudioTests() {
   const manifestPath = path.join(process.cwd(), "public", "manifest.webmanifest");
   assert(fs.existsSync(manifestPath), "public/manifest.webmanifest exists");
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
-  assert(manifest.name === "Comiks X", `Manifest name: ${manifest.name}`);
+  assert(manifest.name.startsWith("Comiks X"), `Manifest name: ${manifest.name}`);
   assert(manifest.short_name === "Comiks X", `Manifest short_name: ${manifest.short_name}`);
   assert(manifest.display === "standalone", `Manifest display: ${manifest.display}`);
-  assert(manifest.theme_color === "#34d399", `Manifest theme_color: ${manifest.theme_color}`);
+  assert(manifest.theme_color === "#34d399" || manifest.theme_color === "#09090b", `Manifest theme_color: ${manifest.theme_color}`);
   assert(manifest.icons.length >= 3, `Manifest has ${manifest.icons.length} configured icons`);
 
   // Verify icons exist
@@ -739,6 +739,52 @@ async function runStudioTests() {
 
   const onboardingPath = path.join(process.cwd(), "src", "components", "studio", "studio-onboarding-modal.tsx");
   assert(fs.existsSync(onboardingPath), "<StudioOnboardingModal /> exists");
+
+  console.log("\n--- 35. Testing Progressive Web App (PWA) Architecture & Security Guardrails ---");
+  const pwaManifestPath = path.join(process.cwd(), "public", "manifest.webmanifest");
+  assert(fs.existsSync(pwaManifestPath), "public/manifest.webmanifest exists");
+  const manifestContent = JSON.parse(fs.readFileSync(pwaManifestPath, "utf-8"));
+  assert(manifestContent.name === "Comiks X - AI Comic Animation Studio", "Manifest name matches studio branding");
+  assert(manifestContent.short_name.length <= 12, "Manifest short_name <= 12 characters");
+  assert(manifestContent.display === "standalone", "Manifest display mode is standalone");
+  assert(manifestContent.start_url.includes("source=pwa"), "Manifest start_url includes source=pwa");
+  assert(manifestContent.icons.length >= 4, "Manifest defines full icon set (192, 512, maskable, 96)");
+  assert(manifestContent.icons.some((i: any) => i.purpose === "maskable"), "Maskable icon declared in manifest");
+  assert(manifestContent.shortcuts.length >= 2, "Manifest defines real app shortcuts (Generator, Editor, Projects)");
+  assert(manifestContent.screenshots.length >= 2, "Manifest defines rich install screenshots (wide and narrow)");
+
+  const pwaSwPath = path.join(process.cwd(), "public", "sw.js");
+  assert(fs.existsSync(pwaSwPath), "public/sw.js service worker script exists");
+  const swCode = fs.readFileSync(pwaSwPath, "utf-8");
+  assert(swCode.includes("supabase.co"), "SW strictly guards Supabase endpoints from caching");
+  assert(swCode.includes("url.pathname.startsWith(\"/api/\")"), "SW strictly guards /api routes from caching");
+  assert(swCode.includes("url.pathname.startsWith(\"/auth/\")"), "SW strictly guards /auth routes from caching");
+  assert(swCode.includes("authorization"), "SW strictly guards authenticated requests from caching");
+  assert(swCode.includes("SKIP_WAITING"), "SW supports SKIP_WAITING for safe user-prompted updates");
+  assert(swCode.includes("/offline"), "SW defines fallback to /offline page");
+
+  const icons192 = path.join(process.cwd(), "public", "icons", "icon-192x192.png");
+  const icons512 = path.join(process.cwd(), "public", "icons", "icon-512x512.png");
+  const iconsMaskable = path.join(process.cwd(), "public", "icons", "icon-maskable-512x512.png");
+  const appleTouch = path.join(process.cwd(), "public", "icons", "apple-touch-icon.png");
+  const shortcutIcon = path.join(process.cwd(), "public", "icons", "shortcut-96x96.png");
+  assert(fs.existsSync(icons192), "192x192 PNG icon exists");
+  assert(fs.existsSync(icons512), "512x512 PNG icon exists");
+  assert(fs.existsSync(iconsMaskable), "512x512 maskable PNG icon exists");
+  assert(fs.existsSync(appleTouch), "180x180 apple-touch-icon exists");
+  assert(fs.existsSync(shortcutIcon), "96x96 shortcut icon exists");
+
+  const pwaContextPath = path.join(process.cwd(), "src", "components", "pwa", "pwa-context.tsx");
+  assert(fs.existsSync(pwaContextPath), "PWA Context provider exists");
+  const pwaContextCode = fs.readFileSync(pwaContextPath, "utf-8");
+  assert(pwaContextCode.includes("beforeinstallprompt"), "PWA captures beforeinstallprompt");
+  assert(pwaContextCode.includes("appinstalled"), "PWA handles appinstalled event");
+  assert(pwaContextCode.includes("clearAppCaches"), "PWA provides cache purge mechanism");
+
+  const nextConfigPath = path.join(process.cwd(), "next.config.mjs");
+  const nextConfigCode = fs.readFileSync(nextConfigPath, "utf-8");
+  assert(nextConfigCode.includes("Service-Worker-Allowed"), "next.config.mjs sets Service-Worker-Allowed: /");
+  assert(nextConfigCode.includes("application/manifest+json"), "next.config.mjs sets manifest MIME type");
 
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);

@@ -22,11 +22,14 @@ import {
   Clock,
   Mic,
   Camera,
+  Download,
 } from "lucide-react";
 import { useAuth } from "@/components/auth/auth-provider";
+import { usePwa } from "@/components/pwa/pwa-context";
 
 export default function LandingPage() {
   const { user } = useAuth();
+  const { canInstall, promptInstall } = usePwa();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -65,6 +68,17 @@ export default function LandingPage() {
 
           {/* Auth Actions */}
           <div className="hidden md:flex items-center gap-3">
+            {canInstall && (
+              <button
+                onClick={promptInstall}
+                className="px-3 py-1.5 rounded-[6px] border border-brand/40 bg-brand/10 hover:bg-brand/20 text-brand font-semibold text-xs transition-colors flex items-center gap-1.5"
+                title="Install Comiks X Studio App"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Install App</span>
+              </button>
+            )}
+
             {user ? (
               <Link
                 href="/projects"

@@ -12,8 +12,10 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Download,
   X,
 } from "lucide-react";
+import { usePwa } from "@/components/pwa/pwa-context";
 
 interface StudioSidebarProps {
   isMobileOpen?: boolean;
@@ -25,6 +27,7 @@ export function StudioSidebar({
   onCloseMobile,
 }: StudioSidebarProps) {
   const pathname = usePathname();
+  const { canInstall, promptInstall } = usePwa();
 
   // Persistent collapsed state (default: expanded on desktop)
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -211,6 +214,30 @@ export function StudioSidebar({
 
         {/* Settings & Pinned Bottom Status */}
         <div className="p-2 border-t border-[#2e2e2e] space-y-1 overflow-hidden whitespace-nowrap">
+          {canInstall && (
+            <button
+              onClick={() => {
+                promptInstall();
+                onCloseMobile?.();
+              }}
+              className="w-full flex items-center h-8.5 px-2 rounded-md text-xs font-semibold text-brand hover:text-brand-hover hover:bg-brand/10 transition-colors group"
+              title="Install Studio App"
+            >
+              <span className="flex items-center justify-center w-6 h-6 shrink-0">
+                <Download className="w-4 h-4 stroke-[2.2] group-hover:scale-110 transition-transform" />
+              </span>
+              <span
+                className={`ml-2 text-xs transition-all duration-150 ${
+                  isExpanded || isMobileOpen
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 -translate-x-2 pointer-events-none w-0"
+                }`}
+              >
+                Install App
+              </span>
+            </button>
+          )}
+
           <Link
             href="/settings"
             onClick={onCloseMobile}
