@@ -569,6 +569,38 @@ async function runStudioTests() {
   const fetchedAssets = await db.getAssets("image");
   assert(fetchedAssets.some(a => a.id === newAsset.id), "Asset retrieved from vault");
 
+  // TEST 29: Instant Signup (No Email Verification) & Abuse Protection
+  console.log("\n--- 29. Testing Instant Signup & Abuse Protection ---");
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+  assert(emailRegex.test("valid.creator@studio.com"), "Email validator accepts valid creator email");
+  assert(!emailRegex.test("invalid-email"), "Email validator rejects malformed email");
+  assert(!emailRegex.test("@studio.com"), "Email validator rejects missing username");
+  assert(!emailRegex.test("creator@"), "Email validator rejects missing domain");
+
+  // Verify server-side SUPABASE_SERVICE_ROLE_KEY env setup
+  if (fs.existsSync(".env.local")) {
+    const envLines = fs.readFileSync(".env.local", "utf8").split("\n");
+    for (const line of envLines) {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith("#") && trimmed.includes("=")) {
+        const [k, ...v] = trimmed.split("=");
+        if (k && !process.env[k.trim()]) {
+          process.env[k.trim()] = v.join("=").trim().replace(/^["']|["']$/g, "");
+        }
+      }
+    }
+  }
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  assert(Boolean(serviceKey), "SUPABASE_SERVICE_ROLE_KEY configured for server-side admin user creation");
+
+  // Verify signup route file exists
+  const signupRoutePath = path.join(process.cwd(), "src", "app", "api", "auth", "signup", "route.ts");
+  assert(fs.existsSync(signupRoutePath), "Server route src/app/api/auth/signup/route.ts exists");
+  const signupRouteCode = fs.readFileSync(signupRoutePath, "utf8");
+  assert(signupRouteCode.includes("email_confirm: true"), "Signup route forces email_confirm: true (no email verification)");
+  assert(signupRouteCode.includes("auth.admin.createUser"), "Signup route calls auth.admin.createUser");
+  assert(signupRouteCode.includes("checkRateLimit"), "Signup route applies per-IP rate limiting abuse protection");
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");

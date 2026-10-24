@@ -4,8 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { getSiteUrl } from "@/lib/utils/url";
-import { Sparkles, Eye, EyeOff, AlertCircle, CheckCircle, ArrowRight, Mail } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, ArrowRight } from "lucide-react";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -17,7 +16,6 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successConfirmation, setSuccessConfirmation] = useState(false);
 
   const supabase = createClient();
 
@@ -34,6 +32,8 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
+
     if (!fullName.trim() || !email.trim() || !password) {
       setErrorMessage("All fields are required.");
       return;
@@ -53,77 +53,49 @@ export default function SignupPage() {
     setErrorMessage(null);
 
     try {
-      const siteUrl = getSiteUrl();
-      const { data, error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: {
-          data: {
-            full_name: fullName.trim(),
-          },
-          emailRedirectTo: `${siteUrl}/auth/callback`,
-        },
+      const cleanEmail = email.trim().toLowerCase();
+
+      // 1. Create confirmed user via server-only route handler using SUPABASE_SERVICE_ROLE_KEY
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          email: cleanEmail,
+          password,
+        }),
       });
 
-      if (error) {
-        if (error.message.includes("User already registered")) {
-          setErrorMessage("An account with this email already exists. Try signing in.");
-        } else {
-          setErrorMessage(error.message);
-        }
+      const result = await res.json();
+
+      if (!res.ok || !result.success) {
+        setErrorMessage(result.error || "An error occurred during account creation.");
+        setLoading(false);
         return;
       }
 
-      // Check if session was created immediately (auto-confirm on) or if email confirmation is required
-      if (data.session) {
+      // 2. Immediately sign in with password with the browser client (account is already confirmed)
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: cleanEmail,
+        password,
+      });
+
+      if (signInError) {
+        // Account was created successfully; fallback redirect to sign-in with notice
+        router.push(`/login?email=${encodeURIComponent(cleanEmail)}`);
+        return;
+      }
+
+      // 3. User is signed in immediately; redirect straight to studio dashboard
+      if (signInData.user) {
         router.push("/dashboard");
         router.refresh();
-      } else if (data.user) {
-        setSuccessConfirmation(true);
       }
     } catch {
-      setErrorMessage("Unable to connect to authentication server. Please check your network.");
-    } finally {
+      setErrorMessage("Unable to connect to authentication server. Please check your network connection.");
       setLoading(false);
     }
   };
-
-  if (successConfirmation) {
-    return (
-      <div className="min-h-screen bg-[#121212] flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4 text-[#ededed]">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-          <div className="w-14 h-14 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mx-auto mb-4">
-            <Mail className="w-7 h-7" />
-          </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Check your email</h1>
-          <p className="text-xs text-[#a0a0a0] mt-2 max-w-sm mx-auto leading-relaxed">
-            We sent a verification link to <strong className="text-white font-medium">{email}</strong>.
-            Click the link in your inbox to confirm your account and access the studio.
-          </p>
-
-          <div className="mt-8 bg-[#171717] p-6 border border-[#2e2e2e] rounded-[8px] space-y-4 text-xs">
-            <p className="text-[#a0a0a0]">
-              Already verified or didn't receive an email?
-            </p>
-            <div className="flex flex-col sm:flex-row gap-2 justify-center">
-              <Link
-                href="/login"
-                className="px-4 py-2 rounded-[6px] bg-brand text-[#09090b] font-medium text-xs hover:bg-brand-hover transition-colors inline-block"
-              >
-                Go to Sign In
-              </Link>
-              <button
-                onClick={() => setSuccessConfirmation(false)}
-                className="px-4 py-2 rounded-[6px] bg-[#1c1c1c] text-[#a0a0a0] hover:text-white border border-[#2e2e2e] transition-colors"
-              >
-                Back to registration
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#121212] flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4 text-[#ededed]">
@@ -137,7 +109,7 @@ export default function SignupPage() {
         </Link>
         <h1 className="text-2xl font-bold text-white tracking-tight">Create your studio account</h1>
         <p className="text-xs text-[#a0a0a0] mt-1.5">
-          Start producing 30-minute animated episodes and viral 9:16 social clips.
+          Start producing animated episodes and viral 9:16 social clips immediately.
         </p>
       </div>
 
@@ -162,61 +134,79 @@ export default function SignupPage() {
               <input
                 id="fullname"
                 type="text"
+                autoComplete="name"
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="e.g. Alex Otieno"
-                className="w-full h-10 px-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] focus:border-brand/60 focus:ring-1 focus:ring-brand/40 text-xs text-white placeholder-[#707070] focus:outline-none transition-colors"
+                placeholder="e.g. Brian Otieno"
+                disabled={loading}
+                className="w-full h-10 px-3 bg-[#121212] border border-[#2e2e2e] focus:border-brand rounded-[6px] text-xs text-[#ededed] placeholder-[#666] outline-none transition-colors disabled:opacity-50"
               />
             </div>
 
             <div>
               <label htmlFor="email" className="block text-xs font-semibold text-[#a0a0a0] uppercase tracking-wider mb-1.5">
-                Work or Studio Email
+                Email address
               </label>
               <input
                 id="email"
                 type="email"
-                required
                 autoComplete="email"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="creator@studio.com"
-                className="w-full h-10 px-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] focus:border-brand/60 focus:ring-1 focus:ring-brand/40 text-xs text-white placeholder-[#707070] focus:outline-none transition-colors"
+                disabled={loading}
+                className="w-full h-10 px-3 bg-[#121212] border border-[#2e2e2e] focus:border-brand rounded-[6px] text-xs text-[#ededed] placeholder-[#666] outline-none transition-colors disabled:opacity-50"
               />
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label htmlFor="password" className="block text-xs font-semibold text-[#a0a0a0] uppercase tracking-wider">
-                  Password
-                </label>
-                {password && (
-                  <span className={`text-[11px] font-medium ${strength.color}`}>
-                    {strength.text}
-                  </span>
-                )}
-              </div>
+              <label htmlFor="password" className="block text-xs font-semibold text-[#a0a0a0] uppercase tracking-wider mb-1.5">
+                Password
+              </label>
               <div className="relative">
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  required
                   autoComplete="new-password"
+                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Min 8 characters"
-                  className="w-full h-10 px-3 pr-10 rounded-[6px] bg-[#121212] border border-[#2e2e2e] focus:border-brand/60 focus:ring-1 focus:ring-brand/40 text-xs text-white placeholder-[#707070] focus:outline-none transition-colors"
+                  placeholder="Min. 8 characters"
+                  disabled={loading}
+                  className="w-full h-10 pl-3 pr-10 bg-[#121212] border border-[#2e2e2e] focus:border-brand rounded-[6px] text-xs text-[#ededed] placeholder-[#666] outline-none transition-colors disabled:opacity-50"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#707070] hover:text-[#ededed] p-1"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#707070] hover:text-[#ededed] transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
+
+              {password && (
+                <div className="mt-1.5 flex items-center justify-between text-[11px]">
+                  <span className={strength.color}>{strength.text}</span>
+                  <div className="flex gap-1">
+                    {[1, 2, 3].map((lvl) => (
+                      <div
+                        key={lvl}
+                        className={`w-6 h-1 rounded-full ${
+                          strength.score >= lvl
+                            ? strength.score === 1
+                              ? "bg-red-400"
+                              : strength.score === 2
+                              ? "bg-amber-400"
+                              : "bg-brand"
+                            : "bg-[#252525]"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div>
@@ -225,13 +215,14 @@ export default function SignupPage() {
               </label>
               <input
                 id="confirmPassword"
-                type="password"
-                required
+                type={showPassword ? "text" : "password"}
                 autoComplete="new-password"
+                required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Re-enter password"
-                className="w-full h-10 px-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] focus:border-brand/60 focus:ring-1 focus:ring-brand/40 text-xs text-white placeholder-[#707070] focus:outline-none transition-colors"
+                placeholder="Repeat password"
+                disabled={loading}
+                className="w-full h-10 px-3 bg-[#121212] border border-[#2e2e2e] focus:border-brand rounded-[6px] text-xs text-[#ededed] placeholder-[#666] outline-none transition-colors disabled:opacity-50"
               />
             </div>
 

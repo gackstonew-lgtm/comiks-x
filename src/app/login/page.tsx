@@ -4,63 +4,27 @@ import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { getSiteUrl } from "@/lib/utils/url";
-import { Sparkles, Eye, EyeOff, AlertCircle, CheckCircle, ArrowRight, Mail } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, ArrowRight } from "lucide-react";
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") || "/dashboard";
-
   const errorParam = searchParams.get("error");
-  const isVerificationFailed = errorParam === "verification_failed";
+  const prefilledEmail = searchParams.get("email") || "";
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(prefilledEmail);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [resending, setResending] = useState(false);
-  const [resendSuccess, setResendSuccess] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(
-    isVerificationFailed ? null : errorParam
-  );
+  const [errorMessage, setErrorMessage] = useState<string | null>(errorParam);
 
   const supabase = createClient();
 
-  const handleResendConfirmation = async () => {
-    if (!email.trim()) {
-      setErrorMessage("Please enter your email address below to receive a new verification link.");
-      return;
-    }
-
-    setResending(true);
-    setResendSuccess(null);
-    setErrorMessage(null);
-
-    try {
-      const siteUrl = getSiteUrl();
-      const { error } = await supabase.auth.resend({
-        type: "signup",
-        email: email.trim(),
-        options: {
-          emailRedirectTo: `${siteUrl}/auth/callback`,
-        },
-      });
-
-      if (error) {
-        setErrorMessage(error.message);
-      } else {
-        setResendSuccess("Verification email resent successfully! Please check your inbox.");
-      }
-    } catch {
-      setErrorMessage("Unable to connect to authentication server. Please try again.");
-    } finally {
-      setResending(false);
-    }
-  };
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
+
     if (!email.trim() || !password) {
       setErrorMessage("Please enter both email and password.");
       return;
@@ -71,15 +35,13 @@ function LoginForm() {
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
+        email: email.trim().toLowerCase(),
         password,
       });
 
       if (error) {
         if (error.message.includes("Invalid login credentials")) {
           setErrorMessage("Invalid email or password. Please check your credentials.");
-        } else if (error.message.includes("Email not confirmed")) {
-          setErrorMessage("Your email address is not yet confirmed. Please check your inbox.");
         } else {
           setErrorMessage(error.message);
         }
@@ -91,7 +53,7 @@ function LoginForm() {
         router.refresh();
       }
     } catch {
-      setErrorMessage("Unable to connect to authentication server. Please check your network.");
+      setErrorMessage("Unable to connect to authentication server. Please check your network connection.");
     } finally {
       setLoading(false);
     }
@@ -115,39 +77,6 @@ function LoginForm() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-[#171717] py-8 px-6 sm:px-8 border border-[#2e2e2e] rounded-[8px] shadow-[0_16px_36px_0_rgba(0,0,0,0.5)] space-y-6">
-          {isVerificationFailed && (
-            <div
-              role="alert"
-              className="p-3.5 rounded-[6px] bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs space-y-2.5"
-            >
-              <div className="flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0 text-amber-400 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-amber-200">Email verification failed</p>
-                  <p className="text-[#c0c0c0] mt-0.5">
-                    Your verification link is invalid or has expired. Make sure your email is entered below, then click to request a new link.
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={handleResendConfirmation}
-                disabled={resending}
-                className="w-full py-2 px-3 rounded-[6px] bg-[#232323] hover:bg-[#2b2b2b] border border-[#3e3e3e] text-xs font-bold text-white hover:text-brand transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
-              >
-                <Mail className="w-3.5 h-3.5" />
-                {resending ? "Sending link..." : "Resend confirmation email"}
-              </button>
-            </div>
-          )}
-
-          {resendSuccess && (
-            <div className="p-3 rounded-[6px] bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" />
-              <span>{resendSuccess}</span>
-            </div>
-          )}
-
           {errorMessage && (
             <div
               role="alert"
@@ -172,7 +101,8 @@ function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="creator@studio.com"
-                className="w-full h-10 px-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] focus:border-brand/60 focus:ring-1 focus:ring-brand/40 text-xs text-white placeholder-[#707070] focus:outline-none transition-colors"
+                disabled={loading}
+                className="w-full h-10 px-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] focus:border-brand/60 focus:ring-1 focus:ring-brand/40 text-xs text-white placeholder-[#707070] focus:outline-none transition-colors disabled:opacity-50"
               />
             </div>
 
@@ -197,7 +127,8 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full h-10 px-3 pr-10 rounded-[6px] bg-[#121212] border border-[#2e2e2e] focus:border-brand/60 focus:ring-1 focus:ring-brand/40 text-xs text-white placeholder-[#707070] focus:outline-none transition-colors"
+                  disabled={loading}
+                  className="w-full h-10 px-3 pr-10 rounded-[6px] bg-[#121212] border border-[#2e2e2e] focus:border-brand/60 focus:ring-1 focus:ring-brand/40 text-xs text-white placeholder-[#707070] focus:outline-none transition-colors disabled:opacity-50"
                 />
                 <button
                   type="button"

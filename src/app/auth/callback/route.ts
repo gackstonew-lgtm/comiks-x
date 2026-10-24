@@ -21,6 +21,6 @@ export async function GET(request: Request) {
     }
   }
 
-  // Redirect to login with error parameter matching the spec
-  return NextResponse.redirect(`${siteUrl}/login?error=verification_failed`);
+  // Redirect to login if code exchange fails
+  return NextResponse.redirect(`${siteUrl}/login?error=auth_failed`);
 }
