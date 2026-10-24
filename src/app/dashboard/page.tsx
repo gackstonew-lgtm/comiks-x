@@ -1,402 +1,518 @@
+"use client";
+
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { db } from "@/lib/db";
 import {
-  Sparkles,
-  BookOpen,
-  User,
-  Video,
-  Layers,
-  ChevronLeft,
-  ChevronRight,
+  ComicSeries,
+  Episode,
+  Character,
+  GenerationJob,
+  BillingAccount,
+  MediaAsset,
+} from "@/types";
+import {
   Plus,
+  Video,
+  ImageIcon,
+  Layers,
+  Sliders,
+  UserCheck,
   Mic,
+  CreditCard,
+  Search,
+  Filter,
   ArrowRight,
+  Clock,
+  Sparkles,
+  Download,
+  AlertCircle,
+  RotateCw,
+  FolderKanban,
+  CheckCircle2,
+  Play,
+  Film,
 } from "lucide-react";
-import { HeroProductionCard } from "@/components/studio/hero-production-card";
 
 export default function DashboardPage() {
-  const allSeries = db.getSeries();
-  const allCharacters = db.getCharacters();
-  const allEpisodes = db.getEpisodes();
-  const allClips = db.getSocialClips();
-  const activeSeries = allSeries[0] || null;
-  const activeEpisode = allEpisodes[0] || null;
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [retryingJobId, setRetryingJobId] = useState<string | null>(null);
+
+  // Live database data loaded via client API
+  const [seriesList, setSeriesList] = useState<ComicSeries[]>([]);
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const [jobs, setJobs] = useState<GenerationJob[]>([]);
+  const [billing, setBilling] = useState<BillingAccount | null>(null);
+  const [assets, setAssets] = useState<MediaAsset[]>([]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const res = await fetch("/api/dashboard");
+      const data = await res.json();
+      if (data.success) {
+        setSeriesList(data.seriesList || []);
+        setEpisodes(data.episodes || []);
+        setCharacters(data.characters || []);
+        setJobs(data.jobs || []);
+        setBilling(data.billing || null);
+        setAssets(data.assets || []);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // Metrics derived from actual data
+  const totalProjects = seriesList.length;
+  const totalEpisodes = episodes.length;
+  const activeJobs = jobs.filter((j) => j.status === "queued" || j.status === "processing");
+  const failedJobs = jobs.filter((j) => j.status === "failed");
+  const completedJobs = jobs.filter((j) => j.status === "completed");
+
+  // Filtered projects
+  const filteredProjects = useMemo(() => {
+    return seriesList.filter((s) => {
+      const matchesSearch =
+        s.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.genre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.artStyle.toLowerCase().includes(searchQuery.toLowerCase());
+      if (statusFilter === "all") return matchesSearch;
+      if (statusFilter === "locked") return matchesSearch && s.isStyleLocked;
+      return matchesSearch;
+    });
+  }, [seriesList, searchQuery, statusFilter]);
+
+  const handleRetryJob = async (jobId: string) => {
+    setRetryingJobId(jobId);
+    try {
+      const res = await fetch("/api/dashboard", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "retry_job", jobId }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setJobs(data.jobs);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setRetryingJobId(null);
+    }
+  };
 
   return (
-    <div className="space-y-6">
-      {/* 1. HORIZONTAL QUICK ACTION CARDS (Supabase Card Grid) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {/* Card 1: New Episode */}
-        <Link
-          href="/story-creator"
-          className="p-3.5 rounded-[6px] bg-[#171717] hover:bg-[#1c1c1c] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-all flex items-center gap-3.5 group shadow-sm focus-visible:outline-brand focus-visible:outline-2"
-        >
-          <div className="w-9 h-9 rounded-[6px] bg-brand/10 border border-brand/25 flex items-center justify-center text-brand shrink-0 group-hover:scale-105 transition-transform">
-            <Plus className="w-4 h-4 stroke-[2.5]" />
-          </div>
-          <div className="min-w-0">
-            <div className="text-xs font-semibold text-[#ededed] group-hover:text-brand transition-colors">
-              New Episode
-            </div>
-            <div className="text-[11px] text-[#a0a0a0] truncate mt-0.5">
-              Use template or blank canvas.
-            </div>
-          </div>
-        </Link>
-
-        {/* Card 2: AI Story Creator */}
-        <Link
-          href="/story-creator"
-          className="p-3.5 rounded-[6px] bg-[#171717] hover:bg-[#1c1c1c] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-all flex items-center gap-3.5 group shadow-sm focus-visible:outline-brand focus-visible:outline-2"
-        >
-          <div className="w-9 h-9 rounded-[6px] bg-brand/10 border border-brand/25 flex items-center justify-center text-brand shrink-0 group-hover:scale-105 transition-transform">
-            <Sparkles className="w-4 h-4" />
-          </div>
-          <div className="min-w-0">
-            <div className="text-xs font-semibold text-[#ededed] group-hover:text-brand transition-colors">
-              AI Story Creator
-            </div>
-            <div className="text-[11px] text-[#a0a0a0] truncate mt-0.5">
-              Turn ideas into 30-min episodes.
-            </div>
-          </div>
-        </Link>
-
-        {/* Card 3: AI Dubbing & Voice */}
-        <Link
-          href="/editor"
-          className="p-3.5 rounded-[6px] bg-[#171717] hover:bg-[#1c1c1c] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-all flex items-center gap-3.5 group shadow-sm focus-visible:outline-brand focus-visible:outline-2"
-        >
-          <div className="w-9 h-9 rounded-[6px] bg-brand/10 border border-brand/25 flex items-center justify-center text-brand shrink-0 group-hover:scale-105 transition-transform">
-            <Mic className="w-4 h-4" />
-          </div>
-          <div className="min-w-0">
-            <div className="text-xs font-semibold text-[#ededed] group-hover:text-brand transition-colors">
-              AI Dubbing & Voice
-            </div>
-            <div className="text-[11px] text-[#a0a0a0] truncate mt-0.5">
-              Multi-language audio tracks.
-            </div>
-          </div>
-        </Link>
-
-        {/* Card 4: Social Studio */}
-        <Link
-          href="/clips"
-          className="p-3.5 rounded-[6px] bg-[#171717] hover:bg-[#1c1c1c] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-all flex items-center gap-3.5 group shadow-sm focus-visible:outline-brand focus-visible:outline-2"
-        >
-          <div className="w-9 h-9 rounded-[6px] bg-brand/10 border border-brand/25 flex items-center justify-center text-brand shrink-0 group-hover:scale-105 transition-transform">
-            <Video className="w-4 h-4" />
-          </div>
-          <div className="min-w-0">
-            <div className="text-xs font-semibold text-[#ededed] group-hover:text-brand transition-colors">
-              Social Studio (9:16)
-            </div>
-            <div className="text-[11px] text-[#a0a0a0] truncate mt-0.5">
-              Extract viral TikTok & Reels clips.
-            </div>
-          </div>
-        </Link>
-      </div>
-
-      {/* 2. CINEMATIC HERO PRODUCTION CARD */}
-      <HeroProductionCard activeEpisode={activeEpisode} />
-
-      {/* 3. INSPIRATION MEDIA CAROUSEL */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-[#ededed] tracking-tight">
-            Production Inspiration
-          </h3>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/series"
-              className="text-xs font-medium text-[#a0a0a0] hover:text-[#ededed] transition-colors mr-2"
-            >
-              All Series Templates
-            </Link>
-            <button
-              className="w-7 h-7 rounded-[6px] bg-[#171717] hover:bg-[#232323] border border-[#2e2e2e] flex items-center justify-center text-[#a0a0a0] hover:text-[#ededed] transition-colors"
-              title="Previous"
-              aria-label="Previous template"
-            >
-              <ChevronLeft className="w-3.5 h-3.5" />
-            </button>
-            <button
-              className="w-7 h-7 rounded-[6px] bg-[#171717] hover:bg-[#232323] border border-[#2e2e2e] flex items-center justify-center text-[#a0a0a0] hover:text-[#ededed] transition-colors"
-              title="Next"
-              aria-label="Next template"
-            >
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
+    <div className="space-y-6 max-w-7xl mx-auto select-none">
+      {/* 1. Header & Studio Production Overview */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#2e2e2e]">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            Production Overview
+            <span className="text-xs px-2 py-0.5 rounded-full bg-brand/10 border border-brand/25 text-brand font-medium">
+              Studio Pro
+            </span>
+          </h1>
+          <p className="text-xs text-[#a0a0a0] mt-0.5">
+            Manage long-form series, animated shorts, AI generation pipelines, and export assets.
+          </p>
         </div>
 
-        {/* 4 Media Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div className="flex items-center gap-2.5">
           <Link
             href="/storyboard"
-            className="group relative aspect-[16/10] rounded-[6px] overflow-hidden bg-[#171717] border border-[#2e2e2e] hover:border-brand/40 transition-all shadow-sm focus-visible:outline-brand focus-visible:outline-2"
+            className="px-3.5 py-2 rounded-md bg-brand hover:bg-brand-hover text-[#09090b] font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
           >
-            <img
-              src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800&auto=format&fit=crop"
-              alt="Storyboards & Visual Frames"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-end p-3.5 text-center">
-              <h4 className="text-xs font-semibold text-white leading-tight">
-                Visual Storyboards
-              </h4>
-              <p className="text-[11px] text-[#a0a0a0] mt-0.5">Camera Framing & Continuity</p>
-            </div>
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+            Create Project
           </Link>
-
           <Link
-            href="/characters"
-            className="group relative aspect-[16/10] rounded-[6px] overflow-hidden bg-[#171717] border border-[#2e2e2e] hover:border-brand/40 transition-all shadow-sm focus-visible:outline-brand focus-visible:outline-2"
+            href="/video-generator"
+            className="px-3.5 py-2 rounded-md bg-[#232323] hover:bg-[#2a2a2a] border border-[#3e3e3e] text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
-            <img
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop"
-              alt="Character Bible"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-end p-3.5 text-center">
-              <h4 className="text-xs font-semibold text-white leading-tight">
-                Character Bible
-              </h4>
-              <p className="text-[11px] text-[#a0a0a0] mt-0.5">5D DNA & Locked Wardrobe</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/series"
-            className="group relative aspect-[16/10] rounded-[6px] overflow-hidden bg-[#171717] border border-[#2e2e2e] hover:border-brand/40 transition-all shadow-sm focus-visible:outline-brand focus-visible:outline-2"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop"
-              alt="Comic Series Hub"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-end p-3.5 text-center">
-              <h4 className="text-xs font-semibold text-white leading-tight">
-                Comic Series Hub
-              </h4>
-              <p className="text-[11px] text-[#a0a0a0] mt-0.5">World Rules & Art Styles</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/clips"
-            className="group relative aspect-[16/10] rounded-[6px] overflow-hidden bg-[#171717] border border-[#2e2e2e] hover:border-brand/40 transition-all shadow-sm focus-visible:outline-brand focus-visible:outline-2"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&auto=format&fit=crop"
-              alt="Social Studio"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-end p-3.5 text-center">
-              <h4 className="text-xs font-semibold text-white leading-tight">
-                Social Studio (9:16)
-              </h4>
-              <p className="text-[11px] text-[#a0a0a0] mt-0.5">TikTok & Reels Derivatives</p>
-            </div>
+            <Video className="w-3.5 h-3.5 text-brand" />
+            Generate Video
           </Link>
         </div>
       </div>
 
-      {/* 4. ACTIVE PRODUCTIONS & SYSTEM OVERVIEW */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-1">
-        {/* Left (2 cols): Episodes List */}
-        <div className="lg:col-span-2 space-y-3">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-[#ededed] tracking-tight">
-              Episodes in Production
+      {/* 2. Actual Derived Statistics KPI Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {/* KPI 1: Available Credits */}
+        <Link
+          href="/billing"
+          className="p-4 rounded-lg bg-[#171717] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-colors group"
+        >
+          <div className="flex items-center justify-between text-xs text-[#a0a0a0] mb-1">
+            <span className="font-semibold uppercase text-[10px]">Credit Balance</span>
+            <CreditCard className="w-3.5 h-3.5 text-brand" />
+          </div>
+          <div className="text-2xl font-black text-white group-hover:text-brand transition-colors">
+            {billing?.currentBalance ?? 250} <span className="text-xs font-normal text-[#707070]">CR</span>
+          </div>
+          <div className="text-[11px] text-[#707070] mt-1 truncate">
+            {(billing?.plan || "creator").toUpperCase()} • {billing?.usedThisCycle ?? 0} used this cycle
+          </div>
+        </Link>
+
+        {/* KPI 2: Active Projects */}
+        <Link
+          href="/projects"
+          className="p-4 rounded-lg bg-[#171717] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-colors group"
+        >
+          <div className="flex items-center justify-between text-xs text-[#a0a0a0] mb-1">
+            <span className="font-semibold uppercase text-[10px]">Active Series</span>
+            <FolderKanban className="w-3.5 h-3.5 text-cyan-400" />
+          </div>
+          <div className="text-2xl font-black text-white group-hover:text-cyan-400 transition-colors">
+            {totalProjects} <span className="text-xs font-normal text-[#707070]">Series</span>
+          </div>
+          <div className="text-[11px] text-[#707070] mt-1 truncate">
+            {totalEpisodes} total episodes structured
+          </div>
+        </Link>
+
+        {/* KPI 3: Characters in Universe */}
+        <Link
+          href="/characters"
+          className="p-4 rounded-lg bg-[#171717] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-colors group"
+        >
+          <div className="flex items-center justify-between text-xs text-[#a0a0a0] mb-1">
+            <span className="font-semibold uppercase text-[10px]">Character Bible</span>
+            <UserCheck className="w-3.5 h-3.5 text-amber-400" />
+          </div>
+          <div className="text-2xl font-black text-white group-hover:text-amber-400 transition-colors">
+            {characters.length} <span className="text-xs font-normal text-[#707070]">DNA Cast</span>
+          </div>
+          <div className="text-[11px] text-[#707070] mt-1 truncate">
+            Visual palettes & turnarounds locked
+          </div>
+        </Link>
+
+        {/* KPI 4: Active Generation Queue */}
+        <Link
+          href="/queue"
+          className="p-4 rounded-lg bg-[#171717] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-colors group"
+        >
+          <div className="flex items-center justify-between text-xs text-[#a0a0a0] mb-1">
+            <span className="font-semibold uppercase text-[10px]">Render Queue</span>
+            <Clock className="w-3.5 h-3.5 text-purple-400" />
+          </div>
+          <div className="text-2xl font-black text-white group-hover:text-purple-400 transition-colors">
+            {activeJobs.length} <span className="text-xs font-normal text-[#707070]">Active</span>
+          </div>
+          <div className="text-[11px] text-[#707070] mt-1 truncate">
+            {completedJobs.length} completed • {failedJobs.length} failed
+          </div>
+        </Link>
+      </div>
+
+      {/* 3. Quick Action Hub (6 Core Workspaces) */}
+      <div>
+        <div className="text-xs font-semibold uppercase tracking-wider text-[#707070] mb-2.5">
+          Production Workspaces
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+          <Link
+            href="/video-generator"
+            className="p-3 rounded-lg bg-[#171717] hover:bg-[#202020] border border-[#2e2e2e] hover:border-brand/40 transition-all flex flex-col items-center text-center group"
+          >
+            <div className="w-8 h-8 rounded-md bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mb-2 group-hover:scale-105 transition-transform">
+              <Video className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-white group-hover:text-brand transition-colors">
+              AI Video
+            </span>
+            <span className="text-[10px] text-[#707070] mt-0.5">I2V & T2V</span>
+          </Link>
+
+          <Link
+            href="/image-generator"
+            className="p-3 rounded-lg bg-[#171717] hover:bg-[#202020] border border-[#2e2e2e] hover:border-cyan-500/40 transition-all flex flex-col items-center text-center group"
+          >
+            <div className="w-8 h-8 rounded-md bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-2 group-hover:scale-105 transition-transform">
+              <ImageIcon className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-white group-hover:text-cyan-400 transition-colors">
+              AI Image
+            </span>
+            <span className="text-[10px] text-[#707070] mt-0.5">Plates & Panels</span>
+          </Link>
+
+          <Link
+            href="/storyboard"
+            className="p-3 rounded-lg bg-[#171717] hover:bg-[#202020] border border-[#2e2e2e] hover:border-amber-500/40 transition-all flex flex-col items-center text-center group"
+          >
+            <div className="w-8 h-8 rounded-md bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-2 group-hover:scale-105 transition-transform">
+              <Layers className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-white group-hover:text-amber-400 transition-colors">
+              Storyboard
+            </span>
+            <span className="text-[10px] text-[#707070] mt-0.5">Scripts & Shots</span>
+          </Link>
+
+          <Link
+            href="/editor"
+            className="p-3 rounded-lg bg-[#171717] hover:bg-[#202020] border border-[#2e2e2e] hover:border-emerald-500/40 transition-all flex flex-col items-center text-center group"
+          >
+            <div className="w-8 h-8 rounded-md bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-2 group-hover:scale-105 transition-transform">
+              <Sliders className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-white group-hover:text-emerald-400 transition-colors">
+              Timeline Editor
+            </span>
+            <span className="text-[10px] text-[#707070] mt-0.5">FlipaClip 2D Player</span>
+          </Link>
+
+          <Link
+            href="/avatars"
+            className="p-3 rounded-lg bg-[#171717] hover:bg-[#202020] border border-[#2e2e2e] hover:border-purple-500/40 transition-all flex flex-col items-center text-center group"
+          >
+            <div className="w-8 h-8 rounded-md bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-2 group-hover:scale-105 transition-transform">
+              <UserCheck className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-white group-hover:text-purple-400 transition-colors">
+              AI Avatars
+            </span>
+            <span className="text-[10px] text-[#707070] mt-0.5">Talking Heads</span>
+          </Link>
+
+          <Link
+            href="/voice-music"
+            className="p-3 rounded-lg bg-[#171717] hover:bg-[#202020] border border-[#2e2e2e] hover:border-pink-500/40 transition-all flex flex-col items-center text-center group"
+          >
+            <div className="w-8 h-8 rounded-md bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 mb-2 group-hover:scale-105 transition-transform">
+              <Mic className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-white group-hover:text-pink-400 transition-colors">
+              Voice & Audio
+            </span>
+            <span className="text-[10px] text-[#707070] mt-0.5">TTS & -14 LUFS</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* 4. Failed Generation Alerts (if any) */}
+      {failedJobs.length > 0 && (
+        <div className="p-3.5 rounded-lg bg-red-500/10 border border-red-500/25 text-red-300 text-xs flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+            <span>
+              {failedJobs.length} generation job(s) encountered provider errors.
+            </span>
+          </div>
+          <button
+            onClick={() => handleRetryJob(failedJobs[0].id)}
+            disabled={retryingJobId === failedJobs[0].id}
+            className="px-3 py-1 rounded bg-[#232323] hover:bg-[#2b2b2b] text-white border border-[#3e3e3e] font-bold text-xs flex items-center gap-1.5 transition-colors disabled:opacity-50"
+          >
+            <RotateCw className={`w-3.5 h-3.5 ${retryingJobId ? "animate-spin" : ""}`} />
+            Retry Latest
+          </button>
+        </div>
+      )}
+
+      {/* 5. Main Split: Recent Projects & Active Render Operations */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left 2 Cols: Projects Management */}
+        <div className="lg:col-span-2 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h2 className="text-sm font-bold text-white flex items-center gap-2">
+              Recent Productions
+              <span className="text-xs text-[#707070] font-normal">
+                ({filteredProjects.length})
+              </span>
+            </h2>
+
+            {/* Search & Filter Bar */}
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#707070]" />
+                <input
+                  type="text"
+                  placeholder="Search series or style..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-44 sm:w-56 h-8 pl-8 pr-2.5 rounded-md bg-[#171717] border border-[#2e2e2e] focus:border-brand text-xs text-white placeholder-[#707070] focus:outline-none transition-colors"
+                />
+              </div>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="h-8 px-2.5 rounded-md bg-[#171717] border border-[#2e2e2e] text-xs text-[#a0a0a0] focus:outline-none"
+              >
+                <option value="all">All Styles</option>
+                <option value="locked">Style Locked</option>
+              </select>
+            </div>
+          </div>
+
+          {filteredProjects.length === 0 ? (
+            /* Empty State */
+            <div className="p-8 rounded-lg bg-[#171717] border border-[#2e2e2e] text-center space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mx-auto">
+                <FolderKanban className="w-6 h-6" />
+              </div>
+              <h3 className="text-sm font-bold text-white">No productions found</h3>
+              <p className="text-xs text-[#a0a0a0] max-w-sm mx-auto">
+                {searchQuery
+                  ? "No projects match your search query. Try clearing the filter."
+                  : "Start by creating your first comic universe, episode, or viral short."}
+              </p>
+              <Link
+                href="/templates"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-brand hover:bg-brand-hover text-[#09090b] font-bold text-xs"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                Browse Production Templates
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              {filteredProjects.map((series) => (
+                <div
+                  key={series.id}
+                  className="p-4 rounded-lg bg-[#171717] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group"
+                >
+                  <div className="flex items-start gap-3.5 min-w-0">
+                    <div
+                      className="w-14 h-14 rounded-md bg-cover bg-center shrink-0 border border-[#2e2e2e]"
+                      style={{
+                        backgroundImage: `url(${
+                          series.visualReferences[0] ||
+                          "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=200"
+                        })`,
+                      }}
+                    />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-xs font-bold text-white group-hover:text-brand transition-colors truncate">
+                          {series.title}
+                        </h4>
+                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-medium">
+                          {series.artStyle}
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#a0a0a0] line-clamp-1 mt-0.5">
+                        {series.description}
+                      </p>
+                      <div className="flex items-center gap-3 text-[11px] text-[#707070] mt-1.5">
+                        <span>{series.episodeCount || 1} Episodes</span>
+                        <span>•</span>
+                        <span>{series.mainCharacterIds?.length || 0} Characters</span>
+                        <span>•</span>
+                        <span className="text-emerald-400">
+                          {series.isStyleLocked ? "Consistent" : "Flexible"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 w-full sm:w-auto justify-end shrink-0">
+                    <Link
+                      href="/storyboard"
+                      className="px-3 py-1.5 rounded-md bg-[#232323] hover:bg-[#2b2b2b] text-white border border-[#3e3e3e] text-xs font-semibold transition-colors"
+                    >
+                      Storyboard
+                    </Link>
+                    <Link
+                      href="/editor"
+                      className="px-3 py-1.5 rounded-md bg-brand hover:bg-brand-hover text-[#09090b] text-xs font-bold transition-colors flex items-center gap-1"
+                    >
+                      Edit Timeline
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Right Col: Active Queue & Recent Generations */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between pb-1">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#a0a0a0]">
+              Active Render Queue
             </h3>
-            <Link
-              href="/story-creator"
-              className="text-xs font-medium text-brand hover:underline inline-flex items-center gap-1"
-            >
-              <span>Create Episode</span>
-              <ArrowRight className="w-3 h-3" />
+            <Link href="/queue" className="text-xs text-brand hover:underline">
+              View All ({jobs.length})
             </Link>
           </div>
 
-          <div className="space-y-3">
-            {allEpisodes.length === 0 ? (
-              <div className="p-8 rounded-[6px] bg-[#171717] border border-dashed border-[#2e2e2e] text-center space-y-3">
-                <div className="w-10 h-10 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center mx-auto text-brand">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div className="text-xs font-semibold text-white">No Episodes in Production</div>
-                <p className="text-[11px] text-[#a0a0a0] max-w-sm mx-auto">
-                  Start by creating your first episode with AI-assisted story decomposition and cinematography.
-                </p>
-                <Link
-                  href="/story-creator"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-brand text-[#09090b] text-xs font-medium hover:bg-brand-hover transition-colors"
-                >
-                  <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                  Create New Episode
-                </Link>
+          <div className="p-3.5 rounded-lg bg-[#171717] border border-[#2e2e2e] space-y-3">
+            {jobs.length === 0 ? (
+              <div className="text-center py-6 text-xs text-[#707070]">
+                No jobs currently rendering. Start a video generation.
               </div>
             ) : (
-              allEpisodes.map((ep) => {
-                const completedCount =
-                  ep.scenes?.filter((s) => s.status === "completed" || s.status === "cached")
-                    .length || 0;
-                const totalCount = ep.scenes?.length || 0;
-                const pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
-
-                return (
-                  <div
-                    key={ep.id}
-                    className="p-4 rounded-[6px] bg-[#171717] border border-[#2e2e2e] hover:border-[#3e3e3e] transition-all space-y-3"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#1c1c1c] text-[#ededed] border border-[#2e2e2e]">
-                            EP {ep.episodeNumber}
-                          </span>
-                          <h4 className="text-xs font-semibold text-[#ededed] truncate">{ep.title}</h4>
-                        </div>
-                        <p className="text-xs text-[#a0a0a0] mt-1 line-clamp-1">{ep.logline}</p>
-                      </div>
-
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[11px] font-mono text-[#a0a0a0] bg-[#121212] px-2 py-0.5 rounded border border-[#2e2e2e]">
-                          ~{ep.targetDurationMinutes} min
-                        </span>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-brand/10 text-brand border border-brand/25">
-                          {ep.status}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Progress bar */}
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[11px] text-[#a0a0a0]">
-                        <span>{completedCount} of {totalCount} scenes generated</span>
-                        <span className="font-medium text-[#ededed] font-mono">{pct}%</span>
-                      </div>
-                      <div className="w-full h-1.5 rounded-full bg-[#121212] overflow-hidden border border-[#2e2e2e]">
-                        <div
-                          className="h-full bg-brand rounded-full transition-all duration-300"
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Quick Action Links */}
-                    <div className="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-[#2e2e2e] text-xs">
-                      <span className="text-[11px] text-[#707070] truncate max-w-xs">
-                        Cast: {ep.charactersInvolved?.length ? ep.charactersInvolved.join(", ") : "Cast pending"}
-                      </span>
-                      <div className="flex items-center gap-1.5">
-                        <Link
-                          href={`/storyboard/${ep.id}`}
-                          className="px-2.5 py-1 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-[#ededed] text-[11px] font-medium transition-colors"
-                        >
-                          Storyboard
-                        </Link>
-                        <Link
-                          href={`/editor/${ep.id}`}
-                          className="px-2.5 py-1 rounded-[6px] bg-[#1c1c1c] hover:bg-[#232323] border border-[#2e2e2e] text-[#ededed] text-[11px] font-medium transition-colors"
-                        >
-                          Timeline
-                        </Link>
-                        <Link
-                          href={`/clips/${ep.id}`}
-                          className="px-2.5 py-1 rounded-[6px] bg-brand/10 hover:bg-brand/20 text-brand text-[11px] font-medium border border-brand/25 transition-colors"
-                        >
-                          Social Clips (9:16)
-                        </Link>
-                      </div>
-                    </div>
+              jobs.slice(0, 4).map((job) => (
+                <div key={job.id} className="space-y-1.5 pb-2.5 border-b border-[#232323] last:border-none last:pb-0">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-semibold text-white truncate max-w-[160px]">
+                      {job.prompt.substring(0, 28)}...
+                    </span>
+                    <span
+                      className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${
+                        job.status === "completed"
+                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                          : job.status === "processing" || job.status === "queued"
+                          ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                          : "bg-red-500/10 text-red-400 border border-red-500/20"
+                      }`}
+                    >
+                      {job.status}
+                    </span>
                   </div>
-                );
-              })
+
+                  <div className="w-full h-1.5 rounded-full bg-[#242424] overflow-hidden">
+                    <div
+                      className="h-full bg-brand rounded-full transition-all duration-300"
+                      style={{ width: `${job.progressPercent || 15}%` }}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between text-[10px] text-[#707070]">
+                    <span>Provider: {job.provider.toUpperCase()}</span>
+                    <span>{job.progressPercent || 15}%</span>
+                  </div>
+                </div>
+              ))
             )}
           </div>
-        </div>
 
-        {/* Right (1 col): Active Universe */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-[#ededed] tracking-tight">
-            Active Universe
-          </h3>
-
-          <div className="p-4 rounded-[6px] bg-[#171717] border border-[#2e2e2e] space-y-3.5">
-            <div>
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-brand">
-                Series Canon
-              </div>
-              <h4 className="text-xs font-semibold text-[#ededed] mt-0.5">
-                {activeSeries?.title || "No Series Created Yet"}
-              </h4>
-              <p className="text-xs text-[#a0a0a0] mt-1 line-clamp-3 leading-relaxed">
-                {activeSeries?.description || "Define your franchise universe, visual aesthetic, and narrative rules."}
-              </p>
-              {!activeSeries && (
-                <Link
-                  href="/series"
-                  className="mt-2 inline-flex items-center gap-1 text-xs text-brand hover:underline font-medium"
-                >
-                  <span>Create Series Project</span>
-                  <ArrowRight className="w-3 h-3" />
-                </Link>
-              )}
-            </div>
-
-            <div className="pt-3 border-t border-[#2e2e2e] space-y-2">
-              <div className="text-[11px] font-medium text-[#ededed] flex items-center justify-between">
-                <span>Character Anchors</span>
-                <Link href="/characters" className="text-brand text-[11px] hover:underline">
-                  View All ({allCharacters.length})
-                </Link>
-              </div>
-              <div className="space-y-1.5">
-                {allCharacters.length === 0 ? (
-                  <div className="p-3 rounded-[6px] bg-[#121212] border border-[#2e2e2e] text-center text-xs text-[#a0a0a0]">
-                    No characters yet.{" "}
-                    <Link href="/characters" className="text-brand hover:underline">
-                      Add Character Anchor
-                    </Link>
-                  </div>
-                ) : (
-                  allCharacters.slice(0, 3).map((c) => (
-                    <div
-                      key={c.id}
-                      className="flex items-center justify-between p-2 rounded-[6px] bg-[#121212] border border-[#2e2e2e] text-xs"
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-[4px] bg-brand/15 text-brand border border-brand/25 flex items-center justify-center font-bold text-[10px]">
-                          {c.name[0]}
-                        </div>
-                        <span className="font-medium text-[#ededed] text-xs">{c.name}</span>
-                      </div>
-                      {c.isLocked && (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-brand/10 text-brand border border-brand/25">
-                          Locked
-                        </span>
-                      )}
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-[#2e2e2e] flex items-center justify-between text-xs">
-              <span className="text-[#a0a0a0] text-[11px]">Providers: Luma, Kling, Runway</span>
+          {/* Quick Shortcuts */}
+          <div className="p-3.5 rounded-lg bg-[#171717] border border-[#2e2e2e] space-y-2.5">
+            <h4 className="text-xs font-bold text-white">Production Kits</h4>
+            <div className="grid grid-cols-2 gap-2 text-xs">
               <Link
-                href="/settings"
-                className="text-brand hover:underline text-[11px] font-medium"
+                href="/templates"
+                className="p-2 rounded bg-[#202020] hover:bg-[#252525] text-[#ededed] border border-[#2a2a2a] truncate"
               >
-                Configure →
+                Templates
+              </Link>
+              <Link
+                href="/brand-kit"
+                className="p-2 rounded bg-[#202020] hover:bg-[#252525] text-[#ededed] border border-[#2a2a2a] truncate"
+              >
+                Brand Kit
+              </Link>
+              <Link
+                href="/team"
+                className="p-2 rounded bg-[#202020] hover:bg-[#252525] text-[#ededed] border border-[#2a2a2a] truncate"
+              >
+                Team Lab
+              </Link>
+              <Link
+                href="/billing"
+                className="p-2 rounded bg-[#202020] hover:bg-[#252525] text-[#ededed] border border-[#2a2a2a] truncate"
+              >
+                Credits & Billing
               </Link>
             </div>
           </div>

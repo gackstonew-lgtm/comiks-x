@@ -498,6 +498,77 @@ async function runStudioTests() {
   assert(swContent.includes("/auth/"), "Service worker explicitly excludes /auth/* from caching");
   assert(swContent.includes("supabase.co"), "Service worker explicitly excludes Supabase endpoints from caching");
 
+  // TEST 28: Studio Upgrade Modules (Avatars, Templates, Brand Kit, Billing, Team, Assets)
+  console.log("\n--- 28. Testing Studio Upgrade Modules ---");
+  // 1. Avatars
+  const initialAvatars = await db.getAvatars();
+  assert(initialAvatars.length >= 2, `Avatars initialized: found ${initialAvatars.length} avatars`);
+  const newAvatar = await db.createAvatar({
+    name: "Zavala Presenter",
+    category: "presenter",
+    role: "Nairobi Tech Reporter",
+    voiceId: "voice-ke-1",
+    avatarType: "custom",
+    stylePreset: "comic-vibrant",
+    thumbnailUrl: "https://example.com/avatar.jpg",
+    previewUrl: "https://example.com/avatar.jpg",
+    consentVerified: true,
+  });
+  assert(Boolean(newAvatar.id), `Created new verified avatar with ID: ${newAvatar.id}`);
+  assert(newAvatar.consentVerified === true, "Avatar has verified digital likeness consent");
+
+  // 2. Templates
+  const templates = await db.getTemplates();
+  assert(templates.length >= 3, `Templates loaded: found ${templates.length} templates`);
+  const tpl = await db.getTemplateById("tmpl-social-explainer");
+  assert(Boolean(tpl), "Found TikTok comedy sketch template");
+
+  // 3. Brand Kit
+  const studioBrandKit = await db.getBrandKit();
+  assert(Boolean(studioBrandKit.accentColor), `Brand kit loaded with accent: ${studioBrandKit.accentColor}`);
+  const updatedBrand = await db.updateBrandKit({ primaryColor: "#111111", watermarkOpacity: 0.85 });
+  assert(updatedBrand.primaryColor === "#111111", "Brand kit updated primary color");
+  assert(updatedBrand.watermarkOpacity === 0.85, "Brand kit updated watermark opacity");
+
+  // 4. Billing & Credits
+  const billing = await db.getBillingAccount();
+  const startingCredits = billing.currentBalance;
+  assert(startingCredits > 0, `Billing initialized with ${startingCredits} credits`);
+  await db.deductCredits(15, "AI Video Clip generation");
+  const afterDeduction = await db.getBillingAccount();
+  assert(afterDeduction.currentBalance === startingCredits - 15, `Credits deducted correctly: now ${afterDeduction.currentBalance}`);
+  await db.addCredits(50, "Credit pack purchase");
+  const afterAdd = await db.getBillingAccount();
+  assert(afterAdd.currentBalance === startingCredits - 15 + 50, `Credits added correctly: now ${afterAdd.currentBalance}`);
+  const txs = await db.getCreditTransactions();
+  assert(txs.length >= 2, `Audit transactions recorded: ${txs.length} transactions`);
+
+  // 5. Team Workspace
+  const team = await db.getTeamWorkspace();
+  assert(Boolean(team.name), `Team workspace loaded: ${team.name}`);
+  assert(team.members.length >= 1, `Found ${team.members.length} team members`);
+  const newMember = await db.addTeamMember({
+    name: "Amani Oduor",
+    email: "amani@example.com",
+    role: "editor",
+  });
+  assert(Boolean(newMember.id), `Added team editor: ${newMember.name}`);
+  const updatedRole = await db.updateTeamMemberRole(newMember.id, "admin");
+  assert(updatedRole === true, "Updated team member role to admin");
+
+  // 6. Assets Vault
+  const newAsset = await db.createAsset({
+    name: "Test Nairobi Skyline Still",
+    type: "image",
+    url: "https://example.com/skyline.png",
+    size: "2.4 MB",
+    aspectRatio: "16:9",
+    tags: ["background", "nairobi"],
+  });
+  assert(Boolean(newAsset.id), `Asset created in vault with ID: ${newAsset.id}`);
+  const fetchedAssets = await db.getAssets("image");
+  assert(fetchedAssets.some(a => a.id === newAsset.id), "Asset retrieved from vault");
+
     console.log("\n==================================================");
     console.log(`TEST SUMMARY: ${passed} PASSED, ${failed} FAILED`);
     console.log("==================================================");

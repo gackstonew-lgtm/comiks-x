@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, BookOpen, Plus, User, Activity } from "lucide-react";
+import { LayoutDashboard, Video, Plus, Sliders, FolderKanban } from "lucide-react";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
 
   const navItems = [
-    { label: "Dashboard", href: "/dashboard", icon: Home },
-    { label: "Series", href: "/series", icon: BookOpen },
-    { label: "Create", href: "/story-creator", icon: Plus, isPrimary: true },
-    { label: "Characters", href: "/characters", icon: User },
-    { label: "Queue", href: "/queue", icon: Activity },
+    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { label: "Video", href: "/video-generator", icon: Video },
+    { label: "Create", href: "/storyboard", icon: Plus, isPrimary: true },
+    { label: "Editor", href: "/editor", icon: Sliders },
+    { label: "Assets", href: "/projects", icon: FolderKanban },
   ];
 
   const isActive = (href: string) => {

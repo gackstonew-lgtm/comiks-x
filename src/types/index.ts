@@ -117,6 +117,8 @@ export interface ComicSeries {
   id: string;
   title: string;
   description: string;
+  logline?: string;
+  defaultAspectRatio?: string;
   genre: string;
   artStyle: ComicArtStyle;
   isStyleLocked: boolean;
@@ -271,6 +273,7 @@ export interface GenerationJob {
   id: string;
   episodeId: string;
   sceneId: string;
+  type?: string;
   provider: string; // "luma" | "runway" | "kling" | "fal" | "sora" | "minimax"
   model: string;
   prompt: string;
@@ -280,6 +283,8 @@ export interface GenerationJob {
   outputUrl?: string;
   error?: string;
   progressPercent: number;
+  progress?: number;
+  parameters?: Record<string, any>;
   costCredits: number;
   createdAt: string;
   updatedAt: string;
@@ -645,5 +650,156 @@ export interface FeatureFlagConfig {
 }
 
 export type { SceneGenerationRequest, GenerationResponse } from "@/lib/providers/video-provider.interface";
+
+// ==========================================
+// EXPANDED STUDIO ENTERPRISE TYPES
+// ==========================================
+
+export interface AvatarProfile {
+  id: string;
+  name: string;
+  category?: "presenter" | "comic_character" | "anime_host" | "photorealistic" | string;
+  role?: string;
+  avatarType?: string;
+  stylePreset?: string;
+  voiceId?: string;
+  previewUrl?: string;
+  thumbnailUrl?: string;
+  previewVideoUrl?: string;
+  gender?: "female" | "male" | "non-binary";
+  defaultVoiceId?: string;
+  voiceProvider?: "elevenlabs" | "openai" | "custom";
+  presentationStyle?: "energetic" | "formal" | "humorous" | "storyteller";
+  aspectRatio?: "16:9" | "9:16";
+  isCustom?: boolean;
+  consentVerified?: boolean;
+  createdAt: string;
+}
+
+export interface ProductionTemplate {
+  id: string;
+  title: string;
+  category: "comedy_short" | "motion_comic" | "manga_sequence" | "product_ad" | "social_explainer" | "episodic_story" | string;
+  description: string;
+  aspectRatio: "9:16" | "16:9" | "1:1";
+  durationSeconds: number;
+  duration?: string;
+  thumbnailUrl: string;
+  tags: string[];
+  defaultSceneCount: number;
+  sampleBeats: Array<{
+    name: string;
+    description: string;
+    suggestedDurationSeconds: number;
+    cameraMovement: string;
+  }>;
+  recommendedStyle: ComicArtStyle;
+  isPopular?: boolean;
+}
+
+export interface BrandKitConfig {
+  id: string;
+  workspaceId: string;
+  brandName: string;
+  logoUrl?: string;
+  watermarkUrl?: string;
+  secondaryLogoUrl?: string;
+  primaryColor: string;
+  secondaryColor: string;
+  accentColor: string;
+  fontFamily: string;
+  watermarkText?: string;
+  watermarkPosition: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  watermarkOpacity: number;
+  introVideoUrl?: string;
+  outroVideoUrl?: string;
+  captionPreset: any;
+  defaultAspectRatio: "9:16" | "16:9" | "1:1";
+  updatedAt: string;
+}
+
+export interface CreditTransaction {
+  id: string;
+  userId: string;
+  amount: number; // positive = credit added, negative = deducted
+  balanceAfter: number;
+  type: "deduction" | "purchase" | "subscription_grant" | "refund";
+  description: string;
+  modelUsed?: string;
+  jobId?: string;
+  timestamp: string;
+  createdAt?: string;
+}
+
+export interface BillingAccount {
+  userId: string;
+  currentBalance: number;
+  creditsRemaining: number;
+  plan: "free" | "creator" | "studio_pro";
+  planTier: string;
+  subscriptionStatus: "active" | "canceled" | "past_due" | "trialing";
+  billingCycle: "monthly" | "yearly";
+  monthlyCreditLimit: number;
+  usedThisCycle: number;
+  creditsUsedThisMonth: number;
+  nextRenewalDate: string;
+  isStripeConfigured: boolean;
+}
+
+export interface TeamMember {
+  id: string;
+  userId?: string;
+  name: string;
+  email: string;
+  role: "owner" | "director" | "animator" | "reviewer" | "admin" | "editor" | "viewer" | string;
+  avatarUrl?: string;
+  joinedAt: string;
+  status?: "active" | "invited";
+}
+
+export interface TeamWorkspace {
+  id: string;
+  name: string;
+  slug: string;
+  ownerId: string;
+  members: TeamMember[];
+  sharedProjectIds: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProjectComment {
+  id: string;
+  projectId: string;
+  sceneId?: string;
+  authorId: string;
+  authorName: string;
+  authorAvatarUrl?: string;
+  content: string;
+  timecode?: number;
+  status: "open" | "resolved";
+  createdAt: string;
+}
+
+export interface MediaAsset {
+  id: string;
+  name: string;
+  title?: string;
+  type: "video" | "image" | "audio" | "character_sheet" | "comic_panel" | "turnaround" | string;
+  url: string;
+  thumbnailUrl?: string;
+  fileSizeMb?: number;
+  size?: string;
+  format?: string;
+  aspectRatio?: "16:9" | "9:16" | "1:1" | "4:5" | string;
+  durationSeconds?: number;
+  duration?: string;
+  sourceJobId?: string;
+  sourcePrompt?: string;
+  tags: string[];
+  isFavorite?: boolean;
+  createdAt: string;
+}
+
 
 

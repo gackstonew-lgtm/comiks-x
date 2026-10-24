@@ -11,6 +11,15 @@ import {
   GenerationJob,
   UsageRecord,
   VideoProviderConfig,
+  AvatarProfile,
+  ProductionTemplate,
+  BrandKitConfig,
+  BillingAccount,
+  CreditTransaction,
+  TeamWorkspace,
+  TeamMember,
+  ProjectComment,
+  MediaAsset,
 } from "@/types";
 
 export interface DatabaseSchema {
@@ -24,6 +33,14 @@ export interface DatabaseSchema {
   generationJobs: GenerationJob[];
   usageRecords: UsageRecord[];
   settings: VideoProviderConfig;
+  avatars?: AvatarProfile[];
+  templates?: ProductionTemplate[];
+  brandKit?: BrandKitConfig;
+  billing?: BillingAccount;
+  creditTransactions?: CreditTransaction[];
+  team?: TeamWorkspace;
+  assets?: MediaAsset[];
+  comments?: ProjectComment[];
   schemaVersion?: number;
 }
 
@@ -51,6 +68,193 @@ const DEFAULT_SETTINGS: VideoProviderConfig = {
   dailyBudgetLimitUsd: 50.0,
 };
 
+const DEFAULT_TEMPLATES: ProductionTemplate[] = [
+  {
+    id: "tmpl-nairobi-comedy",
+    title: "Viral Comedy Short (FlipaClip Style)",
+    category: "comedy_short",
+    description: "Fast-paced comedy short with still painted matte plate, character animation on-twos, sound bursts, and top caption bar.",
+    aspectRatio: "9:16",
+    durationSeconds: 15,
+    thumbnailUrl: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?w=600&auto=format&fit=crop",
+    tags: ["comedy", "flipaclip", "shorts", "viral"],
+    defaultSceneCount: 3,
+    sampleBeats: [
+      { name: "Hook", description: "Sudden extreme comedic problem shocks protagonist awake", suggestedDurationSeconds: 4, cameraMovement: "Punch Zoom + Shake" },
+      { name: "Escalation", description: "The chaos doubles outside the window with loud crowd/sound waves", suggestedDurationSeconds: 6, cameraMovement: "Pan Right" },
+      { name: "Punchline", description: "Snappy punchline delivered straight to camera with Pillow facepalm", suggestedDurationSeconds: 5, cameraMovement: "Close-up" },
+    ],
+    recommendedStyle: "African Comic",
+    isPopular: true,
+  },
+  {
+    id: "tmpl-motion-comic-hero",
+    title: "Motion Comic Chapter Splash",
+    category: "motion_comic",
+    description: "Dynamic multi-panel comic layout with halftone transitions, speed lines, and 2.5D camera push-ins.",
+    aspectRatio: "16:9",
+    durationSeconds: 30,
+    thumbnailUrl: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop",
+    tags: ["motion_comic", "graphic_novel", "superhero"],
+    defaultSceneCount: 4,
+    sampleBeats: [
+      { name: "Gutter Transition", description: "Camera slides across 3 diagonal comic panels", suggestedDurationSeconds: 8, cameraMovement: "Tracking Pan" },
+      { name: "Action Beat", description: "Impact frames flash with comic 'POW!' and radial action lines", suggestedDurationSeconds: 12, cameraMovement: "Dynamic Push" },
+      { name: "Cliffhanger", description: "Hero stands victorious on high-contrast black halftone skyline", suggestedDurationSeconds: 10, cameraMovement: "Slow Zoom Out" },
+    ],
+    recommendedStyle: "2D Comic",
+    isPopular: true,
+  },
+  {
+    id: "tmpl-social-explainer",
+    title: "TikTok / Reels Studio Explainer",
+    category: "social_explainer",
+    description: "Vertical storytelling video optimized for mobile retention with top third captions and safe zone bounds.",
+    aspectRatio: "9:16",
+    durationSeconds: 20,
+    thumbnailUrl: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=600&auto=format&fit=crop",
+    tags: ["explainer", "retention", "tiktok", "reels"],
+    defaultSceneCount: 3,
+    sampleBeats: [
+      { name: "Visual Hook", description: "Question on top caption banner with Twemoji", suggestedDurationSeconds: 5, cameraMovement: "Static" },
+      { name: "Point Breakdown", description: "Animated avatar explains concept with responsive gestures", suggestedDurationSeconds: 10, cameraMovement: "Slow Push-in" },
+      { name: "Call to Action", description: "Follow button animation and outro hook", suggestedDurationSeconds: 5, cameraMovement: "Snap Zoom" },
+    ],
+    recommendedStyle: "Cartoon",
+  },
+  {
+    id: "tmpl-anime-shonen",
+    title: "Anime Shonen Action Sequence",
+    category: "manga_sequence",
+    description: "High-octane anime sequence with cel-shaded character holds, dramatic Dutch tilts, and smear frames.",
+    aspectRatio: "16:9",
+    durationSeconds: 25,
+    thumbnailUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop",
+    tags: ["anime", "action", "shonen", "manga"],
+    defaultSceneCount: 4,
+    sampleBeats: [
+      { name: "Standoff", description: "Extreme close-up on eyes with dramatic wind lines", suggestedDurationSeconds: 6, cameraMovement: "Slow Tilt" },
+      { name: "Power Charge", description: "Energy aura glow and impact shockwave burst", suggestedDurationSeconds: 8, cameraMovement: "Dutch Tilt" },
+      { name: "Strike", description: "Rapid smear frames and screen vibration", suggestedDurationSeconds: 11, cameraMovement: "Shake + Snap Zoom" },
+    ],
+    recommendedStyle: "Anime-inspired",
+  },
+];
+
+const DEFAULT_AVATARS: AvatarProfile[] = [
+  {
+    id: "avatar-zawadi-01",
+    name: "Zawadi",
+    category: "presenter",
+    thumbnailUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop",
+    gender: "female",
+    defaultVoiceId: "ke-female-zawadi",
+    voiceProvider: "elevenlabs",
+    presentationStyle: "energetic",
+    aspectRatio: "9:16",
+    isCustom: false,
+    consentVerified: true,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "avatar-kevo-02",
+    name: "Kevo",
+    category: "comic_character",
+    thumbnailUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop",
+    gender: "male",
+    defaultVoiceId: "ke-male-kevo",
+    voiceProvider: "elevenlabs",
+    presentationStyle: "humorous",
+    aspectRatio: "9:16",
+    isCustom: false,
+    consentVerified: true,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "avatar-amina-03",
+    name: "Amina",
+    category: "anime_host",
+    thumbnailUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop",
+    gender: "female",
+    defaultVoiceId: "ke-female-amina",
+    voiceProvider: "openai",
+    presentationStyle: "storyteller",
+    aspectRatio: "16:9",
+    isCustom: false,
+    consentVerified: true,
+    createdAt: new Date().toISOString(),
+  },
+];
+
+const DEFAULT_BRAND_KIT: BrandKitConfig = {
+  id: "bk-default",
+  workspaceId: "workspace-main",
+  brandName: "Comiks X Studio",
+  primaryColor: "#10b981",
+  secondaryColor: "#06b6d4",
+  accentColor: "#f59e0b",
+  fontFamily: "Cabinet Grotesk, Inter, sans-serif",
+  watermarkText: "COMIKS X",
+  watermarkPosition: "bottom-right",
+  watermarkOpacity: 0.7,
+  captionPreset: {
+    preset: "comic_yellow",
+    fontFamily: "FlipaClip Sans",
+    fontSize: 42,
+    textColor: "#FFE600",
+    backgroundPill: true,
+  },
+  defaultAspectRatio: "9:16",
+  updatedAt: new Date().toISOString(),
+};
+
+const DEFAULT_BILLING: BillingAccount = {
+  userId: "user-creator",
+  currentBalance: 250,
+  creditsRemaining: 250,
+  plan: "creator",
+  planTier: "creator",
+  subscriptionStatus: "active",
+  billingCycle: "monthly",
+  monthlyCreditLimit: 500,
+  usedThisCycle: 85,
+  creditsUsedThisMonth: 85,
+  nextRenewalDate: new Date(Date.now() + 24 * 86400000).toISOString(),
+  isStripeConfigured: Boolean(process.env.STRIPE_SECRET_KEY),
+};
+
+const DEFAULT_TEAM: TeamWorkspace = {
+  id: "team-default-workspace",
+  name: "Comiks X Creative Lab",
+  slug: "comiks-x-lab",
+  ownerId: "user-creator",
+  members: [
+    {
+      id: "mem-owner",
+      userId: "user-creator",
+      name: "Lead Creator",
+      email: "creator@studio.com",
+      role: "owner",
+      avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
+      joinedAt: new Date().toISOString(),
+      status: "active",
+    },
+    {
+      id: "mem-animator",
+      userId: "user-animator",
+      name: "Sam Animator",
+      email: "animator@studio.com",
+      role: "animator",
+      avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+      joinedAt: new Date().toISOString(),
+      status: "active",
+    },
+  ],
+  sharedProjectIds: [],
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+};
+
 const EMPTY_DATABASE: DatabaseSchema = {
   series: [],
   characters: [],
@@ -62,7 +266,15 @@ const EMPTY_DATABASE: DatabaseSchema = {
   generationJobs: [],
   usageRecords: [],
   settings: DEFAULT_SETTINGS,
-  schemaVersion: 2,
+  avatars: DEFAULT_AVATARS,
+  templates: DEFAULT_TEMPLATES,
+  brandKit: DEFAULT_BRAND_KIT,
+  billing: DEFAULT_BILLING,
+  creditTransactions: [],
+  team: DEFAULT_TEAM,
+  assets: [],
+  comments: [],
+  schemaVersion: 3,
 };
 
 class ComiksDb {
@@ -120,7 +332,15 @@ class ComiksDb {
         generationJobs: Array.isArray(parsed.generationJobs) ? parsed.generationJobs : [],
         usageRecords: Array.isArray(parsed.usageRecords) ? parsed.usageRecords : [],
         settings: parsed.settings || DEFAULT_SETTINGS,
-        schemaVersion: parsed.schemaVersion || 2,
+        avatars: Array.isArray(parsed.avatars) && parsed.avatars.length > 0 ? parsed.avatars : DEFAULT_AVATARS,
+        templates: Array.isArray(parsed.templates) && parsed.templates.length > 0 ? parsed.templates : DEFAULT_TEMPLATES,
+        brandKit: parsed.brandKit || DEFAULT_BRAND_KIT,
+        billing: parsed.billing || DEFAULT_BILLING,
+        creditTransactions: Array.isArray(parsed.creditTransactions) ? parsed.creditTransactions : [],
+        team: parsed.team || DEFAULT_TEAM,
+        assets: Array.isArray(parsed.assets) ? parsed.assets : [],
+        comments: Array.isArray(parsed.comments) ? parsed.comments : [],
+        schemaVersion: parsed.schemaVersion || 3,
       };
     } catch {
       return { ...EMPTY_DATABASE };
@@ -155,10 +375,29 @@ class ComiksDb {
     return this.data.series.find((s) => s.id === id);
   }
 
-  public createSeries(item: Omit<ComicSeries, "id" | "createdAt" | "updatedAt"> & { id?: string }): ComicSeries {
+  public createSeries(item: Partial<ComicSeries> & { title: string }): ComicSeries {
     const newSeries: ComicSeries = {
-      ...item,
       id: item.id || `series-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      title: item.title,
+      description: item.description || item.logline || "",
+      logline: item.logline || item.description || "",
+      genre: item.genre || "comedy",
+      defaultAspectRatio: item.defaultAspectRatio || "9:16",
+      artStyle: item.artStyle || "African Comic",
+      isStyleLocked: item.isStyleLocked ?? true,
+      mainCharacterIds: item.mainCharacterIds || [],
+      supportingCharacterIds: item.supportingCharacterIds || [],
+      locationIds: item.locationIds || [],
+      worldRules: item.worldRules || [],
+      visualReferences: item.visualReferences || [],
+      brandIdentity: item.brandIdentity || {
+        tagline: "",
+        outroHook: "",
+        primaryColor: "#10b981",
+        secondaryColor: "#06b6d4",
+        fontStyle: "Bangers",
+      },
+      episodeCount: item.episodeCount || 0,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -489,6 +728,40 @@ class ComiksDb {
     return this.data.generationJobs[idx];
   }
 
+  public getGenerationJobs(): GenerationJob[] {
+    return this.getJobs();
+  }
+
+  public getRenderJobs(): GenerationJob[] {
+    return this.getJobs();
+  }
+
+  public createRenderJob(job: any): GenerationJob {
+    return this.createJob({
+      episodeId: job.episodeId || "global",
+      sceneId: job.sceneId || "global",
+      type: job.type || "clip_generation",
+      provider: job.parameters?.provider || "luma",
+      model: "ray",
+      prompt: job.parameters?.prompt || "",
+      negativePrompt: job.parameters?.negativePrompt || "",
+      durationSeconds: job.parameters?.duration || 5,
+      progressPercent: 0,
+      costCredits: job.parameters?.cost || 5,
+      status: "queued",
+      progress: 0,
+      parameters: job.parameters || {},
+    });
+  }
+
+  public updateRenderJob(id: string, updates: any): GenerationJob | undefined {
+    return this.updateJob(id, updates);
+  }
+
+  public updateJobStatus(id: string, status: GenerationJob["status"], progress?: number, error?: string): GenerationJob | undefined {
+    return this.updateJob(id, { status, ...(progress !== undefined ? { progress } : {}), ...(error ? { error } : {}) });
+  }
+
   // --- Usage Records ---
   public getUsageRecords(): UsageRecord[] {
     return this.data.usageRecords;
@@ -517,6 +790,209 @@ class ComiksDb {
     };
     this.save();
     return this.data.settings;
+  }
+
+  // --- Avatars ---
+  public getAvatars(): AvatarProfile[] {
+    return this.data.avatars || DEFAULT_AVATARS;
+  }
+
+  public getAvatarById(id: string): AvatarProfile | undefined {
+    return this.getAvatars().find((a) => a.id === id);
+  }
+
+  public createAvatar(avatar: Omit<AvatarProfile, "id" | "createdAt"> & { id?: string }): AvatarProfile {
+    const newAvatar: AvatarProfile = {
+      ...avatar,
+      thumbnailUrl: avatar.thumbnailUrl || avatar.previewUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400",
+      category: avatar.category || "presenter",
+      id: avatar.id || `avatar-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      createdAt: new Date().toISOString(),
+    };
+    if (!this.data.avatars) this.data.avatars = [...DEFAULT_AVATARS];
+    this.data.avatars.push(newAvatar);
+    this.save();
+    return newAvatar;
+  }
+
+  public deleteAvatar(id: string): boolean {
+    if (!this.data.avatars) return false;
+    const initialLen = this.data.avatars.length;
+    this.data.avatars = this.data.avatars.filter((a) => a.id !== id);
+    if (this.data.avatars.length !== initialLen) {
+      this.save();
+      return true;
+    }
+    return false;
+  }
+
+  // --- Templates ---
+  public getTemplates(): ProductionTemplate[] {
+    return this.data.templates || DEFAULT_TEMPLATES;
+  }
+
+  public getTemplateById(id: string): ProductionTemplate | undefined {
+    return this.getTemplates().find((t) => t.id === id);
+  }
+
+  // --- Brand Kit ---
+  public getBrandKit(): BrandKitConfig {
+    return this.data.brandKit || DEFAULT_BRAND_KIT;
+  }
+
+  public updateBrandKit(updates: Partial<BrandKitConfig>): BrandKitConfig {
+    this.data.brandKit = {
+      ...this.getBrandKit(),
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    this.save();
+    return this.data.brandKit;
+  }
+
+  // --- Billing & Credits ---
+  public getBillingAccount(): BillingAccount {
+    const b = this.data.billing || DEFAULT_BILLING;
+    return {
+      ...b,
+      creditsRemaining: b.currentBalance,
+      creditsUsedThisMonth: b.usedThisCycle,
+      planTier: b.plan,
+    };
+  }
+
+  public getCreditTransactions(): CreditTransaction[] {
+    return this.data.creditTransactions || [];
+  }
+
+  public addCredits(amount: number, description: string): BillingAccount {
+    const billing = this.getBillingAccount();
+    const newBalance = billing.currentBalance + amount;
+    this.data.billing = {
+      ...billing,
+      currentBalance: newBalance,
+      creditsRemaining: newBalance,
+    };
+
+    if (!this.data.creditTransactions) this.data.creditTransactions = [];
+    this.data.creditTransactions.unshift({
+      id: `tx-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      userId: billing.userId,
+      amount,
+      balanceAfter: newBalance,
+      type: "purchase",
+      description,
+      timestamp: new Date().toISOString(),
+    });
+
+    this.save();
+    return this.getBillingAccount();
+  }
+
+  public deductCredits(amount: number, description: string, modelUsed?: string): { success: boolean; balance: number; error?: string } {
+    const billing = this.getBillingAccount();
+    if (billing.currentBalance < amount) {
+      return { success: false, balance: billing.currentBalance, error: `Insufficient credits. Required: ${amount}, Available: ${billing.currentBalance}` };
+    }
+
+    const newBalance = billing.currentBalance - amount;
+    this.data.billing = {
+      ...billing,
+      currentBalance: newBalance,
+      creditsRemaining: newBalance,
+      usedThisCycle: (billing.usedThisCycle || 0) + amount,
+      creditsUsedThisMonth: (billing.usedThisCycle || 0) + amount,
+    };
+
+    if (!this.data.creditTransactions) this.data.creditTransactions = [];
+    this.data.creditTransactions.unshift({
+      id: `tx-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      userId: billing.userId,
+      amount: -amount,
+      balanceAfter: newBalance,
+      type: "deduction",
+      description,
+      modelUsed,
+      timestamp: new Date().toISOString(),
+    });
+
+    this.save();
+    return { success: true, balance: newBalance };
+  }
+
+  // --- Team Workspace ---
+  public getTeamWorkspace(): TeamWorkspace {
+    return this.data.team || DEFAULT_TEAM;
+  }
+
+  public addTeamMember(member: Omit<TeamMember, "id" | "joinedAt">): TeamMember {
+    const team = this.getTeamWorkspace();
+    const newMember: TeamMember = {
+      ...member,
+      status: member.status || "active",
+      id: `mem-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      joinedAt: new Date().toISOString(),
+    };
+    team.members.push(newMember);
+    this.data.team = team;
+    this.save();
+    return newMember;
+  }
+
+  public updateTeamMemberRole(memberId: string, role: TeamMember["role"]): boolean {
+    const team = this.getTeamWorkspace();
+    const target = team.members.find((m) => m.id === memberId);
+    if (!target) return false;
+    target.role = role;
+    this.data.team = team;
+    this.save();
+    return true;
+  }
+
+  public removeTeamMember(memberId: string): boolean {
+    const team = this.getTeamWorkspace();
+    const initialLen = team.members.length;
+    team.members = team.members.filter((m) => m.id !== memberId);
+    if (team.members.length !== initialLen) {
+      this.data.team = team;
+      this.save();
+      return true;
+    }
+    return false;
+  }
+
+  // --- Assets Library ---
+  public getAssets(typeFilter?: string): MediaAsset[] {
+    const list = this.data.assets || [];
+    if (typeFilter && typeFilter !== "all") {
+      return list.filter((a) => a.type === typeFilter);
+    }
+    return list;
+  }
+
+  public createAsset(asset: Omit<MediaAsset, "id" | "createdAt"> & { id?: string }): MediaAsset {
+    const newAsset: MediaAsset = {
+      ...asset,
+      title: asset.title || asset.name || "Untitled Asset",
+      name: asset.name || asset.title || "Untitled Asset",
+      id: asset.id || `asset-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      createdAt: new Date().toISOString(),
+    };
+    if (!this.data.assets) this.data.assets = [];
+    this.data.assets.unshift(newAsset);
+    this.save();
+    return newAsset;
+  }
+
+  public deleteAsset(id: string): boolean {
+    if (!this.data.assets) return false;
+    const initialLen = this.data.assets.length;
+    this.data.assets = this.data.assets.filter((a) => a.id !== id);
+    if (this.data.assets.length !== initialLen) {
+      this.save();
+      return true;
+    }
+    return false;
   }
 }
 
