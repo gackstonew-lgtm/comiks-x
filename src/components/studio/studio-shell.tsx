@@ -1,44 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { StudioSidebar } from "./studio-sidebar";
 import { StudioTopBar } from "./studio-topbar";
 import { CreatorAssistant } from "@/components/creator-assistant";
 
 export function StudioShell({ children }: { children: React.ReactNode }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-    const saved = localStorage.getItem("comiksx.sidebar.collapsed");
-    if (saved !== null) {
-      setIsCollapsed(saved === "true");
-    } else if (window.innerWidth < 1024) {
-      setIsCollapsed(true);
-    }
-  }, []);
-
-  const handleToggle = () => {
-    setIsCollapsed((prev) => {
-      const next = !prev;
-      localStorage.setItem("comiksx.sidebar.collapsed", String(next));
-      return next;
-    });
-  };
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-studio-950 text-zinc-100 flex overflow-hidden">
-      {/* Expandable/Collapsible Studio Sidebar */}
-      <StudioSidebar isCollapsed={isCollapsed} onToggle={handleToggle} />
+    <div className="min-h-screen bg-[#121212] text-[#ededed] flex overflow-hidden">
+      {/* Supabase-style Compact Hover-Expanding Sidebar */}
+      <StudioSidebar
+        isMobileOpen={isMobileOpen}
+        onCloseMobile={() => setIsMobileOpen(false)}
+      />
 
-      {/* Main Workspace Frame */}
-      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+      {/* Main Workspace Frame with constant 56px (pl-14) offset on desktop to prevent layout shifts */}
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden md:pl-14 transition-[padding] duration-200">
         {/* Studio Top Navigation Bar */}
-        <StudioTopBar />
+        <StudioTopBar onToggleMobile={() => setIsMobileOpen((prev) => !prev)} />
 
-        {/* Scrollable Main Studio Content */}
-        <main className="flex-1 overflow-y-auto bg-studio-950 p-4 lg:p-6">
+        {/* Scrollable Main Content Area */}
+        <main className="flex-1 overflow-y-auto bg-[#121212] p-4 lg:p-6 animate-fade-in">
           <div className="max-w-7xl mx-auto w-full space-y-6">{children}</div>
         </main>
       </div>
