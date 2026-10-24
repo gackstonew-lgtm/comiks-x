@@ -2,32 +2,60 @@
 /node_modules
 /.pnp
 .pnp.js
+vendor/
+venv/
+.venv/
+__pycache__/
 
 # testing
 /coverage
 
-# next.js
+# next.js & build output
 /.next/
 /out/
-
-# production
 /build
+dist/
+*.egg-info/
 
-# misc
+# misc & OS
 .DS_Store
-*.pem
+Thumbs.db
+*.swp
+.idea/
 
-# debug
+# secrets, keys & credentials
+*.pem
+*.key
+*.p12
+*.keystore
+*service-account*.json
+*credentials*.json
+
+# debug & logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+tmp/
+.cache/
+.turbo/
 
 # local env files
+.env
+.env.*
+!.env.example
 .env*.local
 
 # vercel
 .vercel
 
+# databases & uploads
+*.sqlite
+*.sqlite3
+*.db
+uploads/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+

@@ -124,10 +124,10 @@
       ],
       "characterPrompt": "24-year-old Kenyan young man, Brian, short faded hairstyle, warm brown skin, expressive brown eyes, wearing green safari zip jacket and dark jeans, African comic art style, clean bold cel-shaded outlines, vivid colors, animated character sheet",
       "negativePrompt": "photorealistic, European features, blurry, disfigured face, extra limbs, 3d clay render",
-      "isLocked": true,
+      "isLocked": false,
       "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop",
       "createdAt": "2026-10-06T19:33:32.298Z",
-      "updatedAt": "2026-10-06T20:49:41.574Z",
+      "updatedAt": "2026-10-06T22:17:21.292Z",
       "dna": {
         "identity": {
           "role": "Protagonist / Key Cast",
@@ -9069,6 +9069,341 @@
       "thumbnailUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop",
       "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
       "createdAt": "2026-10-06T19:33:32.298Z"
+    },
+    {
+      "id": "clip-1791324997574-s9eb6",
+      "episodeId": "ep-01-the-pitch",
+      "title": "The Big Pitch | Part 1 (15s Clip)",
+      "hook": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+      "mainMoment": "Critical turning point in \"Buru Buru Apartment\" - Brian taps enter aggressively, then leans back as green success messages scroll on screen.",
+      "endingCta": "Follow for Episode 2! Full 30-min episode link in bio.",
+      "startTimeSeconds": 0,
+      "endTimeSeconds": 15,
+      "durationSeconds": 15,
+      "aspectRatio": "9:16",
+      "platform": "all",
+      "captions": [
+        {
+          "start": 0,
+          "end": 3,
+          "text": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+          "emphasisWords": [
+            "Never",
+            "trust"
+          ]
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "text": "Just one more function and the sync is complete... Come on, compile!",
+          "emphasisWords": [
+            "Wait",
+            "reaction"
+          ]
+        },
+        {
+          "start": 6,
+          "end": 9,
+          "text": "Nairobi traffic never forgives! 💀",
+          "emphasisWords": [
+            "never",
+            "forgives"
+          ]
+        },
+        {
+          "start": 9,
+          "end": 15,
+          "text": "Part 2 dropping soon! Follow @ComiksX 🔥",
+          "emphasisWords": [
+            "Follow",
+            "Part 2"
+          ]
+        }
+      ],
+      "description": "The Big Pitch | Part 1 (15s Clip)\n\nCan Brian and Kevin survive Nairobi hustle? Drop your thoughts below! 👇\n\n#ComiksX #KenyanAnimation #NairobiComics #TikTokKenya #AfricanCartoons #LifeInNairobi #AnimeKenya #ShengVibes #ComedyReels",
+      "hashtags": [
+        "#ComiksX",
+        "#KenyanAnimation",
+        "#NairobiComics",
+        "#TikTokKenya",
+        "#AfricanCartoons",
+        "#LifeInNairobi",
+        "#AnimeKenya",
+        "#ShengVibes",
+        "#ComedyReels"
+      ],
+      "thumbnailUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
+      "safeZoneCompliance": true,
+      "createdAt": "2026-10-06T22:16:37.574Z"
+    },
+    {
+      "id": "clip-1791324997585-xmdt9",
+      "episodeId": "ep-01-the-pitch",
+      "title": "The Big Pitch | Part 1 (30s Clip)",
+      "hook": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+      "mainMoment": "Critical turning point in \"Buru Buru Apartment\" - Brian taps enter aggressively, then leans back as green success messages scroll on screen.",
+      "endingCta": "Follow for Episode 2! Full 30-min episode link in bio.",
+      "startTimeSeconds": 0,
+      "endTimeSeconds": 30,
+      "durationSeconds": 30,
+      "aspectRatio": "9:16",
+      "platform": "all",
+      "captions": [
+        {
+          "start": 0,
+          "end": 7,
+          "text": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+          "emphasisWords": [
+            "Never",
+            "trust"
+          ]
+        },
+        {
+          "start": 7,
+          "end": 14,
+          "text": "Just one more function and the sync is complete... Come on, compile!",
+          "emphasisWords": [
+            "Wait",
+            "reaction"
+          ]
+        },
+        {
+          "start": 14,
+          "end": 21,
+          "text": "Nairobi traffic never forgives! 💀",
+          "emphasisWords": [
+            "never",
+            "forgives"
+          ]
+        },
+        {
+          "start": 21,
+          "end": 30,
+          "text": "Part 2 dropping soon! Follow @ComiksX 🔥",
+          "emphasisWords": [
+            "Follow",
+            "Part 2"
+          ]
+        }
+      ],
+      "description": "The Big Pitch | Part 1 (30s Clip)\n\nCan Brian and Kevin survive Nairobi hustle? Drop your thoughts below! 👇\n\n#ComiksX #KenyanAnimation #NairobiComics #TikTokKenya #AfricanCartoons #LifeInNairobi #AnimeKenya #ShengVibes #ComedyReels",
+      "hashtags": [
+        "#ComiksX",
+        "#KenyanAnimation",
+        "#NairobiComics",
+        "#TikTokKenya",
+        "#AfricanCartoons",
+        "#LifeInNairobi",
+        "#AnimeKenya",
+        "#ShengVibes",
+        "#ComedyReels"
+      ],
+      "thumbnailUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
+      "safeZoneCompliance": true,
+      "createdAt": "2026-10-06T22:16:37.586Z"
+    },
+    {
+      "id": "clip-1791324997595-yvp6g",
+      "episodeId": "ep-01-the-pitch",
+      "title": "The Big Pitch | Part 1 (45s Clip)",
+      "hook": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+      "mainMoment": "Critical turning point in \"Buru Buru Apartment\" - Brian taps enter aggressively, then leans back as green success messages scroll on screen.",
+      "endingCta": "Follow for Episode 2! Full 30-min episode link in bio.",
+      "startTimeSeconds": 0,
+      "endTimeSeconds": 45,
+      "durationSeconds": 45,
+      "aspectRatio": "9:16",
+      "platform": "all",
+      "captions": [
+        {
+          "start": 0,
+          "end": 11,
+          "text": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+          "emphasisWords": [
+            "Never",
+            "trust"
+          ]
+        },
+        {
+          "start": 11,
+          "end": 22,
+          "text": "Just one more function and the sync is complete... Come on, compile!",
+          "emphasisWords": [
+            "Wait",
+            "reaction"
+          ]
+        },
+        {
+          "start": 22,
+          "end": 33,
+          "text": "Nairobi traffic never forgives! 💀",
+          "emphasisWords": [
+            "never",
+            "forgives"
+          ]
+        },
+        {
+          "start": 33,
+          "end": 45,
+          "text": "Part 2 dropping soon! Follow @ComiksX 🔥",
+          "emphasisWords": [
+            "Follow",
+            "Part 2"
+          ]
+        }
+      ],
+      "description": "The Big Pitch | Part 1 (45s Clip)\n\nCan Brian and Kevin survive Nairobi hustle? Drop your thoughts below! 👇\n\n#ComiksX #KenyanAnimation #NairobiComics #TikTokKenya #AfricanCartoons #LifeInNairobi #AnimeKenya #ShengVibes #ComedyReels",
+      "hashtags": [
+        "#ComiksX",
+        "#KenyanAnimation",
+        "#NairobiComics",
+        "#TikTokKenya",
+        "#AfricanCartoons",
+        "#LifeInNairobi",
+        "#AnimeKenya",
+        "#ShengVibes",
+        "#ComedyReels"
+      ],
+      "thumbnailUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
+      "safeZoneCompliance": true,
+      "createdAt": "2026-10-06T22:16:37.595Z"
+    },
+    {
+      "id": "clip-1791324997602-3gbb4",
+      "episodeId": "ep-01-the-pitch",
+      "title": "The Big Pitch | Part 1 (60s Clip)",
+      "hook": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+      "mainMoment": "Critical turning point in \"Buru Buru Apartment\" - Brian taps enter aggressively, then leans back as green success messages scroll on screen.",
+      "endingCta": "Follow for Episode 2! Full 30-min episode link in bio.",
+      "startTimeSeconds": 0,
+      "endTimeSeconds": 51,
+      "durationSeconds": 60,
+      "aspectRatio": "9:16",
+      "platform": "all",
+      "captions": [
+        {
+          "start": 0,
+          "end": 15,
+          "text": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+          "emphasisWords": [
+            "Never",
+            "trust"
+          ]
+        },
+        {
+          "start": 15,
+          "end": 30,
+          "text": "Just one more function and the sync is complete... Come on, compile!",
+          "emphasisWords": [
+            "Wait",
+            "reaction"
+          ]
+        },
+        {
+          "start": 30,
+          "end": 45,
+          "text": "Nairobi traffic never forgives! 💀",
+          "emphasisWords": [
+            "never",
+            "forgives"
+          ]
+        },
+        {
+          "start": 45,
+          "end": 60,
+          "text": "Part 2 dropping soon! Follow @ComiksX 🔥",
+          "emphasisWords": [
+            "Follow",
+            "Part 2"
+          ]
+        }
+      ],
+      "description": "The Big Pitch | Part 1 (60s Clip)\n\nCan Brian and Kevin survive Nairobi hustle? Drop your thoughts below! 👇\n\n#ComiksX #KenyanAnimation #NairobiComics #TikTokKenya #AfricanCartoons #LifeInNairobi #AnimeKenya #ShengVibes #ComedyReels",
+      "hashtags": [
+        "#ComiksX",
+        "#KenyanAnimation",
+        "#NairobiComics",
+        "#TikTokKenya",
+        "#AfricanCartoons",
+        "#LifeInNairobi",
+        "#AnimeKenya",
+        "#ShengVibes",
+        "#ComedyReels"
+      ],
+      "thumbnailUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
+      "safeZoneCompliance": true,
+      "createdAt": "2026-10-06T22:16:37.602Z"
+    },
+    {
+      "id": "clip-1791324997610-9ucja",
+      "episodeId": "ep-01-the-pitch",
+      "title": "The Big Pitch | Part 1 (90s Clip)",
+      "hook": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+      "mainMoment": "Critical turning point in \"Buru Buru Apartment\" - Brian taps enter aggressively, then leans back as green success messages scroll on screen.",
+      "endingCta": "Follow for Episode 2! Full 30-min episode link in bio.",
+      "startTimeSeconds": 0,
+      "endTimeSeconds": 51,
+      "durationSeconds": 90,
+      "aspectRatio": "9:16",
+      "platform": "all",
+      "captions": [
+        {
+          "start": 0,
+          "end": 22,
+          "text": "Never trust a Nairobi matatu when you're 10 minutes late! 💀",
+          "emphasisWords": [
+            "Never",
+            "trust"
+          ]
+        },
+        {
+          "start": 22,
+          "end": 44,
+          "text": "Just one more function and the sync is complete... Come on, compile!",
+          "emphasisWords": [
+            "Wait",
+            "reaction"
+          ]
+        },
+        {
+          "start": 44,
+          "end": 66,
+          "text": "Nairobi traffic never forgives! 💀",
+          "emphasisWords": [
+            "never",
+            "forgives"
+          ]
+        },
+        {
+          "start": 66,
+          "end": 90,
+          "text": "Part 2 dropping soon! Follow @ComiksX 🔥",
+          "emphasisWords": [
+            "Follow",
+            "Part 2"
+          ]
+        }
+      ],
+      "description": "The Big Pitch | Part 1 (90s Clip)\n\nCan Brian and Kevin survive Nairobi hustle? Drop your thoughts below! 👇\n\n#ComiksX #KenyanAnimation #NairobiComics #TikTokKenya #AfricanCartoons #LifeInNairobi #AnimeKenya #ShengVibes #ComedyReels",
+      "hashtags": [
+        "#ComiksX",
+        "#KenyanAnimation",
+        "#NairobiComics",
+        "#TikTokKenya",
+        "#AfricanCartoons",
+        "#LifeInNairobi",
+        "#AnimeKenya",
+        "#ShengVibes",
+        "#ComedyReels"
+      ],
+      "thumbnailUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-african-man-working-on-his-laptop-at-home-41857-large.mp4",
+      "safeZoneCompliance": true,
+      "createdAt": "2026-10-06T22:16:37.610Z"
     }
   ],
   "thumbnails": [
